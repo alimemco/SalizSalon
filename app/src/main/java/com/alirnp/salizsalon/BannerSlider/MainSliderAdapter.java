@@ -1,15 +1,15 @@
 package com.alirnp.salizsalon.BannerSlider;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import ss.com.bannerslider.adapters.SliderAdapter;
 import ss.com.bannerslider.viewholder.ImageSlideViewHolder;
 
 public class MainSliderAdapter extends SliderAdapter {
 
-    private List<Banner> bannerList;
+    private ArrayList<Banner> bannerList;
 
-    public MainSliderAdapter(List<Banner> bannerList) {
+    public MainSliderAdapter(ArrayList<Banner> bannerList) {
         this.bannerList = bannerList;
     }
 

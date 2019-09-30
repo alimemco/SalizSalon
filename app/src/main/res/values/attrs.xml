@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MyTextView">
+        <attr name="fontCustom" format="integer">
+            <enum name="bYekan" value="0" />
+            <enum name="iranSans" value="1" />
+            <enum name="iranSansBold" value="2" />/>
+
+        </attr>
+
+    </declare-styleable>
+
+</resources>
