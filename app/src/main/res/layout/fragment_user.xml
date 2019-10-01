@@ -1,21 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Views.Fragments.FragmentUser">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/fragment_user_rcv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="user"
-        android:textSize="35sp" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/fagment_user_image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:srcCompat="@drawable/ic_gift" />
-
-</FrameLayout>
+        android:layout_height="match_parent" />
+</LinearLayout>

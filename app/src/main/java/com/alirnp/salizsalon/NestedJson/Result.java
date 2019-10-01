@@ -7,6 +7,17 @@ import java.util.List;
 
 public class Result {
 
+    @SerializedName("title")
+    @Expose
+    private String title;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
     @SerializedName("success")
     @Expose
     private String success;
@@ -16,6 +27,7 @@ public class Result {
     @SerializedName("items")
     @Expose
     private List<Item> items = null;
+
 
     public String getSuccess() {
         return success;

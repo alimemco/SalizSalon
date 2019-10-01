@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alirnp.salizsalon.Adapters.CategoryAdapter;
+import com.alirnp.salizsalon.Adapters.ItemsVerticalAdapter;
 import com.alirnp.salizsalon.BannerSlider.Banner;
 import com.alirnp.salizsalon.BannerSlider.MainSliderAdapter;
 import com.alirnp.salizsalon.BannerSlider.PicassoImageLoadingService;
@@ -23,6 +24,7 @@ import com.alirnp.salizsalon.Utils.Utils;
 import com.alirnp.salizsalon.Views.Activities.MainActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,7 +52,7 @@ public class FragmentHome extends Fragment {
             Utils.log(MainActivity.class, "banner" + t.toString());
         }
     };
-    private Callback<ResponseJson> callbackNested = new Callback<ResponseJson>() {
+    private Callback<ResponseJson> callbackCategory = new Callback<ResponseJson>() {
 
         @Override
         public void onResponse(Call<ResponseJson> call, Response<ResponseJson> response) {
@@ -74,7 +76,30 @@ public class FragmentHome extends Fragment {
             Utils.log(MainActivity.class, t.toString());
         }
     };
+    private Callback<ResponseJson> callbackPosts = new Callback<ResponseJson>() {
 
+        @Override
+        public void onResponse(Call<ResponseJson> call, Response<ResponseJson> response) {
+
+            if (response.body() != null) {
+
+                List<Result> result = response.body().getResult();
+
+                ItemsVerticalAdapter verticalAdapter = new ItemsVerticalAdapter(result);
+
+/*
+                for (int i = 0; i < result.getItems().size(); i++) {
+                    Utils.log(FragmentHome.class,result.getItems().get(i).getTitle());
+                }*/
+
+            }
+        }
+
+        @Override
+        public void onFailure(Call<ResponseJson> call, Throwable t) {
+            Utils.log(MainActivity.class, t.toString());
+        }
+    };
 
     public FragmentHome() {
 
@@ -115,7 +140,8 @@ public class FragmentHome extends Fragment {
         Slider.init(new PicassoImageLoadingService(getContext()));
 
         MyApplication.getApi().getBannerImages().enqueue(callbackBanner);
-        MyApplication.getApi().getNested().enqueue(callbackNested);
+        MyApplication.getApi().getCategory("category").enqueue(callbackCategory);
+        MyApplication.getApi().getCategory("posts").enqueue(callbackPosts);
 
     }
 }

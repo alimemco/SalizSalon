@@ -4,7 +4,7 @@
     <string name="account">حساب کاربری</string>
     <string name="setting">تنظیمات</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="gift">تخفیف ویژه برای روز های تعطیل</string>
+    <string name="lorem">متن ساختگی برای نمایش متن</string>
 </resources>
