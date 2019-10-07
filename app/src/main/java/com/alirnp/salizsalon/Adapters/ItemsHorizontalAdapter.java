@@ -10,16 +10,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alirnp.salizsalon.CustomViews.MyTextView;
+import com.alirnp.salizsalon.NestedJson.Item;
 import com.alirnp.salizsalon.R;
+import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.util.List;
 
 
 public class ItemsHorizontalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private ArrayList models;
+    private List<Item> models;
 
 
-    public ItemsHorizontalAdapter(ArrayList models) {
+    public ItemsHorizontalAdapter(List<Item> models) {
         this.models = models;
     }
 
@@ -36,7 +38,7 @@ public class ItemsHorizontalAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
         ItemsHorizontalHolder mHolder = (ItemsHorizontalHolder) holder;
-        mHolder.bind();
+        mHolder.bind(models.get(position));
 
 
     }
@@ -59,7 +61,12 @@ public class ItemsHorizontalAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             title = itemView.findViewById(R.id.rcv_item_hor_text);
         }
 
-        void bind() {
+        void bind(Item item) {
+
+            title.setText(item.getTitle());
+            Picasso.get()
+                    .load(item.getImage())
+                    .into(img);
 
         }
     }

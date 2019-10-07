@@ -69,10 +69,6 @@ public class FragmentUser extends Fragment {
 
                 rcv.setAdapter(new ItemsVerticalAdapter(result));
 
-/*
-                for (int i = 0; i < result.getItems().size(); i++) {
-                    Utils.log(FragmentHome.class,result.getItems().get(i).getTitle());
-                }*/
 
             }
         }

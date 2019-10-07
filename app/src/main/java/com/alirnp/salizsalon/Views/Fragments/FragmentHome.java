@@ -1,6 +1,7 @@
 package com.alirnp.salizsalon.Views.Fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +11,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.alirnp.salizsalon.Adapters.CategoryAdapter;
+import com.alirnp.salizsalon.Adapters.Generator.DataGenerator;
+import com.alirnp.salizsalon.Adapters.ItemsAdapter;
 import com.alirnp.salizsalon.Adapters.ItemsVerticalAdapter;
 import com.alirnp.salizsalon.BannerSlider.Banner;
 import com.alirnp.salizsalon.BannerSlider.MainSliderAdapter;
@@ -21,6 +25,7 @@ import com.alirnp.salizsalon.NestedJson.ResponseJson;
 import com.alirnp.salizsalon.NestedJson.Result;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Utils;
+import com.alirnp.salizsalon.Views.Activities.ActivityChooseTime;
 import com.alirnp.salizsalon.Views.Activities.MainActivity;
 
 import java.util.ArrayList;
@@ -32,12 +37,15 @@ import retrofit2.Response;
 import ss.com.bannerslider.Slider;
 
 
-public class FragmentHome extends Fragment {
+public class FragmentHome extends Fragment
+        implements ItemsAdapter.OnItemClick {
 
     private Slider slider;
     private View view;
 
-    private RecyclerView rcv;
+    private RecyclerView rcvCategory;
+    private RecyclerView rcvItems;
+
     private Callback<ArrayList<Banner>> callbackBanner = new Callback<ArrayList<Banner>>() {
         @Override
         public void onResponse(Call<ArrayList<Banner>> call, Response<ArrayList<Banner>> response) {
@@ -62,8 +70,7 @@ public class FragmentHome extends Fragment {
                 Result result = response.body().getResult().get(0);
                 if (Boolean.parseBoolean(result.getSuccess())) {
 
-                    rcv.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-                    rcv.setAdapter(new CategoryAdapter(result.getItems()));
+                    rcvCategory.setAdapter(new CategoryAdapter(result.getItems()));
 
                 } else {
                     Utils.log(FragmentHome.class, "UnSuccess");
@@ -121,7 +128,19 @@ public class FragmentHome extends Fragment {
 
         initView();
 
+        initItemsRecyclerView();
+
         return view;
+    }
+
+    private void initItemsRecyclerView() {
+
+        rcvItems.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+
+        ItemsAdapter itemsAdapter = new ItemsAdapter(DataGenerator.getHomeItems());
+        itemsAdapter.setOnItemClick(this);
+        rcvItems.setAdapter(itemsAdapter);
+
     }
 
     @Override
@@ -133,7 +152,15 @@ public class FragmentHome extends Fragment {
 
     private void initView() {
         slider = view.findViewById(R.id.fragment_home_banner);
-        rcv = view.findViewById(R.id.fragment_home_rcv);
+
+        rcvCategory = view.findViewById(R.id.fragment_home_rcv_category);
+        rcvItems = view.findViewById(R.id.fragment_home_rcv_items);
+
+        rcvCategory.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+
+
+
+
     }
 
     private void initSlider() {
@@ -142,6 +169,21 @@ public class FragmentHome extends Fragment {
         MyApplication.getApi().getBannerImages().enqueue(callbackBanner);
         MyApplication.getApi().getCategory("category").enqueue(callbackCategory);
         MyApplication.getApi().getCategory("posts").enqueue(callbackPosts);
+
+    }
+
+    @Override
+    public void OnClick(int ID) {
+
+        switch (ID) {
+            case 0:
+                startActivity(new Intent(getContext(), ActivityChooseTime.class));
+                break;
+
+            case 1:
+
+                break;
+        }
 
     }
 }

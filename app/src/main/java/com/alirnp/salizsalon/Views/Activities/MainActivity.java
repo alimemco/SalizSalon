@@ -1,11 +1,11 @@
 package com.alirnp.salizsalon.Views.Activities;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,9 +24,7 @@ public class MainActivity extends AppCompatActivity implements
         BottomNavigationView.OnNavigationItemSelectedListener {
 
     FragmentManager fragmentManager;
-
-
-
+    boolean doubleBackToExitPressedOnce = false;
     private BottomNavigationView btmView;
     private FragmentHome fragmentHome = FragmentHome.newInstance();
     private FragmentUser fragmentUser = FragmentUser.newInstance();
@@ -42,9 +40,7 @@ public class MainActivity extends AppCompatActivity implements
 
         replace(fragmentHome);
 
-
     }
-
 
     private void initViews() {
 
@@ -55,7 +51,6 @@ public class MainActivity extends AppCompatActivity implements
         fragmentManager = getSupportFragmentManager();
 
     }
-
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -78,7 +73,6 @@ public class MainActivity extends AppCompatActivity implements
         return false;
     }
 
-
     public void add(Fragment fragment) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.activity_main_fragment, fragment);
@@ -90,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         if (fragmentManager.getBackStackEntryCount() > 0) {
             fragmentManager.popBackStack();
-            Toast.makeText(this, "Fragment is deleted!!!!!!", Toast.LENGTH_SHORT).show();
         }
         fragmentTransaction.commit();
     }
@@ -98,10 +91,8 @@ public class MainActivity extends AppCompatActivity implements
     private void replace(Fragment fragment) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.activity_main_fragment, fragment);
-        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
-
 
     public void setNavigationTypeface() {
         ViewGroup navigationGroup = (ViewGroup) btmView.getChildAt(0);
@@ -122,4 +113,47 @@ public class MainActivity extends AppCompatActivity implements
             }
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
+        if (backStackEntryCount == 0) {
+            goBackWithTimer();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    private void goBackWithTimer() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+        DetectFragment();
+
+        this.doubleBackToExitPressedOnce = true;
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
+    }
+
+    private void DetectFragment() {
+        Fragment frCurrent = getSupportFragmentManager().findFragmentById(R.id.activity_main_fragment);
+        if (!(frCurrent instanceof FragmentHome)) {
+            replace(fragmentHome);
+
+        }
+    }
+
+    private void clearFragmentBackStack() {
+        for (int i = 0; i < fragmentManager.getBackStackEntryCount(); i++) {
+            fragmentManager.popBackStack();
+        }
+    }
+
 }

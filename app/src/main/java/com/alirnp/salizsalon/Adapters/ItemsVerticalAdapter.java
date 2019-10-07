@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alirnp.salizsalon.CustomViews.MyTextView;
@@ -58,15 +59,14 @@ public class ItemsVerticalAdapter extends RecyclerView.Adapter<RecyclerView.View
 
             title = itemView.findViewById(R.id.rcv_items_ver_title);
             rcv = itemView.findViewById(R.id.rcv_items_ver_rcv);
-
-
-            // rcv.setLayoutManager(new LinearLayoutManager(itemView.getContext(),RecyclerView.VERTICAL,false));
+            rcv.setLayoutManager(new LinearLayoutManager(itemView.getContext(), RecyclerView.HORIZONTAL, true));
 
         }
 
         void bind(Result result) {
             title.setText(result.getTitle());
 
+            rcv.setAdapter(new ItemsHorizontalAdapter(result.getItems()));
 
         }
     }

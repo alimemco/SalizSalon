@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.graphics.Typeface;
 
+import androidx.appcompat.app.AppCompatDelegate;
+
 import com.alirnp.salizsalon.Interface.ApiService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -41,6 +43,8 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
@@ -55,5 +59,7 @@ public class MyApplication extends Application {
 
 
         api = retrofit.create(ApiService.class);
+
+
     }
 }

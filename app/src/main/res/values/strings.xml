@@ -6,5 +6,8 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="gift">تخفیف ویژه برای روز های تعطیل</string>
-    <string name="lorem">متن ساختگی برای نمایش متن</string>
+    <string name="lorem">متن سابرایختگی  نمایش متن</string>
+    <string name="choose">انتخاب کنید</string>
+    <string name="select_day">زمان را مشخص کنید</string>
+    <string name="choose_dayHour">انتخاب روز و ساعت</string>
 </resources>

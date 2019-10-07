@@ -20,5 +20,8 @@ public interface ApiService {
     Call<ResponseJson> getCategory(@Query("get") String get);
 
     @GET("salizGet.php")
+    Call<ResponseJson> getTimes(@Query("get") String get, @Query("day") String day);
+
+    @GET("salizGet.php")
     Call<ResponseBody> getPosts(@Query("get") String get);
 }

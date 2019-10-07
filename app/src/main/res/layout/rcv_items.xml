@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/standard_cardCornerRadius"
+    app:cardElevation="@dimen/standard_cardElevation"
+    app:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/rcv_items_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/rcv_items_img"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="@dimen/standard_margin2x"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="@dimen/standard_margin2x"
+            android:layout_marginBottom="@dimen/standard_margin2x"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_clock" />
+
+
+        <com.alirnp.salizsalon.CustomViews.MyTextView
+            android:id="@+id/rcv_items_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/standard_margin2x"
+            android:layout_marginTop="35dp"
+            android:layout_marginRight="@dimen/standard_margin2x"
+            android:layout_marginBottom="@dimen/standard_margin2x"
+            android:gravity="center"
+            android:text="@string/lorem"
+            android:textColor="#AD1457"
+            android:textSize="@dimen/large_sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rcv_items_img" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>

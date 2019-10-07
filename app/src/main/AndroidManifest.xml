@@ -3,7 +3,9 @@
     xmlns:dist="http://schemas.android.com/apk/distribution"
     package="com.alirnp.salizsalon">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
 
     <dist:module dist:instant="true" />
 
@@ -16,6 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".Views.Activities.ActivityChooseTime"></activity>
         <activity android:name=".Views.Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
