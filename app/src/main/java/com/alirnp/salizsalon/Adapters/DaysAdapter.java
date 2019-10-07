@@ -19,11 +19,13 @@ import saman.zamani.persiandate.PersianDateFormat;
 
 
 public class DaysAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
     private ArrayList<Day> models;
 
-
     public DaysAdapter(ArrayList<Day> models) {
+        models.get(0).setSelected(true);
         this.models = models;
+
     }
 
     @NonNull
@@ -40,7 +42,7 @@ public class DaysAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         DaysHolder mHolder = (DaysHolder) holder;
 
-        mHolder.bind(models.get(position));
+        mHolder.bind(models.get(position), position);
 
     }
 
@@ -50,13 +52,25 @@ public class DaysAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return models == null ? 0 : models.size();
     }
 
-    public static class DaysHolder extends RecyclerView.ViewHolder {
+    private void changeState(int position) {
+
+        for (int i = 0; i < models.size(); i++) {
+            this.models.get(i).setSelected(i == position);
+        }
+
+        notifyDataSetChanged();
+
+    }
+
+    public class DaysHolder extends RecyclerView.ViewHolder {
 
         MyTextView dayName;
         MyTextView dayOfMonth;
 
         PersianDate pDate;
         PersianDateFormat pFormatter;
+
+        private int currentSelected = 0;
 
         DaysHolder(View itemView) {
             super(itemView);
@@ -68,11 +82,23 @@ public class DaysAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             pFormatter = new PersianDateFormat("j");
         }
 
-        void bind(Day day) {
+        void bind(Day day, final int position) {
             dayName.setText(day.getDayName());
 
             String month = day.getDayOfMonth() + " " + day.getMonthName();
             dayOfMonth.setText(month);
+
+
+            itemView.setSelected(day.isSelected());
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    changeState(position);
+
+                }
+            });
 
 
         }

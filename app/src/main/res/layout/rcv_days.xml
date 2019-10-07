@@ -3,16 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/standard_margin2x"
-    android:background="@color/gray_blue_100">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="@dimen/standard_margin"
+    android:background="@drawable/selector_days">
 
 
     <com.alirnp.salizsalon.CustomViews.MyTextView
         android:id="@+id/rcv_days_dayName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/standard_margin"
-        android:text="دوشنبه"
+        android:layout_marginLeft="@dimen/standard_margin2x"
+        android:layout_marginTop="@dimen/standard_margin3x"
+        android:layout_marginRight="@dimen/standard_margin2x"
+        tools:text="دوشنبه"
         android:textSize="@dimen/large_3X_sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,10 +26,13 @@
         android:id="@+id/rcv_days_dayOfMonth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/standard_margin"
-        android:layout_marginTop="8dp"
-        android:text="12"
+        android:layout_marginLeft="@dimen/standard_margin2x"
+        android:layout_marginTop="@dimen/standard_margin2x"
+        android:layout_marginRight="@dimen/standard_margin2x"
+        android:layout_marginBottom="@dimen/standard_margin3x"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:textSize="@dimen/large_2X_sp"
+        tools:text="12"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rcv_days_dayName" />

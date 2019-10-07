@@ -5,11 +5,13 @@ public class Day {
     private String dayName;
     private String monthName;
     private String dayOfMonth;
+    private boolean isSelected;
 
     public Day(String dayName, String monthName, String dayOfMonth) {
         this.dayName = dayName;
         this.monthName = monthName;
         this.dayOfMonth = dayOfMonth;
+        this.isSelected = false;
     }
 
     public String getDayName() {
@@ -34,5 +36,13 @@ public class Day {
 
     public void setDayOfMonth(String dayOfMonth) {
         this.dayOfMonth = dayOfMonth;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 }
