@@ -10,9 +10,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.alirnp.salizsalon.Adapters.DaysAdapter;
+import com.alirnp.salizsalon.Generator.DataGenerator;
 import com.alirnp.salizsalon.MyApplication;
+import com.alirnp.salizsalon.NestedJson.ResponseJson;
 import com.alirnp.salizsalon.R;
+import com.alirnp.salizsalon.Utils.Utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,11 +27,19 @@ import java.util.Locale;
 import ir.he.meowdatetimepicker.MeowTypefaceHelper;
 import ir.he.meowdatetimepicker.date.DatePickerDialog;
 import ir.he.meowdatetimepicker.utils.PersianCalendar;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import saman.zamani.persiandate.PersianDate;
+import saman.zamani.persiandate.PersianDateFormat;
 
 
-public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDateSetListener {
+public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDateSetListener
+        , Callback<ResponseJson> {
 
     private View view;
+
+    private RecyclerView rcv;
 
     public FragmentStepOne() {
     }
@@ -47,15 +61,36 @@ public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDate
         view = inflater.inflate(R.layout.fragment_step_one, container, false);
         initViews();
 
+        initRcv();
+
         getOpenTimes();
 
+
+        PersianDate pDate = new PersianDate();
+
+        PersianDateFormat pFormatter = new PersianDateFormat("Y/m/d");
+
+        Utils.log(FragmentStepOne.class, pFormatter.format(pDate));
+
+        pDate.setShDay(pDate.getShDay() + 2);
+
+        Utils.log(FragmentStepOne.class, pFormatter.format(pDate));
+
+
         return view;
+    }
+
+    private void initRcv() {
+
+        rcv = view.findViewById(R.id.fragment_step_one_rcv);
+        rcv.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+        rcv.setAdapter(new DaysAdapter(DataGenerator.getDays()));
     }
 
     private void getOpenTimes() {
 
 
-        // MyApplication.getApi().getTimes("times",getCurrentDay()).enqueue(this);
+        MyApplication.getApi().getTimes("times", getCurrentDay()).enqueue(this);
 
 
     }
@@ -104,6 +139,20 @@ public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDate
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
         Toast.makeText(getContext(), year + "." + monthOfYear + "." + dayOfMonth, Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onResponse(Call<ResponseJson> call, Response<ResponseJson> response) {
+
+        if (response.body() != null) {
+            Utils.log(FragmentStepOne.class, String.valueOf(response.body().getResult().get(0).getItems().size()));
+        }
+
+    }
+
+    @Override
+    public void onFailure(Call<ResponseJson> call, Throwable t) {
 
     }
 }

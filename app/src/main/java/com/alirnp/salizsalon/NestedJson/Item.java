@@ -25,6 +25,19 @@ public class Item {
     @Expose
     private String image;
 
+
+    @SerializedName("day")
+    @Expose
+    private String day;
+
+    @SerializedName("hour")
+    @Expose
+    private String hour;
+
+    @SerializedName("open")
+    @Expose
+    private String open;
+
     public String getID() {
         return iD;
     }
@@ -72,5 +85,29 @@ public class Item {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
+    }
+
+    public String getHour() {
+        return hour;
+    }
+
+    public void setHour(String hour) {
+        this.hour = hour;
+    }
+
+    public String getOpen() {
+        return open;
+    }
+
+    public void setOpen(String open) {
+        this.open = open;
     }
 }

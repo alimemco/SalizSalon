@@ -14,12 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.alirnp.salizsalon.Adapters.CategoryAdapter;
-import com.alirnp.salizsalon.Adapters.Generator.DataGenerator;
 import com.alirnp.salizsalon.Adapters.ItemsAdapter;
 import com.alirnp.salizsalon.Adapters.ItemsVerticalAdapter;
 import com.alirnp.salizsalon.BannerSlider.Banner;
 import com.alirnp.salizsalon.BannerSlider.MainSliderAdapter;
 import com.alirnp.salizsalon.BannerSlider.PicassoImageLoadingService;
+import com.alirnp.salizsalon.Generator.DataGenerator;
 import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.NestedJson.ResponseJson;
 import com.alirnp.salizsalon.NestedJson.Result;
