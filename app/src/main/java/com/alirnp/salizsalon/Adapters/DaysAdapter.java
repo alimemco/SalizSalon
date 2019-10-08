@@ -14,18 +14,20 @@ import com.alirnp.salizsalon.R;
 
 import java.util.ArrayList;
 
-import saman.zamani.persiandate.PersianDate;
-import saman.zamani.persiandate.PersianDateFormat;
-
 
 public class DaysAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private ArrayList<Day> models;
+    private OnItemClickListener onItemClickListener;
 
     public DaysAdapter(ArrayList<Day> models) {
-        models.get(0).setSelected(true);
         this.models = models;
+        changeState(0);
 
+    }
+
+    public ArrayList<Day> getModels() {
+        return models;
     }
 
     @NonNull
@@ -42,7 +44,7 @@ public class DaysAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         DaysHolder mHolder = (DaysHolder) holder;
 
-        mHolder.bind(models.get(position), position);
+        mHolder.bind(position, onItemClickListener);
 
     }
 
@@ -62,15 +64,19 @@ public class DaysAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     }
 
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+
+    public interface OnItemClickListener {
+        void OnItemClick(Day day);
+    }
+
     public class DaysHolder extends RecyclerView.ViewHolder {
 
         MyTextView dayName;
         MyTextView dayOfMonth;
-
-        PersianDate pDate;
-        PersianDateFormat pFormatter;
-
-        private int currentSelected = 0;
 
         DaysHolder(View itemView) {
             super(itemView);
@@ -78,11 +84,12 @@ public class DaysAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             dayName = itemView.findViewById(R.id.rcv_days_dayName);
             dayOfMonth = itemView.findViewById(R.id.rcv_days_dayOfMonth);
 
-            pDate = new PersianDate();
-            pFormatter = new PersianDateFormat("j");
         }
 
-        void bind(Day day, final int position) {
+        void bind(final int position, final OnItemClickListener onItemClickListener) {
+
+            final Day day = models.get(position);
+
             dayName.setText(day.getDayName());
 
             String month = day.getDayOfMonth() + " " + day.getMonthName();
@@ -97,9 +104,12 @@ public class DaysAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
                     changeState(position);
 
+                    if (onItemClickListener != null) {
+                        onItemClickListener.OnItemClick(day);
+                    }
+
                 }
             });
-
 
         }
     }

@@ -40,6 +40,7 @@ public class DataGenerator {
         ArrayList<Day> list = new ArrayList<>();
         PersianDate pDate = new PersianDate();
 
+
         PersianDateFormat pFormatterDay = new PersianDateFormat("j");
         PersianDateFormat pFormatterDayName = new PersianDateFormat("l");
         PersianDateFormat pFormatterMonthName = new PersianDateFormat("F");
@@ -48,7 +49,7 @@ public class DataGenerator {
 
             list.add(new Day(pFormatterDayName.format(pDate),
                     pFormatterMonthName.format(pDate),
-                    pFormatterDay.format(pDate)));
+                    pFormatterDay.format(pDate), pDate.toDate()));
 
             pDate.setShDay(pDate.getShDay() + 1);
 

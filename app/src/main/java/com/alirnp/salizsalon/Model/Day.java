@@ -1,17 +1,30 @@
 package com.alirnp.salizsalon.Model;
 
+import java.util.Date;
+
 public class Day {
 
     private String dayName;
     private String monthName;
     private String dayOfMonth;
     private boolean isSelected;
+    private Date date;
 
-    public Day(String dayName, String monthName, String dayOfMonth) {
+
+    public Day(String dayName, String monthName, String dayOfMonth, Date date) {
         this.dayName = dayName;
         this.monthName = monthName;
         this.dayOfMonth = dayOfMonth;
+        this.date = date;
         this.isSelected = false;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public String getDayName() {
@@ -45,4 +58,5 @@ public class Day {
     public void setSelected(boolean selected) {
         isSelected = selected;
     }
+
 }
