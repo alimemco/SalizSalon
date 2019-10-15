@@ -7,6 +7,7 @@
     <dimen name="large_sp">17sp</dimen>
     <dimen name="large_2X_sp">17sp</dimen>
     <dimen name="large_3X_sp">19sp</dimen>
+    <dimen name="large_4X_sp">22sp</dimen>
     <dimen name="normal_dp">15dp</dimen>
     <dimen name="standard_cardCornerRadius">8dp</dimen>
     <dimen name="standard_cardElevation">4dp</dimen>

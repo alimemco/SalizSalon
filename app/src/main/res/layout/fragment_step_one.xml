@@ -9,16 +9,17 @@
     <com.alirnp.salizsalon.CustomViews.MyButton
         android:id="@+id/fragment_step_one_button"
         style="@style/ButtonGreen"
+        android:layout_marginBottom="8dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/standard_margin2x"
-        android:layout_marginTop="30dp"
         android:layout_marginRight="@dimen/standard_margin2x"
+        android:enabled="false"
         android:text="@string/choose_dayHour"
         android:textSize="@dimen/large_3X_sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragment_step_one_rcv_days"
@@ -29,7 +30,7 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_step_one_button"
+        app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/rcv_days">
 
     </androidx.recyclerview.widget.RecyclerView>
@@ -38,16 +39,17 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragment_step_one_rcv_hours"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="8dp"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_step_one_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragment_step_one_rcv_days"
         app:spanCount="3"
-        tools:listitem="@layout/rcv_hours">
-    </androidx.recyclerview.widget.RecyclerView>
+        tools:listitem="@layout/rcv_hours" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

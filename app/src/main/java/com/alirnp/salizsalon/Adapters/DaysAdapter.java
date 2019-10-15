@@ -70,7 +70,7 @@ public class DaysAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
     public interface OnItemClickListener {
-        void OnItemClick(Day day);
+        void OnDayClick(Day day);
     }
 
     public class DaysHolder extends RecyclerView.ViewHolder {
@@ -105,7 +105,7 @@ public class DaysAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     changeState(position);
 
                     if (onItemClickListener != null) {
-                        onItemClickListener.OnItemClick(day);
+                        onItemClickListener.OnDayClick(day);
                     }
 
                 }
