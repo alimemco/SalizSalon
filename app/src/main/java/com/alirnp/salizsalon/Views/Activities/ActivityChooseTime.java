@@ -1,11 +1,16 @@
 package com.alirnp.salizsalon.Views.Activities;
 
 import android.os.Bundle;
+import android.os.Parcel;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.alirnp.salizsalon.CustomViews.MyButton;
+import com.alirnp.salizsalon.Interface.OnClickNext;
 import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Views.Fragments.FragmentStepOne;
@@ -15,13 +20,16 @@ import com.shuhart.stepview.StepView;
 import java.util.ArrayList;
 
 public class ActivityChooseTime extends AppCompatActivity implements
-        StepView.OnStepClickListener {
+        StepView.OnStepClickListener,
+        View.OnClickListener ,
+        OnClickNext {
 
     private StepView stepView;
+    private MyButton nextStepBtn;
 
     private FragmentManager fragmentManager = getSupportFragmentManager();
 
-    private FragmentStepOne fragmentStepOne = FragmentStepOne.newInstance();
+    private FragmentStepOne fragmentStepOne = new FragmentStepOne(this);
     private FragmentStepTwo fragmentStepTwo = FragmentStepTwo.newInstance();
 
 
@@ -44,6 +52,7 @@ public class ActivityChooseTime extends AppCompatActivity implements
     private void initViews() {
 
         stepView = findViewById(R.id.activity_choose_time_step);
+        nextStepBtn = findViewById(R.id.activity_choose_time_btn);
 
 
         stepView.getState()
@@ -89,4 +98,19 @@ public class ActivityChooseTime extends AppCompatActivity implements
         }
 
     }
+
+    @Override
+    public void onClick(View v) {
+       if (v.getId() == R.id.activity_choose_time_btn){
+           stepView.go(2,true);
+           replace(fragmentStepTwo);
+       }
+    }
+
+    @Override
+    public void OnNext() {
+        Toast.makeText(this, "Next In Activity", Toast.LENGTH_SHORT).show();
+    }
+
+
 }

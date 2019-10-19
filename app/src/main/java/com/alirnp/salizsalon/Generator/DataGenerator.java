@@ -1,6 +1,7 @@
 package com.alirnp.salizsalon.Generator;
 
 import com.alirnp.salizsalon.Model.Day;
+import com.alirnp.salizsalon.Model.Hour;
 import com.alirnp.salizsalon.Model.Item;
 import com.alirnp.salizsalon.R;
 
@@ -35,6 +36,7 @@ public class DataGenerator {
         return itemList;
     }
 
+
     public static ArrayList<Day> getDays() {
 
         ArrayList<Day> list = new ArrayList<>();
@@ -57,4 +59,6 @@ public class DataGenerator {
 
         return list;
     }
+
+
 }

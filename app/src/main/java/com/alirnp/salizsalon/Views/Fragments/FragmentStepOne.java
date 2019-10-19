@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alirnp.salizsalon.Adapters.DaysAdapter;
 import com.alirnp.salizsalon.Adapters.HoursAdapter;
 import com.alirnp.salizsalon.Generator.DataGenerator;
+import com.alirnp.salizsalon.Interface.OnClickNext;
 import com.alirnp.salizsalon.Model.Day;
 import com.alirnp.salizsalon.Model.Hour;
 import com.alirnp.salizsalon.MyApplication;
@@ -53,13 +55,28 @@ public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDate
 
     private DaysAdapter daysAdapter;
 
-    private HashMap<Constants.resultMap, String> result = new HashMap();
+    private HoursAdapter hoursAdapter;
 
+    private OnClickNext onClickNext;
 
-
+    private HashMap<Constants.resultMap, String> result = new HashMap<>();
 
     public FragmentStepOne() {
     }
+
+    public FragmentStepOne(OnClickNext onClickNext) {
+        this.onClickNext = onClickNext;
+    }
+
+    /*public FragmentStepOne newInstance(OnClickNext onClickNext) {
+
+        Bundle args = new Bundle();
+
+        FragmentStepOne fragment = new FragmentStepOne();
+        args.putParcelable(Constants.InterfaceOnClickNext,onClickNext);
+        fragment.setArguments(args);
+        return fragment;
+    }*/
 
     public static FragmentStepOne newInstance() {
 
@@ -71,6 +88,7 @@ public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDate
     }
 
 
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -79,6 +97,7 @@ public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDate
         initViews();
 
         initRcv();
+
 
         return view;
     }
@@ -89,13 +108,18 @@ public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDate
         rcvHours = view.findViewById(R.id.fragment_step_one_rcv_hours);
 
         rcvDays.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-        rcvHours.setLayoutManager(new GridLayoutManager(getContext(), 3, RecyclerView.VERTICAL, false));
+
+        rcvHours.setLayoutManager(new GridLayoutManager(getContext(), 1, RecyclerView.VERTICAL, false));
+
         daysAdapter = new DaysAdapter(DataGenerator.getDays());
+        hoursAdapter = new HoursAdapter();
+
         daysAdapter.setOnItemClickListener(this);
         rcvDays.setAdapter(daysAdapter);
 
 
         getHours(daysAdapter.getModels().get(0));
+
 
     }
 
@@ -108,10 +132,11 @@ public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDate
             public void onClick(View v) {
 
                 if (result.size() == Constants.resultMap.values().length) {
-                    Toast.makeText(getContext(), "server ready ?! ", Toast.LENGTH_SHORT).show();
 
+                    if (onClickNext != null ){
+                        onClickNext.OnNext();
+                    }
                 }
-
 
             }
         });
@@ -151,7 +176,6 @@ public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDate
         getHours(day);
 
         chooseBtn.setEnabled(false);
-        result.put(Constants.resultMap.HOUR, null);
         Utils.log(FragmentStepOne.class,"false btn");
     }
 
@@ -159,15 +183,65 @@ public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDate
     public void OnHourClick(Hour hour) {
 
         result.remove(Constants.resultMap.HOUR);
+
+        putToResult(hour);
+
         chooseBtn.setEnabled(true);
-        Utils.log(FragmentStepOne.class,"true btn");
     }
 
     private void getHours(Day day) {
         MyApplication.getApi().getTimes(Constants.TIMES, getDayByNumber(day)).enqueue(this);
-        result.put(Constants.resultMap.DAY_NAME, day.getDayName());
-        result.put(Constants.resultMap.DAY_OF_MONTH, day.getDayOfMonth());
-        result.put(Constants.resultMap.MONTH_NAME, day.getMonthName());
+
+        switchState(Constants.state.SEARCHING);
+
+        putToResult(day);
+    }
+
+    private <T> void genericDisplay (T element)
+    {
+        System.out.println(element.getClass().getName() +
+                " = " + element);
+    }
+
+    private <T> void putToResult(T data) {
+
+        if (data instanceof Day){
+            Day day = (Day) data;
+
+            result.put(Constants.resultMap.DAY_NAME, day.getDayName());
+            result.put(Constants.resultMap.DAY_OF_MONTH, day.getDayOfMonth());
+            result.put(Constants.resultMap.MONTH_NAME, day.getMonthName());
+        }else if (data instanceof Hour){
+            Hour hour = (Hour) data;
+
+            result.put(Constants.resultMap.HOUR, hour.getTime());
+        }
+
+    }
+
+
+    private void switchState(Constants.state state) {
+        switch (state){
+            case SEARCHING:
+                rcvHours.setLayoutManager(getGridLayoutManager(1));
+                hoursAdapter.setSearching();
+                rcvHours.setAdapter(hoursAdapter);
+                break;
+
+            case ITEM_NOT_FOUND:
+                rcvHours.setLayoutManager(getGridLayoutManager(1));
+                hoursAdapter.setNotFound();
+                break;
+
+            case SUCCESS:
+                rcvHours.setLayoutManager(getGridLayoutManager(3));
+                break;
+        }
+
+    }
+
+    private RecyclerView.LayoutManager getGridLayoutManager(int count) {
+       return new GridLayoutManager(getContext(), count, RecyclerView.VERTICAL, false);
     }
 
 
@@ -217,12 +291,13 @@ public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDate
                         list.add(new Hour(time, open));
                     }
 
-                    HoursAdapter hoursAdapter = new HoursAdapter(list);
-                    hoursAdapter.setOnItemClickListener(this);
+                    switchState(Constants.state.SUCCESS);
+                    hoursAdapter.setData(list,this);
 
-                    rcvHours.setAdapter(hoursAdapter);
+
                 }else {
                     Utils.log(FragmentStepOne.class,result.getMessage());
+                   switchState(Constants.state.ITEM_NOT_FOUND);
                 }
             }
         }
@@ -231,5 +306,8 @@ public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDate
     @Override
     public void onFailure(Call<ResponseJson> call, Throwable t) {
         Utils.log(FragmentStepOne.class, t.toString());
+        switchState(Constants.state.ITEM_NOT_FOUND);
     }
+
+
 }

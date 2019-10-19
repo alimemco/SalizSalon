@@ -9,12 +9,12 @@
     <com.alirnp.salizsalon.CustomViews.MyButton
         android:id="@+id/fragment_step_one_button"
         style="@style/ButtonGreen"
-        android:layout_marginBottom="8dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/standard_margin2x"
         android:layout_marginRight="@dimen/standard_margin2x"
-android:enabled="false"
+        android:layout_marginBottom="8dp"
+        android:enabled="false"
         android:text="@string/choose_dayHour"
         android:textSize="@dimen/large_3X_sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -36,6 +36,20 @@ android:enabled="false"
     </androidx.recyclerview.widget.RecyclerView>
 
 
+    <com.alirnp.salizsalon.CustomViews.MyTextView
+        android:id="@+id/myTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/choose_hour"
+        android:textSize="@dimen/large_3X_sp"
+
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_step_one_rcv_days" />
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragment_step_one_rcv_hours"
         android:layout_width="match_parent"
@@ -47,7 +61,7 @@ android:enabled="false"
         app:layout_constraintBottom_toTopOf="@+id/fragment_step_one_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_step_one_rcv_days"
+        app:layout_constraintTop_toBottomOf="@+id/myTextView"
         app:spanCount="3"
         tools:listitem="@layout/rcv_hours" />
 

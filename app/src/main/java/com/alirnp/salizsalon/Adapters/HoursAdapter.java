@@ -9,8 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alirnp.salizsalon.CustomViews.MyTextView;
+import com.alirnp.salizsalon.Holder.NotFoundHolder;
+import com.alirnp.salizsalon.Holder.SearchingHolder;
 import com.alirnp.salizsalon.Model.Hour;
 import com.alirnp.salizsalon.R;
+import com.alirnp.salizsalon.Utils.Constants;
+import com.alirnp.salizsalon.Utils.Utils;
 
 import java.util.List;
 
@@ -20,38 +24,105 @@ public class HoursAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private List<Hour> models;
     private OnItemClickListener onItemClickListener;
 
+    private Constants.state state;
 
-    public HoursAdapter(List<Hour> models) {
+
+    public HoursAdapter() {
+
+    }
+
+
+    public void setData(List<Hour> models, OnItemClickListener onItemClickListener) {
+        state = Constants.state.SUCCESS;
+
         this.models = models;
+
+        this.onItemClickListener = onItemClickListener;
+        notifyDataSetChanged();
+
+    }
+
+    public void setSearching() {
+        state = Constants.state.SEARCHING;
+        notifyDataSetChanged();
+
+    }
+
+    public void setNotFound() {
+        state = Constants.state.ITEM_NOT_FOUND;
+        notifyDataSetChanged();
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rcv_hours, parent, false);
-        return new HoursHolder(view);
+
+        if (viewType == Constants.state.SUCCESS.getStatus()) {
+            return new HoursHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.rcv_hours, parent, false));
+
+        } else if (viewType == Constants.state.ITEM_NOT_FOUND.getStatus()) {
+            return new NotFoundHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.rcv_not_found, parent, false));
+
+        } else if (viewType == Constants.state.SEARCHING.getStatus()) {
+            return new SearchingHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.rcv_searching, parent, false));
+
+        }else {
+            return new SearchingHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.rcv_searching, parent, false));
+        }
+
     }
 
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
-        HoursHolder mHolder = (HoursHolder) holder;
 
-        mHolder.bind(position, onItemClickListener);
+        if (state == Constants.state.SUCCESS) {
+            HoursHolder mHolder = (HoursHolder) holder;
+            mHolder.bind(position, onItemClickListener);
+        }
+
 
     }
 
 
     @Override
-    public int getItemCount() {
-        return models == null ? 0 : models.size();
+    public int getItemViewType(int position) {
+
+        switch (state) {
+            case SUCCESS:
+                return Constants.state.SUCCESS.getStatus();
+            case ITEM_NOT_FOUND:
+                return Constants.state.ITEM_NOT_FOUND.getStatus();
+            case SEARCHING:
+                return Constants.state.SEARCHING.getStatus();
+
+            default:
+                return Constants.state.SEARCHING.getStatus();
+        }
+
     }
 
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
+    @Override
+    public int getItemCount() {
+
+        switch (state) {
+            case SUCCESS:
+                return models == null ? 0 : models.size();
+
+            case SEARCHING:
+                return 1;
+
+            case ITEM_NOT_FOUND:
+                return 1;
+
+            default:
+                return 0;
+        }
+
     }
+
 
     private void changeState(int position) {
 
@@ -95,5 +166,7 @@ public class HoursAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             });
         }
     }
+
+
 }
 
