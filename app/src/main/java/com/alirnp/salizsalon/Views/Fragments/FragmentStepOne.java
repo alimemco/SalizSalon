@@ -150,8 +150,9 @@ public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDate
     public void OnDayClick(Day day) {
         getHours(day);
 
-        chooseBtn.setSelected(false);
+        chooseBtn.setEnabled(false);
         result.put(Constants.resultMap.HOUR, null);
+        Utils.log(FragmentStepOne.class,"false btn");
     }
 
     @Override
@@ -159,6 +160,7 @@ public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDate
 
         result.remove(Constants.resultMap.HOUR);
         chooseBtn.setEnabled(true);
+        Utils.log(FragmentStepOne.class,"true btn");
     }
 
     private void getHours(Day day) {
@@ -201,11 +203,9 @@ public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDate
         if (response.body() != null) {
             Result result = response.body().getResult().get(0);
             if (result != null) {
-                boolean success = Boolean.parseBoolean(response.body().getResult().get(0).getSuccess());
+                boolean success = Boolean.parseBoolean(result.getSuccess());
 
                 if (success) {
-                    Utils.log(FragmentStepOne.class, "item received " + response.body().getResult().get(0).getItems().size());
-
                     List<Hour> list = new ArrayList<>();
 
                     for (int i = 0; i < result.getItems().size(); i++) {
@@ -221,6 +221,8 @@ public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDate
                     hoursAdapter.setOnItemClickListener(this);
 
                     rcvHours.setAdapter(hoursAdapter);
+                }else {
+                    Utils.log(FragmentStepOne.class,result.getMessage());
                 }
             }
         }

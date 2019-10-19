@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/standard_margin2x"
         android:layout_marginRight="@dimen/standard_margin2x"
-        android:enabled="false"
+android:enabled="false"
         android:text="@string/choose_dayHour"
         android:textSize="@dimen/large_3X_sp"
         app:layout_constraintBottom_toBottomOf="parent"

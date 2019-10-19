@@ -50,8 +50,6 @@ public class MyApplication extends Application {
                 .create();
 
 
-
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://khodemon.ir/SalizApp/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
