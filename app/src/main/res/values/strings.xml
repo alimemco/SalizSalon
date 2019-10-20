@@ -9,7 +9,9 @@
     <string name="lorem">متن سابرایختگی  نمایش متن</string>
     <string name="choose">انتخاب کنید</string>
     <string name="select_day">زمان را مشخص کنید</string>
-    <string name="choose_dayHour">انتخاب روز و ساعت</string>
+    <string name="choose_dayHour">تایید روز و ساعت</string>
+    <string name="choose_service">تایید خدمات</string>
+    <string name="choose_final">تایید نهایی</string>
     <string name="itemNotFound">موردی یافت نشد</string>
     <string name="choose_hour">انتخاب ساعت</string>
 </resources>

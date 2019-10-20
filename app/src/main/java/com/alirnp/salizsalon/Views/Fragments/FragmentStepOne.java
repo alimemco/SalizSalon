@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alirnp.salizsalon.Adapters.DaysAdapter;
 import com.alirnp.salizsalon.Adapters.HoursAdapter;
 import com.alirnp.salizsalon.Generator.DataGenerator;
-import com.alirnp.salizsalon.Interface.OnClickNext;
+import com.alirnp.salizsalon.Interface.OnStepReady;
 import com.alirnp.salizsalon.Model.Day;
 import com.alirnp.salizsalon.Model.Hour;
 import com.alirnp.salizsalon.MyApplication;
@@ -48,7 +46,6 @@ public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDate
 
     private View view;
 
-    private AppCompatButton chooseBtn;
 
     private RecyclerView rcvDays;
     private RecyclerView rcvHours;
@@ -57,36 +54,16 @@ public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDate
 
     private HoursAdapter hoursAdapter;
 
-    private OnClickNext onClickNext;
+    private OnStepReady onStepReady;
 
     private HashMap<Constants.resultMap, String> result = new HashMap<>();
 
     public FragmentStepOne() {
     }
 
-    public FragmentStepOne(OnClickNext onClickNext) {
-        this.onClickNext = onClickNext;
+    public FragmentStepOne(OnStepReady onStepReady) {
+        this.onStepReady = onStepReady;
     }
-
-    /*public FragmentStepOne newInstance(OnClickNext onClickNext) {
-
-        Bundle args = new Bundle();
-
-        FragmentStepOne fragment = new FragmentStepOne();
-        args.putParcelable(Constants.InterfaceOnClickNext,onClickNext);
-        fragment.setArguments(args);
-        return fragment;
-    }*/
-
-    public static FragmentStepOne newInstance() {
-
-        Bundle args = new Bundle();
-
-        FragmentStepOne fragment = new FragmentStepOne();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
 
 
     @Override
@@ -125,21 +102,7 @@ public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDate
 
 
     private void initViews() {
-        chooseBtn = view.findViewById(R.id.fragment_step_one_button);
 
-        chooseBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (result.size() == Constants.resultMap.values().length) {
-
-                    if (onClickNext != null ){
-                        onClickNext.OnNext();
-                    }
-                }
-
-            }
-        });
     }
 
     private void showDataPicker() {
@@ -173,20 +136,26 @@ public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDate
 
     @Override
     public void OnDayClick(Day day) {
+
+        result.remove(Constants.resultMap.HOUR);
         getHours(day);
 
-        chooseBtn.setEnabled(false);
-        Utils.log(FragmentStepOne.class,"false btn");
+        validateStep(false);
     }
 
     @Override
     public void OnHourClick(Hour hour) {
 
-        result.remove(Constants.resultMap.HOUR);
-
         putToResult(hour);
 
-        chooseBtn.setEnabled(true);
+        if (result.size() == Constants.resultMap.values().length)
+            validateStep(true);
+
+    }
+
+    private void validateStep(boolean enable) {
+        if (onStepReady != null)
+            onStepReady.OnReady(1, enable);
     }
 
     private void getHours(Day day) {
@@ -197,21 +166,20 @@ public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDate
         putToResult(day);
     }
 
-    private <T> void genericDisplay (T element)
-    {
+    private <T> void genericDisplay(T element) {
         System.out.println(element.getClass().getName() +
                 " = " + element);
     }
 
     private <T> void putToResult(T data) {
 
-        if (data instanceof Day){
+        if (data instanceof Day) {
             Day day = (Day) data;
 
             result.put(Constants.resultMap.DAY_NAME, day.getDayName());
             result.put(Constants.resultMap.DAY_OF_MONTH, day.getDayOfMonth());
             result.put(Constants.resultMap.MONTH_NAME, day.getMonthName());
-        }else if (data instanceof Hour){
+        } else if (data instanceof Hour) {
             Hour hour = (Hour) data;
 
             result.put(Constants.resultMap.HOUR, hour.getTime());
@@ -221,7 +189,7 @@ public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDate
 
 
     private void switchState(Constants.state state) {
-        switch (state){
+        switch (state) {
             case SEARCHING:
                 rcvHours.setLayoutManager(getGridLayoutManager(1));
                 hoursAdapter.setSearching();
@@ -241,7 +209,7 @@ public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDate
     }
 
     private RecyclerView.LayoutManager getGridLayoutManager(int count) {
-       return new GridLayoutManager(getContext(), count, RecyclerView.VERTICAL, false);
+        return new GridLayoutManager(getContext(), count, RecyclerView.VERTICAL, false);
     }
 
 
@@ -292,12 +260,12 @@ public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDate
                     }
 
                     switchState(Constants.state.SUCCESS);
-                    hoursAdapter.setData(list,this);
+                    hoursAdapter.setData(list, this);
 
 
-                }else {
-                    Utils.log(FragmentStepOne.class,result.getMessage());
-                   switchState(Constants.state.ITEM_NOT_FOUND);
+                } else {
+                    Utils.log(FragmentStepOne.class, result.getMessage());
+                    switchState(Constants.state.ITEM_NOT_FOUND);
                 }
             }
         }

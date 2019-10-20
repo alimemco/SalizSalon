@@ -1,7 +1,6 @@
 package com.alirnp.salizsalon.Views.Activities;
 
 import android.os.Bundle;
-import android.os.Parcel;
 import android.view.View;
 import android.widget.Toast;
 
@@ -10,19 +9,19 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.alirnp.salizsalon.CustomViews.MyButton;
-import com.alirnp.salizsalon.Interface.OnClickNext;
+import com.alirnp.salizsalon.Interface.OnStepReady;
 import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Views.Fragments.FragmentStepOne;
+import com.alirnp.salizsalon.Views.Fragments.FragmentStepThree;
 import com.alirnp.salizsalon.Views.Fragments.FragmentStepTwo;
 import com.shuhart.stepview.StepView;
 
 import java.util.ArrayList;
 
 public class ActivityChooseTime extends AppCompatActivity implements
-        StepView.OnStepClickListener,
         View.OnClickListener ,
-        OnClickNext {
+        OnStepReady {
 
     private StepView stepView;
     private MyButton nextStepBtn;
@@ -31,6 +30,7 @@ public class ActivityChooseTime extends AppCompatActivity implements
 
     private FragmentStepOne fragmentStepOne = new FragmentStepOne(this);
     private FragmentStepTwo fragmentStepTwo = FragmentStepTwo.newInstance();
+    private FragmentStepThree fragmentStepThree = FragmentStepThree.newInstance();
 
 
     @Override
@@ -39,14 +39,8 @@ public class ActivityChooseTime extends AppCompatActivity implements
         setContentView(R.layout.activity_choose_time);
 
         initViews();
-        // showDataPicker();
 
         replace(fragmentStepOne);
-
-
-    }
-
-    private void initFragments() {
     }
 
     private void initViews() {
@@ -54,19 +48,20 @@ public class ActivityChooseTime extends AppCompatActivity implements
         stepView = findViewById(R.id.activity_choose_time_step);
         nextStepBtn = findViewById(R.id.activity_choose_time_btn);
 
+        nextStepBtn.setOnClickListener(this);
+
 
         stepView.getState()
                 .animationType(StepView.ANIMATION_CIRCLE)
                 .steps(new ArrayList<String>() {{
-                    add("First step");
-                    add("Second step");
-                    add("Third step");
+                    add("time");
+                    add("service");
+                    add("final");
                 }})
                 .animationDuration(getResources().getInteger(android.R.integer.config_shortAnimTime))
                 .typeface(MyApplication.getIranSans(this))
                 .commit();
 
-        stepView.setOnStepClickListener(this);
 
     }
 
@@ -78,38 +73,66 @@ public class ActivityChooseTime extends AppCompatActivity implements
 
 
     @Override
-    public void onStepClick(int step) {
-        stepView.go(step, true);
-        switch (step) {
-            case 0:
-                replace(fragmentStepOne);
-
-                break;
-
-            case 1:
-                replace(fragmentStepTwo);
-                break;
-
-            case 2:
-                replace(fragmentStepOne);
-                break;
-
-
-        }
-
-    }
-
-    @Override
     public void onClick(View v) {
        if (v.getId() == R.id.activity_choose_time_btn){
-           stepView.go(2,true);
-           replace(fragmentStepTwo);
+
+           int step = stepView.getCurrentStep();
+           goToStep(step + 1);
+
        }
     }
 
     @Override
-    public void OnNext() {
-        Toast.makeText(this, "Next In Activity", Toast.LENGTH_SHORT).show();
+    public void OnReady(int step, boolean enabled) {
+        switch (step) {
+            case 1:
+                nextStepBtn.setEnabled(enabled);
+                break;
+
+            case 2:
+
+                break;
+        }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        int currentStep = stepView.getCurrentStep();
+
+        if (currentStep == 0)
+            super.onBackPressed();
+
+        else {
+            goToStep(currentStep - 1);
+        }
+
+    }
+
+    private void goToStep(int step) {
+        stepView.go(step, true);
+        nextStepBtn.setEnabled(false);
+
+        switch (step) {
+            case 0:
+                replace(fragmentStepOne);
+                nextStepBtn.setText(R.string.choose_dayHour);
+                break;
+
+            case 1:
+                replace(fragmentStepTwo);
+                nextStepBtn.setText(R.string.choose_service);
+                break;
+
+            case 2:
+                replace(fragmentStepThree);
+                nextStepBtn.setText(R.string.choose_final);
+                break;
+
+            case 3:
+                Toast.makeText(this, "Last Step", Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 
 

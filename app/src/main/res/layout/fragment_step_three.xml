@@ -3,13 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Views.Fragments.FragmentStepTwo">
+    tools:context=".Views.Fragments.FragmentStepThree">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="Step Two"
+        android:text="Step Three"
+        android:textColor="@color/mdtp_red"
+
         android:textSize="@dimen/large_4X_sp" />
 
 </FrameLayout>
