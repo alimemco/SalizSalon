@@ -8,29 +8,66 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.alirnp.salizsalon.Adapters.ServicesAdapter;
+import com.alirnp.salizsalon.Generator.DataGenerator;
+import com.alirnp.salizsalon.Interface.OnStepReady;
+import com.alirnp.salizsalon.Model.Service;
 import com.alirnp.salizsalon.R;
 
-public class FragmentStepTwo extends Fragment {
+import java.util.List;
 
+public class FragmentStepTwo extends Fragment implements ServicesAdapter.onServiceSelect {
 
-    public FragmentStepTwo() {
+    private View view;
+    private RecyclerView rcv;
+
+    private OnStepReady onStepReady;
+
+    public FragmentStepTwo(OnStepReady onStepReady) {
+        this.onStepReady = onStepReady;
     }
 
-    public static FragmentStepTwo newInstance() {
-
-        Bundle args = new Bundle();
-
-        FragmentStepTwo fragment = new FragmentStepTwo();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_step_two, container, false);
+        view = inflater.inflate(R.layout.fragment_step_two, container, false);
+        initViews();
+        initRcView();
+        return view;
     }
 
+    private void initViews() {
+
+        rcv = view.findViewById(R.id.fragment_step_two_rcv);
+
+    }
+
+    private void initRcView() {
+        rcv.setLayoutManager(new LinearLayoutManager(getContext()));
+        ServicesAdapter adapter = new ServicesAdapter(DataGenerator.getServices());
+        adapter.setOnServiceSelect(this);
+        rcv.setAdapter(adapter);
+    }
+
+    private void validateStep(boolean enable) {
+        if (onStepReady != null)
+            onStepReady.OnReady(1, enable);
+    }
+
+    @Override
+    public void services(List<Service> model) {
+
+        if (model != null) {
+            if (model.size() > 0) {
+                validateStep(true);
+
+            } else {
+                validateStep(false);
+            }
+        }
+    }
 }

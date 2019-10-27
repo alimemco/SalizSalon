@@ -29,8 +29,8 @@ public class ActivityChooseTime extends AppCompatActivity implements
     private FragmentManager fragmentManager = getSupportFragmentManager();
 
     private FragmentStepOne fragmentStepOne = new FragmentStepOne(this);
-    private FragmentStepTwo fragmentStepTwo = FragmentStepTwo.newInstance();
-    private FragmentStepThree fragmentStepThree = FragmentStepThree.newInstance();
+    private FragmentStepTwo fragmentStepTwo = new FragmentStepTwo(this);
+    private FragmentStepThree fragmentStepThree = new FragmentStepThree(this);
 
 
     @Override
@@ -84,6 +84,8 @@ public class ActivityChooseTime extends AppCompatActivity implements
 
     @Override
     public void OnReady(int step, boolean enabled) {
+        nextStepBtn.setEnabled(enabled);
+        /*
         switch (step) {
             case 1:
                 nextStepBtn.setEnabled(enabled);
@@ -92,7 +94,7 @@ public class ActivityChooseTime extends AppCompatActivity implements
             case 2:
 
                 break;
-        }
+        }*/
     }
 
 
@@ -131,6 +133,7 @@ public class ActivityChooseTime extends AppCompatActivity implements
 
             case 3:
                 Toast.makeText(this, "Last Step", Toast.LENGTH_SHORT).show();
+                nextStepBtn.setEnabled(true);
                 break;
         }
     }

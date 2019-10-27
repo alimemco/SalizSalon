@@ -5,11 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".Views.Fragments.FragmentStepTwo">
 
-    <TextView
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/fragment_step_two_rcv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Step Two"
-        android:textSize="@dimen/large_4X_sp" />
+        android:layout_marginTop="@dimen/standard_margin2x" />
 
 </FrameLayout>

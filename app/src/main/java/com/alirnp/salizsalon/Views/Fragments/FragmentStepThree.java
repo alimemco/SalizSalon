@@ -8,32 +8,24 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import com.alirnp.salizsalon.Interface.OnStepReady;
 import com.alirnp.salizsalon.R;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class FragmentStepThree extends Fragment {
 
+    private OnStepReady onStepReady;
 
-    public FragmentStepThree() {
-        // Required empty public constructor
+
+    public FragmentStepThree(OnStepReady onStepReady) {
+        this.onStepReady = onStepReady;
     }
-
-    public static FragmentStepThree newInstance() {
-
-        Bundle args = new Bundle();
-
-        FragmentStepThree fragment = new FragmentStepThree();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        if (onStepReady != null) {
+            onStepReady.OnReady(3, true);
+        }
         return inflater.inflate(R.layout.fragment_step_three, container, false);
     }
 

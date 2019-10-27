@@ -7,7 +7,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="ButtonGreen" parent="Widget.AppCompat.Button">
+    <style name="buttonGreen" parent="Widget.AppCompat.Button">
         <item name="android:background">@drawable/selector_button_green</item>
         <item name="android:textColor">@color/btn_text_color</item>
         <item name="android:paddingRight">@dimen/standard_margin2x</item>

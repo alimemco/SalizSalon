@@ -1,12 +1,13 @@
 package com.alirnp.salizsalon.Generator;
 
 import com.alirnp.salizsalon.Model.Day;
-import com.alirnp.salizsalon.Model.Hour;
 import com.alirnp.salizsalon.Model.Item;
+import com.alirnp.salizsalon.Model.Service;
 import com.alirnp.salizsalon.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import saman.zamani.persiandate.PersianDate;
 import saman.zamani.persiandate.PersianDateFormat;
@@ -60,5 +61,34 @@ public class DataGenerator {
         return list;
     }
 
+    public static ArrayList<Service> getServices() {
 
+        ArrayList<Service> list = new ArrayList<>();
+        ArrayList<String> listTitle = new ArrayList<>();
+
+        listTitle.add("اصلاح صورت");
+        listTitle.add("شنیون");
+        listTitle.add("کوتاهی ساده");
+        listTitle.add("اصلاح ناخن");
+        listTitle.add("میکاپ ساده");
+        listTitle.add("میکاپ حرفه ای");
+        listTitle.add("سشوار");
+        listTitle.add("اپیلاسیون");
+        listTitle.add("پدیکور");
+        listTitle.add("مانی کور");
+
+        for (int i = 0; i < listTitle.size(); i++) {
+            Service service = new Service();
+            service.setName(listTitle.get(i));
+            service.setPrice((randomDigit(1, 15)) * 10000);
+            list.add(service);
+        }
+
+        return list;
+    }
+
+    public static int randomDigit(int min, int max) {
+        Random r = new Random();
+        return r.nextInt((max - min) + 1) + min;
+    }
 }

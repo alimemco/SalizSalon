@@ -66,12 +66,9 @@
 
     <com.alirnp.salizsalon.CustomViews.MyButton
         android:id="@+id/activity_choose_time_btn"
-        style="@style/ButtonGreen"
+        style="@style/buttonGreen"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/standard_margin2x"
-        android:layout_marginRight="@dimen/standard_margin2x"
-        android:layout_marginBottom="8dp"
         android:enabled="false"
         android:text="@string/choose_dayHour"
         android:textSize="@dimen/large_3X_sp"
