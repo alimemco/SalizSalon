@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layoutDirection="rtl"
+    android:orientation="horizontal">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/rcv_final_services_img"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/standard_margin2x"
+        app:srcCompat="@drawable/ic_left_arrow" />
+
+    <com.alirnp.salizsalon.CustomViews.MyTextView
+        android:id="@+id/rcv_final_services_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/standard_margin2x"
+        android:layout_marginEnd="@dimen/standard_margin2x"
+        android:layout_marginBottom="@dimen/standard_margin2x"
+        android:layout_weight="1"
+        android:textSize="@dimen/large_sp"
+        tools:text="شنیون حرفه ای" />
+
+    <com.alirnp.salizsalon.CustomViews.MyTextView
+        android:id="@+id/rcv_final_services_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/standard_margin2x"
+        android:layout_marginEnd="@dimen/standard_margin2x"
+        android:layout_marginBottom="@dimen/standard_margin2x"
+        android:layout_weight="1"
+        android:textColor="@color/green_300"
+        android:textSize="@dimen/normal_sp"
+        tools:text="80,000 تومان" />
+
+</LinearLayout>

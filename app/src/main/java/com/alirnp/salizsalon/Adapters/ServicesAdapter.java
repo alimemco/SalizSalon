@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -38,7 +39,7 @@ public class ServicesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rcv_service, parent, false);
-        return new ServiceHolder(view, onServiceSelect);
+        return new ServiceHolder(view);
     }
 
 
@@ -54,8 +55,8 @@ public class ServicesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return models == null ? 0 : models.size();
     }
 
-    private List<Service> applyFilter(List<Service> models) {
-        List<Service> list = new ArrayList<>();
+    private ArrayList<Service> applyFilter(List<Service> models) {
+        ArrayList<Service> list = new ArrayList<>();
         for (Service service : models) {
             if (service.isChecked())
                 list.add(service);
@@ -64,10 +65,11 @@ public class ServicesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public interface onServiceSelect {
-        void services(List<Service> model);
+        void services(ArrayList<Service> model);
     }
 
-    public class ServiceHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ServiceHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
+            CompoundButton.OnCheckedChangeListener {
 
         private MyTextView title;
         private MyTextView price;
@@ -75,7 +77,7 @@ public class ServicesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         private ConstraintLayout root;
 
 
-        ServiceHolder(View itemView, ServicesAdapter.onServiceSelect onServiceSelect) {
+        ServiceHolder(View itemView) {
             super(itemView);
 
             title = itemView.findViewById(R.id.rcv_service_txt_title);
@@ -88,6 +90,8 @@ public class ServicesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             title.setOnClickListener(this);
             price.setOnClickListener(this);
             root.setOnClickListener(this);
+
+            chb.setOnCheckedChangeListener(this);
 
         }
 
@@ -106,8 +110,6 @@ public class ServicesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             } else {
                 notify(position, false, true);
             }
-
-
         }
 
         @Override
@@ -131,6 +133,12 @@ public class ServicesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 if (onServiceSelect != null)
                     onServiceSelect.services(applyFilter(models));
             }
+        }
+
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            int pos = getAdapterPosition();
+            notify(pos, true, isChecked);
         }
     }
 

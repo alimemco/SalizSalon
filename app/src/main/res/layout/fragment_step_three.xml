@@ -1,67 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_height="wrap_content"
+    android:orientation="vertical"
     tools:context=".Views.Fragments.FragmentStepThree">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_margin="@dimen/standard_margin"
         app:cardCornerRadius="1dp"
+        android:layout_weight="1"
         app:cardUseCompatPadding="true">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fragment_step_three_rcv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            tools:listitem="@layout/rcv_final_services">
 
-
-            <com.alirnp.salizsalon.CustomViews.MyTextView
-                android:id="@+id/fragment_step_three_time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/standard_margin2x"
-                android:text="روز : چهارشنبه 12 آبان \nساعت : 8:00"
-                android:textSize="@dimen/large_sp"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-            <com.alirnp.salizsalon.CustomViews.MyTextView
-                android:id="@+id/fragment_step_three_services"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/standard_margin2x"
-                android:text="خدمات : \n *میکاپ ساده \n *پدیکور \n * شنیون حرفه ای"
-                android:textSize="@dimen/normal_sp"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fragment_step_three_time" />
-
-
-            <View
-                android:id="@+id/fragment_step_three_line2"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/standard_margin2x"
-                android:background="@color/gray_blue_200"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fragment_step_three_services" />
-
-            <com.alirnp.salizsalon.CustomViews.MyTextView
-                android:id="@+id/fragment_step_three_price"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/standard_margin2x"
-                android:text="26,000 تومان"
-                android:textColor="@color/green_500"
-                android:textSize="@dimen/large_sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fragment_step_three_line2" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.recyclerview.widget.RecyclerView>
     </androidx.cardview.widget.CardView>
 
-</FrameLayout>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <com.alirnp.salizsalon.CustomViews.MyTextView
+            android:id="@+id/fragment_step_three_finalPrice"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/standard_margin2x"
+            android:gravity="center"
+            android:textColor="@color/green_500"
+            android:textSize="@dimen/large_sp"
+            tools:text="قیمت نهایی : 26000" />
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

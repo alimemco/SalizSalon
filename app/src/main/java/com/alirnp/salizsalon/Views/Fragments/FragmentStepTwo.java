@@ -12,22 +12,28 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alirnp.salizsalon.Adapters.ServicesAdapter;
+import com.alirnp.salizsalon.CustomViews.MyTextView;
 import com.alirnp.salizsalon.Generator.DataGenerator;
+import com.alirnp.salizsalon.Interface.OnDataReady;
 import com.alirnp.salizsalon.Interface.OnStepReady;
 import com.alirnp.salizsalon.Model.Service;
 import com.alirnp.salizsalon.R;
+import com.alirnp.salizsalon.Utils.Utils;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class FragmentStepTwo extends Fragment implements ServicesAdapter.onServiceSelect {
 
     private View view;
     private RecyclerView rcv;
+    private MyTextView finalPriceTv;
 
     private OnStepReady onStepReady;
+    private OnDataReady onDataReady;
 
-    public FragmentStepTwo(OnStepReady onStepReady) {
+    public FragmentStepTwo(OnStepReady onStepReady, OnDataReady onDataReady) {
         this.onStepReady = onStepReady;
+        this.onDataReady = onDataReady;
     }
 
 
@@ -43,7 +49,15 @@ public class FragmentStepTwo extends Fragment implements ServicesAdapter.onServi
     private void initViews() {
 
         rcv = view.findViewById(R.id.fragment_step_two_rcv);
+        finalPriceTv = view.findViewById(R.id.fragment_step_two_finalPrice);
 
+        showPrice(0);
+
+    }
+
+    private void showPrice(int price) {
+        String prc = " مجموع :  " + Utils.numberToTextPrice(price);
+        finalPriceTv.setText(prc);
     }
 
     private void initRcView() {
@@ -59,15 +73,23 @@ public class FragmentStepTwo extends Fragment implements ServicesAdapter.onServi
     }
 
     @Override
-    public void services(List<Service> model) {
+    public void services(ArrayList<Service> model) {
 
         if (model != null) {
-            if (model.size() > 0) {
-                validateStep(true);
 
-            } else {
-                validateStep(false);
-            }
+            showPrice(calculatorPrice(model));
+            validateStep(model.size() > 0);
         }
+
+        if (onDataReady != null)
+            onDataReady.onServicesReceived(model);
+    }
+
+    private int calculatorPrice(ArrayList<Service> model) {
+        int prc = 0;
+        for (int i = 0; i < model.size(); i++) {
+            prc += model.get(i).getPrice();
+        }
+        return prc;
     }
 }

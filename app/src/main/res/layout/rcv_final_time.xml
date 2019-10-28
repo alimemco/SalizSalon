@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:layoutDirection="rtl"
+    android:orientation="horizontal">
+
+    <com.alirnp.salizsalon.CustomViews.MyTextView
+        android:id="@+id/rcv_final_time_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/standard_margin2x"
+        android:textSize="@dimen/large_2X_sp"
+        tools:text="چهارشنبه 28 آبان" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/standard_margin2x"
+        android:background="@color/gray_blue_100" />
+
+    <com.alirnp.salizsalon.CustomViews.MyTextView
+        android:id="@+id/rcv_final_time_hour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/standard_margin2x"
+        android:textSize="@dimen/large_2X_sp"
+        tools:text="ساعت 16:00" />
+
+
+</LinearLayout>

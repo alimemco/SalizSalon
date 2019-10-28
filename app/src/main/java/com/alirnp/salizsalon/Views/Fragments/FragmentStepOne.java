@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alirnp.salizsalon.Adapters.DaysAdapter;
 import com.alirnp.salizsalon.Adapters.HoursAdapter;
 import com.alirnp.salizsalon.Generator.DataGenerator;
+import com.alirnp.salizsalon.Interface.OnDataReady;
 import com.alirnp.salizsalon.Interface.OnStepReady;
 import com.alirnp.salizsalon.Model.Day;
 import com.alirnp.salizsalon.Model.Hour;
@@ -24,7 +25,6 @@ import com.alirnp.salizsalon.NestedJson.ResponseJson;
 import com.alirnp.salizsalon.NestedJson.Result;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
-import com.alirnp.salizsalon.Utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -55,14 +55,16 @@ public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDate
     private HoursAdapter hoursAdapter;
 
     private OnStepReady onStepReady;
+    private OnDataReady onDataReady;
 
     private HashMap<Constants.resultMap, String> result = new HashMap<>();
 
     public FragmentStepOne() {
     }
 
-    public FragmentStepOne(OnStepReady onStepReady) {
+    public FragmentStepOne(OnStepReady onStepReady, OnDataReady onDataReady) {
         this.onStepReady = onStepReady;
+        this.onDataReady = onDataReady;
     }
 
 
@@ -141,6 +143,11 @@ public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDate
         getHours(day);
 
         validateStep(false);
+
+        if (onDataReady != null) {
+            onDataReady.onDayReceived(day);
+            onDataReady.onHourReceived(null);
+        }
     }
 
     @Override
@@ -150,6 +157,10 @@ public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDate
 
         if (result.size() == Constants.resultMap.values().length)
             validateStep(true);
+
+        if (onDataReady != null)
+            onDataReady.onHourReceived(hour);
+
 
     }
 
@@ -233,14 +244,12 @@ public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDate
                 return "Friday";
             case 7:
                 return "Saturday";
-
         }
         return null;
     }
 
     @Override
     public void onResponse(Call<ResponseJson> call, Response<ResponseJson> response) {
-
 
         if (response.body() != null) {
             Result result = response.body().getResult().get(0);
@@ -251,20 +260,13 @@ public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDate
                     List<Hour> list = new ArrayList<>();
 
                     for (int i = 0; i < result.getItems().size(); i++) {
-
                         String time = result.getItems().get(i).getHour();
-
                         boolean open = Boolean.valueOf(result.getItems().get(i).getOpen());
-
                         list.add(new Hour(time, open));
                     }
-
                     switchState(Constants.state.SUCCESS);
                     hoursAdapter.setData(list, this);
-
-
                 } else {
-                    Utils.log(FragmentStepOne.class, result.getMessage());
                     switchState(Constants.state.ITEM_NOT_FOUND);
                 }
             }
@@ -273,7 +275,6 @@ public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDate
 
     @Override
     public void onFailure(Call<ResponseJson> call, Throwable t) {
-        Utils.log(FragmentStepOne.class, t.toString());
         switchState(Constants.state.ITEM_NOT_FOUND);
     }
 

@@ -4,10 +4,11 @@ public class Constants {
 
     public static String TIMES = "times";
 
-
     public static String POSITION = "POSITION";
     public static String IMAGE_LIST = "IMAGE_LIST";
-    public static String InterfaceOnClickNext = "INT_ON_NXT";
+    public static String DAY = "DAY";
+    public static String HOUR = "HOUR";
+    public static String SERVICES = "SERVICES";
 
     public enum resultMap {
         DAY_NAME,
@@ -29,6 +30,22 @@ public class Constants {
 
         public int getStatus() {
             return status;
+        }
+    }
+
+
+    public enum viewType {
+        TIME(1),
+        SERVICES(2);
+
+        private int viewType;
+
+        viewType(int viewType) {
+            this.viewType = viewType;
+        }
+
+        public int getViewType() {
+            return viewType;
         }
     }
 
