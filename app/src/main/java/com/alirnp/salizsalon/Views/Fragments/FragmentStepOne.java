@@ -31,9 +31,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-import ir.he.meowdatetimepicker.MeowTypefaceHelper;
 import ir.he.meowdatetimepicker.date.DatePickerDialog;
-import ir.he.meowdatetimepicker.utils.PersianCalendar;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -96,7 +94,6 @@ public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDate
         daysAdapter.setOnItemClickListener(this);
         rcvDays.setAdapter(daysAdapter);
 
-
         getHours(daysAdapter.getModels().get(0));
 
 
@@ -105,27 +102,6 @@ public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDate
 
     private void initViews() {
 
-    }
-
-    private void showDataPicker() {
-
-
-        MeowTypefaceHelper.init(MyApplication.getIranSans(getContext()),
-                MyApplication.getIranSans(getContext()),
-                MyApplication.getIranSansBold(getContext()),
-                MyApplication.getIranSans(getContext()));
-
-        PersianCalendar persianCalendar = new PersianCalendar();
-
-        DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(
-                FragmentStepOne.this,
-                persianCalendar.getPersianYear(),
-                persianCalendar.getPersianMonth(),
-                persianCalendar.getPersianDay()
-        );
-
-        if (getActivity() != null)
-            datePickerDialog.show(getActivity().getFragmentManager(), "DatePickerDialog");
     }
 
 
@@ -177,22 +153,16 @@ public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDate
         putToResult(day);
     }
 
-    private <T> void genericDisplay(T element) {
-        System.out.println(element.getClass().getName() +
-                " = " + element);
-    }
-
     private <T> void putToResult(T data) {
 
         if (data instanceof Day) {
             Day day = (Day) data;
-
             result.put(Constants.resultMap.DAY_NAME, day.getDayName());
             result.put(Constants.resultMap.DAY_OF_MONTH, day.getDayOfMonth());
             result.put(Constants.resultMap.MONTH_NAME, day.getMonthName());
+
         } else if (data instanceof Hour) {
             Hour hour = (Hour) data;
-
             result.put(Constants.resultMap.HOUR, hour.getTime());
         }
 

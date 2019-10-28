@@ -14,4 +14,5 @@
     <string name="choose_final">تایید نهایی</string>
     <string name="itemNotFound">موردی یافت نشد</string>
     <string name="choose_hour">انتخاب ساعت</string>
+    <string name="reserved">رزرو شد !</string>
 </resources>

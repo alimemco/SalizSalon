@@ -13,6 +13,7 @@
     <color name="gray_blue_200">#B0BEC5</color>
     <color name="gray_blue_500">#78909C</color>
     <color name="gray_blue_700">#455A64</color>
+    <color name="red_500">#f44336</color>
 
     
 </resources>

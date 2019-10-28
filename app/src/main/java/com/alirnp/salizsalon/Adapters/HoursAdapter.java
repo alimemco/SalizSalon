@@ -1,6 +1,7 @@
 package com.alirnp.salizsalon.Adapters;
 
 
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,6 @@ import com.alirnp.salizsalon.Holder.SearchingHolder;
 import com.alirnp.salizsalon.Model.Hour;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
-import com.alirnp.salizsalon.Utils.Utils;
 
 import java.util.List;
 
@@ -141,29 +141,80 @@ public class HoursAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public class HoursHolder extends RecyclerView.ViewHolder {
 
         MyTextView hourTv;
+        MyTextView reservedTv;
 
         HoursHolder(View itemView) {
             super(itemView);
 
             hourTv = itemView.findViewById(R.id.rcv_hours_tv);
+            reservedTv = itemView.findViewById(R.id.rcv_hours_reserved);
 
         }
 
+        /*
+                void bind(final int position, final OnItemClickListener onItemClickListener) {
+                    final Hour hour = models.get(position);
+                    ColorStateList oldColors =  hourTv.getTextColors();
+
+                    hourTv.setText(hour.getTime());
+
+
+                    if (hour.isReserved()){
+                        itemView.setBackground(ContextCompat.getDrawable(itemView.getContext(),R.drawable.bg_disabled_hrs));
+                        itemView.setEnabled(false);
+                        hourTv.setTextColor(ColorStateList.valueOf(ContextCompat.getColor(itemView.getContext(),R.color.gray_blue_500)));
+                        reservedTv.setVisibility(View.VISIBLE);
+                    }else {
+                        itemView.setBackground(ContextCompat.getDrawable(itemView.getContext(),R.drawable.selector_hours));
+                        itemView.setEnabled(true);
+                        itemView.setSelected(hour.isSelected());
+                        hourTv.setTextColor(oldColors);
+                        reservedTv.setVisibility(View.INVISIBLE);
+
+                        itemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                changeState(position);
+                                if (onItemClickListener != null) {
+                                    onItemClickListener.OnHourClick(hour);
+                                }
+                            }
+                        });
+                    }
+
+
+
+
+                }
+                */
         void bind(final int position, final OnItemClickListener onItemClickListener) {
             final Hour hour = models.get(position);
 
-            itemView.setSelected(hour.isSelected());
             hourTv.setText(hour.getTime());
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    changeState(position);
-                    if (onItemClickListener != null) {
-                        onItemClickListener.OnHourClick(hour);
+            if (hour.isReserved()) {
+
+                reservedTv.setVisibility(View.VISIBLE);
+                hourTv.setPaintFlags(hourTv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+            } else {
+                itemView.setSelected(hour.isSelected());
+                reservedTv.setVisibility(View.INVISIBLE);
+
+                hourTv.setPaintFlags(0);
+
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        changeState(position);
+                        if (onItemClickListener != null) {
+                            onItemClickListener.OnHourClick(hour);
+                        }
                     }
-                }
-            });
+                });
+            }
+
+
         }
     }
 

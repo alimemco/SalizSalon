@@ -7,12 +7,22 @@ public class Hour implements Parcelable {
 
     private String time;
     private boolean selected;
-    private boolean open;
+    private boolean reserved;
 
 
-    public Hour(String time, boolean open) {
+    public Hour(String time, boolean reserved) {
         this.time = time;
-        this.open = open;
+        this.reserved = reserved;
+    }
+
+    protected Hour(Parcel in) {
+        time = in.readString();
+        selected = in.readByte() != 0x00;
+        reserved = in.readByte() != 0x00;
+    }
+
+    public boolean isReserved() {
+        return reserved;
     }
 
     public String getTime() {
@@ -44,10 +54,8 @@ public class Hour implements Parcelable {
         }
     };
 
-    protected Hour(Parcel in) {
-        time = in.readString();
-        selected = in.readByte() != 0x00;
-        open = in.readByte() != 0x00;
+    public void setReserved(boolean reserved) {
+        this.reserved = reserved;
     }
 
     @Override
@@ -59,6 +67,6 @@ public class Hour implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(time);
         dest.writeByte((byte) (selected ? 0x01 : 0x00));
-        dest.writeByte((byte) (open ? 0x01 : 0x00));
+        dest.writeByte((byte) (reserved ? 0x01 : 0x00));
     }
 }
