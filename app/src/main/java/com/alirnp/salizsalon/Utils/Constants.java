@@ -10,11 +10,28 @@ public class Constants {
     public static String HOUR = "HOUR";
     public static String SERVICES = "SERVICES";
 
+    public static String REGISTER = "REGISTER";
+    public static String LOGIN = "LOGIN";
+
+    public static String FIRST_NAME = "first_name";
+    public static String LAST_NAME = "last_name";
+    public static String PHONE = "phone";
+    public static String PASSWORD = "password";
+
+    public static String REGISTER_MAP = "register_map";
+
+
     public enum resultMap {
         DAY_NAME,
         MONTH_NAME,
         DAY_OF_MONTH,
         HOUR
+    }
+
+    public enum data {
+        DAY,
+        HOUR,
+        SERVICES
     }
 
     public enum state {

@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
-
     <dist:module dist:instant="true" />
 
     <application
@@ -18,13 +17,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Views.Activities.ActivityChooseTime"></activity>
-        <activity android:name=".Views.Activities.MainActivity">
+        <activity android:name=".Views.Activities.ActivityRegister">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".Views.Activities.ActivityLogin" />
+        <activity android:name=".Views.Activities.ActivityChooseTime" />
+        <activity android:name=".Views.Activities.MainActivity">
+
         </activity>
     </application>
 

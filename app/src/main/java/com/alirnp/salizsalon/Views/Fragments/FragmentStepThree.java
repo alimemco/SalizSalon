@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -47,17 +48,21 @@ public class FragmentStepThree extends Fragment {
 
             adapter = new FinalAdapter(day, hour, services);
 
-            finalPrice = 0;
-            if (services != null)
-                for (int i = 0; i < services.size(); i++) {
-                    finalPrice += services.get(i).getPrice();
-                }
+            initFinalPrice(services);
 
         }
     }
 
+    private void initFinalPrice(ArrayList<Service> services) {
+        finalPrice = 0;
+        if (services != null)
+            for (int i = 0; i < services.size(); i++) {
+                finalPrice += services.get(i).getPrice();
+            }
+    }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         if (onStepReady != null) {
             onStepReady.OnReady(3, true);

@@ -67,7 +67,7 @@ public class HoursAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         } else if (viewType == Constants.state.SEARCHING.getStatus()) {
             return new SearchingHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.rcv_searching, parent, false));
 
-        }else {
+        } else {
             return new SearchingHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.rcv_searching, parent, false));
         }
 
@@ -151,57 +151,16 @@ public class HoursAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         }
 
-        /*
-                void bind(final int position, final OnItemClickListener onItemClickListener) {
-                    final Hour hour = models.get(position);
-                    ColorStateList oldColors =  hourTv.getTextColors();
-
-                    hourTv.setText(hour.getTime());
-
-
-                    if (hour.isReserved()){
-                        itemView.setBackground(ContextCompat.getDrawable(itemView.getContext(),R.drawable.bg_disabled_hrs));
-                        itemView.setEnabled(false);
-                        hourTv.setTextColor(ColorStateList.valueOf(ContextCompat.getColor(itemView.getContext(),R.color.gray_blue_500)));
-                        reservedTv.setVisibility(View.VISIBLE);
-                    }else {
-                        itemView.setBackground(ContextCompat.getDrawable(itemView.getContext(),R.drawable.selector_hours));
-                        itemView.setEnabled(true);
-                        itemView.setSelected(hour.isSelected());
-                        hourTv.setTextColor(oldColors);
-                        reservedTv.setVisibility(View.INVISIBLE);
-
-                        itemView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                changeState(position);
-                                if (onItemClickListener != null) {
-                                    onItemClickListener.OnHourClick(hour);
-                                }
-                            }
-                        });
-                    }
-
-
-
-
-                }
-                */
         void bind(final int position, final OnItemClickListener onItemClickListener) {
+
             final Hour hour = models.get(position);
 
+            itemView.setSelected(hour.isSelected());
             hourTv.setText(hour.getTime());
+            reservedTv.setVisibility(hour.isReserved() ? View.VISIBLE : View.INVISIBLE);
+            hourTv.setPaintFlags(hour.isReserved() ? hourTv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG : 0);
 
-            if (hour.isReserved()) {
-
-                reservedTv.setVisibility(View.VISIBLE);
-                hourTv.setPaintFlags(hourTv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-
-            } else {
-                itemView.setSelected(hour.isSelected());
-                reservedTv.setVisibility(View.INVISIBLE);
-
-                hourTv.setPaintFlags(0);
+            if (!hour.isReserved()) {
 
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override

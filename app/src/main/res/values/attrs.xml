@@ -10,6 +10,16 @@
 
     </declare-styleable>
 
+    <declare-styleable name="MyEdiText">
+        <attr name="fontCustomEdiText" format="integer">
+            <enum name="bYekan" value="0" />
+            <enum name="iranSans" value="1" />
+            <enum name="iranSansBold" value="2" />/>
+
+        </attr>
+
+    </declare-styleable>
+
     <declare-styleable name="MyButton">
         <attr name="fontCustomButton" format="integer">
             <enum name="bYekan" value="0" />

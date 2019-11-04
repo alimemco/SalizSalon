@@ -14,11 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alirnp.salizsalon.Adapters.ServicesAdapter;
 import com.alirnp.salizsalon.CustomViews.MyTextView;
 import com.alirnp.salizsalon.Generator.DataGenerator;
-import com.alirnp.salizsalon.Interface.OnDataReady;
 import com.alirnp.salizsalon.Interface.OnStepReady;
 import com.alirnp.salizsalon.Model.Service;
 import com.alirnp.salizsalon.R;
+import com.alirnp.salizsalon.Utils.Constants;
 import com.alirnp.salizsalon.Utils.Utils;
+import com.alirnp.salizsalon.Views.Activities.ActivityChooseTime;
 
 import java.util.ArrayList;
 
@@ -29,11 +30,11 @@ public class FragmentStepTwo extends Fragment implements ServicesAdapter.onServi
     private MyTextView finalPriceTv;
 
     private OnStepReady onStepReady;
-    private OnDataReady onDataReady;
 
-    public FragmentStepTwo(OnStepReady onStepReady, OnDataReady onDataReady) {
+
+    public FragmentStepTwo(OnStepReady onStepReady) {
         this.onStepReady = onStepReady;
-        this.onDataReady = onDataReady;
+
     }
 
 
@@ -67,6 +68,10 @@ public class FragmentStepTwo extends Fragment implements ServicesAdapter.onServi
         rcv.setAdapter(adapter);
     }
 
+    private void putToData(ArrayList<Service> services) {
+        ActivityChooseTime.setValues(Constants.data.SERVICES, services);
+    }
+
     private void validateStep(boolean enable) {
         if (onStepReady != null)
             onStepReady.OnReady(1, enable);
@@ -79,10 +84,14 @@ public class FragmentStepTwo extends Fragment implements ServicesAdapter.onServi
 
             showPrice(calculatorPrice(model));
             validateStep(model.size() > 0);
+
+            putToData(model);
         }
 
+
+/*
         if (onDataReady != null)
-            onDataReady.onServicesReceived(model);
+            onDataReady.onServicesReceived(model);*/
     }
 
     private int calculatorPrice(ArrayList<Service> model) {

@@ -9,10 +9,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.alirnp.salizsalon.CustomViews.MyButton;
-import com.alirnp.salizsalon.Interface.OnDataReady;
 import com.alirnp.salizsalon.Interface.OnStepReady;
 import com.alirnp.salizsalon.Model.Day;
 import com.alirnp.salizsalon.Model.Hour;
+import com.alirnp.salizsalon.Model.JSON.Result;
 import com.alirnp.salizsalon.Model.Service;
 import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.R;
@@ -23,25 +23,36 @@ import com.alirnp.salizsalon.Views.Fragments.FragmentStepTwo;
 import com.shuhart.stepview.StepView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ActivityChooseTime extends AppCompatActivity implements
         View.OnClickListener,
-        OnStepReady,
-        OnDataReady {
+        OnStepReady {
 
-    private StepView stepView;
-    private MyButton nextStepBtn;
-
+    private static HashMap<Constants.data, Object> data = new HashMap<>();
     private Day day;
     private Hour hour;
     private ArrayList<Service> services;
 
-    private FragmentManager fragmentManager = getSupportFragmentManager();
+    private StepView stepView;
+    private MyButton nextStepBtn;
 
-    private FragmentStepOne fragmentStepOne = new FragmentStepOne(this, this);
-    private FragmentStepTwo fragmentStepTwo = new FragmentStepTwo(this, this);
+    private FragmentManager fragmentManager = getSupportFragmentManager();
+    private FragmentStepOne fragmentStepOne = new FragmentStepOne(this);
+    private FragmentStepTwo fragmentStepTwo = new FragmentStepTwo(this);
     private FragmentStepThree fragmentStepThree = new FragmentStepThree(this);
 
+    public static void setValues(Constants.data key, Object object) {
+        data.put(key, object);
+    }
+
+    public static HashMap<Constants.data, Object> getData() {
+        return data;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +141,13 @@ public class ActivityChooseTime extends AppCompatActivity implements
                 break;
 
             case 2:
+
+                day = (Day) data.get(Constants.data.DAY);
+                hour = (Hour) data.get(Constants.data.HOUR);
+                services = (ArrayList<Service>) data.get(Constants.data.SERVICES);
+
+                //TODO Change Generic java :)
+
                 Bundle bundle = new Bundle();
                 bundle.putParcelable(Constants.DAY, day);
                 bundle.putParcelable(Constants.HOUR, hour);
@@ -137,29 +155,60 @@ public class ActivityChooseTime extends AppCompatActivity implements
                 fragmentStepThree.setArguments(bundle);
                 replace(fragmentStepThree);
                 nextStepBtn.setText(R.string.choose_final);
+
                 break;
 
             case 3:
-                Toast.makeText(this, "Last Step", Toast.LENGTH_SHORT).show();
+
+                MyApplication.getApi().reserve(
+                        day.getDayName(),
+                        day.getMonthName(),
+                        day.getDayOfMonth(),
+                        hour.getTime(),
+                        calculatorPrice(),
+                        explodeServices()
+                )
+                        .enqueue(callback());
+
                 nextStepBtn.setEnabled(true);
                 break;
         }
     }
 
-
-    @Override
-    public void onDayReceived(Day day) {
-        this.day = day;
-
+    private int calculatorPrice() {
+        int price = 0;
+        for (int i = 0; i < services.size(); i++) {
+            price += services.get(i).getPrice();
+        }
+        return price;
     }
 
-    @Override
-    public void onHourReceived(Hour hour) {
-        this.hour = hour;
+    private String explodeServices() {
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < services.size(); i++) {
+            if (i != 0) {
+                sb.append(",");
+            }
+            sb.append(services.get(i).getName());
+        }
+        return sb.toString();
     }
 
-    @Override
-    public void onServicesReceived(ArrayList<Service> services) {
-        this.services = services;
+
+    private Callback<ArrayList<Result>> callback() {
+        return new Callback<ArrayList<Result>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Result>> call, Response<ArrayList<Result>> response) {
+                if (response.body() != null)
+                    Toast.makeText(ActivityChooseTime.this, response.body().get(0).getMessage(), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Result>> call, Throwable t) {
+                Toast.makeText(ActivityChooseTime.this, t.toString(), Toast.LENGTH_LONG).show();
+
+            }
+        };
     }
 }

@@ -15,5 +15,14 @@
 
     </style>
 
+    <style name="buttonPrimaryRadius" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/bg_btn_radius</item>
+        <item name="android:paddingRight">@dimen/standard_margin2x</item>
+        <item name="android:paddingLeft">@dimen/standard_margin2x</item>
+        <item name="android:textSize">@dimen/large_2X_sp</item>
+        <item name="android:textColor">@color/white</item>
+
+    </style>
+
 
 </resources>

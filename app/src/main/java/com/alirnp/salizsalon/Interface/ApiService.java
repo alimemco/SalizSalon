@@ -1,15 +1,13 @@
 package com.alirnp.salizsalon.Interface;
 
 import com.alirnp.salizsalon.BannerSlider.Banner;
+import com.alirnp.salizsalon.Model.JSON.Result;
 import com.alirnp.salizsalon.NestedJson.ResponseJson;
-import com.alirnp.salizsalon.Utils.Constants;
 
 import java.util.ArrayList;
 import java.util.Map;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -27,11 +25,24 @@ public interface ApiService {
     @GET("salizGet.php")
     Call<ResponseJson> getTimes(@Query("get") String get, @Query("day") String day);
 
-    @GET("salizGet.php")
-    Call<ResponseBody> getPosts(@Query("get") String get);
+    @GET("reserve.php")
+    Call<ArrayList<Result>> reserve(
+            @Query("DAY_NAME") String dayName,
+            @Query("MONTH_NAME") String monthName,
+            @Query("DAY_OF_MONTH") String dayOfMonth,
+            @Query("HOUR") String hour,
+            @Query("PRICE") int price,
+            @Query("SERVICES") String services
+    );
 
-    @FormUrlEncoded
-    @POST("salizGet.php")
-    Call<ResponseBody> putTime(@QueryMap Map<Constants.resultMap, String> times);
 
+    /**
+     * @param request = {REGISTER , LOGIN}
+     * @param info    = map with { first_name , last_name , phone , password } values
+     */
+
+    @POST("api/v1/users.php")
+    Call<ArrayList<Result>> register(
+            @Query("request") String request,
+            @QueryMap Map<String, String> info);
 }
