@@ -39,7 +39,7 @@
             android:layout_marginBottom="@dimen/standard_margin2x"
             android:gravity="center"
             android:text="@string/lorem"
-            android:textColor="#AD1457"
+            android:textColor="@color/colorPrimary"
             android:textSize="@dimen/large_sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

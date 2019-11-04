@@ -16,7 +16,7 @@
 
     <item
         android:title="@string/setting"
-        android:id="@+id/setting"
+        android:id="@+id/order"
         android:icon="@drawable/ic_settings"
    />
 

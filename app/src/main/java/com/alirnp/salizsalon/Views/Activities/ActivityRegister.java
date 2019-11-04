@@ -9,9 +9,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.alirnp.salizsalon.CustomViews.MyButton;
 import com.alirnp.salizsalon.CustomViews.MyEditText;
 import com.alirnp.salizsalon.Model.JSON.Result;
+import com.alirnp.salizsalon.Model.User;
 import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
+import com.alirnp.salizsalon.Utils.SharedPrefManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,6 +26,7 @@ import retrofit2.Response;
 public class ActivityRegister extends AppCompatActivity implements View.OnClickListener {
 
     private MyEditText firstNameEdt, lastNameEdt, phoneEdt, passwordEdt;
+    private String firstName, lastName, phone, password;
     private Map<String, String> infoMap = new HashMap<>();
 
     @Override
@@ -58,19 +61,27 @@ public class ActivityRegister extends AppCompatActivity implements View.OnClickL
     }
 
     private boolean validateInfo() {
+
+
         if (firstNameEdt.getText() != null
                 && lastNameEdt.getText() != null &&
                 phoneEdt.getText() != null &&
                 passwordEdt.getText() != null) {
-            if (!firstNameEdt.getText().toString().equals("") &&
-                    !lastNameEdt.getText().toString().equals("") &&
-                    !phoneEdt.getText().toString().equals("") &&
-                    !passwordEdt.getText().toString().equals("")) {
 
-                infoMap.put(Constants.FIRST_NAME, firstNameEdt.getText().toString());
-                infoMap.put(Constants.LAST_NAME, lastNameEdt.getText().toString());
-                infoMap.put(Constants.PHONE, phoneEdt.getText().toString());
-                infoMap.put(Constants.PASSWORD, passwordEdt.getText().toString());
+            firstName = firstNameEdt.getText().toString();
+            lastName = firstNameEdt.getText().toString();
+            phone = firstNameEdt.getText().toString();
+            password = firstNameEdt.getText().toString();
+
+            if (!firstName.equals("") &&
+                    !lastName.equals("") &&
+                    !phone.equals("") &&
+                    !password.equals("")) {
+
+                infoMap.put(Constants.FIRST_NAME, firstName);
+                infoMap.put(Constants.LAST_NAME, lastName);
+                infoMap.put(Constants.PHONE, phone);
+                infoMap.put(Constants.PASSWORD, password);
                 return true;
             }
         }
@@ -91,6 +102,8 @@ public class ActivityRegister extends AppCompatActivity implements View.OnClickL
                     if (response.body() != null) {
                         if (Boolean.parseBoolean(response.body().get(0).getSuccess())) {
                             Toast.makeText(ActivityRegister.this, "Success :D", Toast.LENGTH_SHORT).show();
+                            saveUserInSharePreference();
+
                         } else {
                             Toast.makeText(ActivityRegister.this, response.body().get(0).getMessage(), Toast.LENGTH_SHORT).show();
                         }
@@ -105,6 +118,12 @@ public class ActivityRegister extends AppCompatActivity implements View.OnClickL
                 Toast.makeText(ActivityRegister.this, t.toString(), Toast.LENGTH_SHORT).show();
             }
         };
+    }
+
+    private void saveUserInSharePreference() {
+
+        SharedPrefManager sharedPrefManager = new SharedPrefManager(ActivityRegister.this);
+        sharedPrefManager.saveUser(new User(firstName, lastName, phone));
     }
 
 

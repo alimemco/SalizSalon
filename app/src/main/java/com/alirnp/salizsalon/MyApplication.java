@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.alirnp.salizsalon.Interface.ApiService;
+import com.alirnp.salizsalon.Utils.SharedPrefManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -19,6 +20,13 @@ public class MyApplication extends Application {
 
     public static Typeface iranSans;
     public static Typeface iranSansBold;
+
+
+    public static SharedPrefManager sharedPrefManager;
+
+    public static SharedPrefManager getSharedPrefManager() {
+        return sharedPrefManager;
+    }
 
     public static Typeface getIranSans(Context context) {
         if (iranSans == null) {
@@ -58,6 +66,7 @@ public class MyApplication extends Application {
 
         api = retrofit.create(ApiService.class);
 
+        sharedPrefManager = new SharedPrefManager(getApplicationContext());
 
     }
 }

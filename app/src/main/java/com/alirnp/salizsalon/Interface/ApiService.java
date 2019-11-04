@@ -37,10 +37,9 @@ public interface ApiService {
 
 
     /**
-     * @param request = {REGISTER , LOGIN}
-     * @param info    = map with { first_name , last_name , phone , password } values
+     * @param request  {REGISTER , LOGIN}
+     * @param info    { first_name , last_name , phone , password }
      */
-
     @POST("api/v1/users.php")
     Call<ArrayList<Result>> register(
             @Query("request") String request,

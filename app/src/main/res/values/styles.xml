@@ -24,5 +24,14 @@
 
     </style>
 
+    <style name="buttonStrokePrimary" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/bg_stroke_primary</item>
+        <item name="android:paddingRight">@dimen/standard_margin2x</item>
+        <item name="android:paddingLeft">@dimen/standard_margin2x</item>
+        <item name="android:textSize">@dimen/large_3X_sp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+
+    </style>
+
 
 </resources>

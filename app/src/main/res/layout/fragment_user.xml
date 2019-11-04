@@ -1,13 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layoutDirection="ltr"
     tools:context=".Views.Fragments.FragmentUser">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/fragment_user_rcv"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/appCompatImageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="120dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/ic_launcher_round" />
+
+    <com.alirnp.salizsalon.CustomViews.MyTextView
+        android:id="@+id/myTextView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/saliz_beautiful_salon"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/large_3X_sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appCompatImageView3" />
+
+    <com.alirnp.salizsalon.CustomViews.MyButton
+        android:id="@+id/fragment_user_btn_login"
+        style="@style/buttonStrokePrimary"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/standard_margin2x"
+        android:layout_marginEnd="@dimen/standard_margin2x"
+        android:layout_marginBottom="30dp"
+        android:text="ورود"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_user_btn_register"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <com.alirnp.salizsalon.CustomViews.MyButton
+        android:id="@+id/fragment_user_btn_register"
+        style="@style/buttonStrokePrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/standard_margin2x"
+        android:layout_marginEnd="@dimen/standard_margin2x"
+        android:layout_marginBottom="120dp"
+        android:text="ثبت نام"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

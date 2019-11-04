@@ -13,10 +13,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.alirnp.salizsalon.Model.User;
 import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Views.Fragments.FragmentHome;
+import com.alirnp.salizsalon.Views.Fragments.FragmentOrder;
 import com.alirnp.salizsalon.Views.Fragments.FragmentUser;
+import com.alirnp.salizsalon.Views.Fragments.FragmentUserInfo;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.internal.BaselineLayout;
 
@@ -28,6 +31,8 @@ public class MainActivity extends AppCompatActivity implements
     private BottomNavigationView btmView;
     private FragmentHome fragmentHome = FragmentHome.newInstance();
     private FragmentUser fragmentUser = FragmentUser.newInstance();
+    private FragmentOrder fragmentOrder = FragmentOrder.newInstance();
+    private FragmentUserInfo fragmentUserInfo = FragmentUserInfo.newInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +45,22 @@ public class MainActivity extends AppCompatActivity implements
 
         replace(fragmentHome);
 
+        //  getDataSharedPreference();
+
 
     }
+
+   /* private void getDataSharedPreference() {
+        SharedPrefManager sharedPrefManager = new SharedPrefManager(MainActivity.this);
+        User user  = sharedPrefManager.getUser();
+
+        if (user != null){
+            String firstName = user.getFirstName();
+            if (firstName != null)
+            Toast.makeText(this, firstName, Toast.LENGTH_SHORT).show();
+        }
+
+    }*/
 
     private void initViews() {
 
@@ -62,11 +81,19 @@ public class MainActivity extends AppCompatActivity implements
                 return true;
 
             case R.id.account:
-                replace(fragmentUser);
+                User user = MyApplication.getSharedPrefManager().getUser();
+                if (user != null) {
+                    String firstName = user.getFirstName();
+                    if (firstName != null)
+                        replace(fragmentUserInfo);
+                    else
+                        replace(fragmentUser);
+                }
+
                 return true;
 
-            case R.id.setting:
-                // replace(fragmentHome);
+            case R.id.order:
+                replace(fragmentOrder);
                 return true;
 
         }
@@ -74,20 +101,7 @@ public class MainActivity extends AppCompatActivity implements
         return false;
     }
 
-    public void add(Fragment fragment) {
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.activity_main_fragment, fragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
-    }
 
-    private void delete() {
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        if (fragmentManager.getBackStackEntryCount() > 0) {
-            fragmentManager.popBackStack();
-        }
-        fragmentTransaction.commit();
-    }
 
     private void replace(Fragment fragment) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

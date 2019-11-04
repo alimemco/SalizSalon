@@ -18,7 +18,7 @@ public class Constants {
     public static String PHONE = "phone";
     public static String PASSWORD = "password";
 
-    public static String REGISTER_MAP = "register_map";
+    public static String SHARED_PREF_NAME = "sharedPrefName";
 
 
     public enum resultMap {
