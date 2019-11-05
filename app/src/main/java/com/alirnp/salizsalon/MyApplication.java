@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.alirnp.salizsalon.Interface.ApiService;
+import com.alirnp.salizsalon.Model.User;
 import com.alirnp.salizsalon.Utils.SharedPrefManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -20,6 +21,7 @@ public class MyApplication extends Application {
 
     public static Typeface iranSans;
     public static Typeface iranSansBold;
+
 
 
     public static SharedPrefManager sharedPrefManager;
@@ -69,4 +71,11 @@ public class MyApplication extends Application {
         sharedPrefManager = new SharedPrefManager(getApplicationContext());
 
     }
+
+    public static void saveUserInSharePreference(Context context, User user) {
+        SharedPrefManager sharedPrefManager = new SharedPrefManager(context);
+        sharedPrefManager.saveUser(user);
+    }
+
+
 }

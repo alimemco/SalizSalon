@@ -17,7 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ic_launcher_round" />
+        app:srcCompat="@drawable/ic_reading" />
 
     <com.alirnp.salizsalon.CustomViews.MyTextView
         android:id="@+id/myTextView2"
@@ -39,12 +39,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/standard_margin2x"
+        android:layout_marginTop="70dp"
         android:layout_marginEnd="@dimen/standard_margin2x"
-        android:layout_marginBottom="30dp"
         android:text="ورود"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_user_btn_register"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/myTextView2" />
 
 
     <com.alirnp.salizsalon.CustomViews.MyButton
@@ -53,12 +53,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/standard_margin2x"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="@dimen/standard_margin2x"
-        android:layout_marginBottom="120dp"
         android:text="ثبت نام"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_user_btn_login" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

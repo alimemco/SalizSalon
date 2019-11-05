@@ -16,9 +16,15 @@ public class SharedPrefManager {
 
     public void saveUser(User user) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(Constants.FIRST_NAME, user.getFirstName());
-        editor.putString(Constants.LAST_NAME, user.getLastName());
-        editor.putString(Constants.PHONE, user.getPhone());
+        if (user != null) {
+            editor.putString(Constants.FIRST_NAME, user.getFirstName());
+            editor.putString(Constants.LAST_NAME, user.getLastName());
+            editor.putString(Constants.PHONE, user.getPhone());
+        } else {
+            editor.putString(Constants.FIRST_NAME, null);
+            editor.putString(Constants.LAST_NAME, null);
+            editor.putString(Constants.PHONE, null);
+        }
         editor.apply();
     }
 

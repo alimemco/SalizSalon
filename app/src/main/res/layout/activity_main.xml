@@ -7,6 +7,49 @@
     android:layoutDirection="ltr"
     tools:context=".Views.Activities.MainActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.alirnp.salizsalon.CustomViews.MyTextView
+                    android:id="@+id/activity_main_toolbar_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/standard_margin2x"
+                    android:layout_marginRight="@dimen/standard_margin2x"
+                    android:text="@string/saliz_beautiful_salon"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/large_2X_sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="@dimen/standard_margin2x"
+                    android:layout_marginRight="@dimen/standard_margin2x"
+                    android:adjustViewBounds="true"
+                    app:layout_constraintBottom_toBottomOf="@id/activity_main_toolbar_title"
+                    app:layout_constraintLeft_toRightOf="@id/activity_main_toolbar_title"
+                    app:layout_constraintTop_toTopOf="@id/activity_main_toolbar_title"
+                    app:srcCompat="@mipmap/ic_launcher_round" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
 
     <FrameLayout
         android:id="@+id/activity_main_fragment"

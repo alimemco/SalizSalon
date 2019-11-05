@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.alirnp.salizsalon.Interface.OnLoginUser;
+import com.alirnp.salizsalon.Interface.OnLogoutUser;
 import com.alirnp.salizsalon.Model.User;
 import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.R;
@@ -24,15 +26,16 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.internal.BaselineLayout;
 
 public class MainActivity extends AppCompatActivity implements
-        BottomNavigationView.OnNavigationItemSelectedListener {
+        BottomNavigationView.OnNavigationItemSelectedListener,
+        OnLogoutUser, OnLoginUser {
 
     FragmentManager fragmentManager;
     boolean doubleBackToExitPressedOnce = false;
     private BottomNavigationView btmView;
     private FragmentHome fragmentHome = FragmentHome.newInstance();
-    private FragmentUser fragmentUser = FragmentUser.newInstance();
+    private FragmentUser fragmentUser = new FragmentUser(this);
     private FragmentOrder fragmentOrder = FragmentOrder.newInstance();
-    private FragmentUserInfo fragmentUserInfo = FragmentUserInfo.newInstance();
+    private FragmentUserInfo fragmentUserInfo = new FragmentUserInfo(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,27 +43,16 @@ public class MainActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_main);
 
         initViews();
-        //setFontBottomNavigation(btmView);
+
         setNavigationTypeface();
 
         replace(fragmentHome);
 
-        //  getDataSharedPreference();
 
 
     }
 
-   /* private void getDataSharedPreference() {
-        SharedPrefManager sharedPrefManager = new SharedPrefManager(MainActivity.this);
-        User user  = sharedPrefManager.getUser();
 
-        if (user != null){
-            String firstName = user.getFirstName();
-            if (firstName != null)
-            Toast.makeText(this, firstName, Toast.LENGTH_SHORT).show();
-        }
-
-    }*/
 
     private void initViews() {
 
@@ -161,7 +153,6 @@ public class MainActivity extends AppCompatActivity implements
         Fragment frCurrent = getSupportFragmentManager().findFragmentById(R.id.activity_main_fragment);
         if (!(frCurrent instanceof FragmentHome)) {
             replace(fragmentHome);
-
         }
     }
 
@@ -170,5 +161,17 @@ public class MainActivity extends AppCompatActivity implements
             fragmentManager.popBackStack();
         }
     }
+
+    @Override
+    public void onLogin() {
+        replace(fragmentHome);
+    }
+
+    @Override
+    public void onLogout() {
+        MyApplication.getSharedPrefManager().saveUser(null);
+        btmView.setSelectedItemId(R.id.home);
+    }
+
 
 }

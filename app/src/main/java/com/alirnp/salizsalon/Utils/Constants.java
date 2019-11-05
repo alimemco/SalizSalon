@@ -20,6 +20,8 @@ public class Constants {
 
     public static String SHARED_PREF_NAME = "sharedPrefName";
 
+    public static String INTERFACE_ON_LOGIN_USER = "onLoginUser";
+
 
     public enum resultMap {
         DAY_NAME,

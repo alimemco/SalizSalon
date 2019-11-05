@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -31,14 +30,13 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-import ir.he.meowdatetimepicker.date.DatePickerDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDateSetListener
-        , Callback<ResponseJson>
+public class FragmentStepOne extends Fragment implements
+        Callback<ResponseJson>
         , DaysAdapter.OnItemClickListener,
         HoursAdapter.OnItemClickListener {
 
@@ -91,8 +89,6 @@ public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDate
         rcvDays.setAdapter(daysAdapter);
 
         getHours(daysAdapter.getModels().get(0));
-
-
     }
 
 
@@ -101,11 +97,6 @@ public class FragmentStepOne extends Fragment implements DatePickerDialog.OnDate
     }
 
 
-    @Override
-    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-        Toast.makeText(getContext(), year + "." + monthOfYear + "." + dayOfMonth, Toast.LENGTH_SHORT).show();
-
-    }
 
 
     @Override
