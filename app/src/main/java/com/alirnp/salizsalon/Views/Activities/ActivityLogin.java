@@ -11,12 +11,12 @@ import com.alirnp.salizsalon.CustomViews.MyButton;
 import com.alirnp.salizsalon.CustomViews.MyEditText;
 import com.alirnp.salizsalon.Dialog.LoadingDialog;
 import com.alirnp.salizsalon.Interface.OnLoginUser;
-import com.alirnp.salizsalon.Model.InterfaceModel;
 import com.alirnp.salizsalon.Model.JSON.Result;
 import com.alirnp.salizsalon.Model.User;
 import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
+import com.alirnp.salizsalon.Utils.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,13 +44,23 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initViews();
-        initLoginListener();
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null)
+            onLoginUser = (OnLoginUser) bundle.getSerializable(Constants.INTERFACE_ON_LOGIN_USER);
+
+
+        // initLoginListener();
     }
 
-    private void initLoginListener() {
+    public void setOnLoginUser(OnLoginUser onLoginUser) {
+        this.onLoginUser = onLoginUser;
+    }
+
+  /*  private void initLoginListener() {
         InterfaceModel interfaceModel = getIntent().getParcelableExtra(Constants.INTERFACE_ON_LOGIN_USER);
         onLoginUser = interfaceModel.getOnLoginUser();
-    }
+    }*/
 
     private void initViews() {
         phoneEdt = findViewById(R.id.activity_login_phone);
@@ -90,9 +100,14 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
                             User user = new User(firstName, lastName, phone);
                             MyApplication.saveUserInSharePreference(ActivityLogin.this, user);
 
-                            if (onLoginUser != null)
+                            if (onLoginUser != null) {
+                                Utils.log(getClass(), "AcLogin login");
                                 onLoginUser.onLogin();
-                            finish();
+                                finish();
+                            } else {
+                                Utils.log(getClass(), "AcLogin login null");
+                            }
+
 
                         } else {
                             if (result.getMessage().equals("userNotFound"))

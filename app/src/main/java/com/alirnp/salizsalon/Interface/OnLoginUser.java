@@ -1,7 +1,9 @@
 package com.alirnp.salizsalon.Interface;
 
 
-public interface OnLoginUser {
+import java.io.Serializable;
+
+public interface OnLoginUser extends Serializable {
     void onLogin();
 }
 

@@ -11,7 +11,6 @@ import com.alirnp.salizsalon.CustomViews.MyButton;
 import com.alirnp.salizsalon.CustomViews.MyEditText;
 import com.alirnp.salizsalon.Dialog.LoadingDialog;
 import com.alirnp.salizsalon.Interface.OnLoginUser;
-import com.alirnp.salizsalon.Model.InterfaceModel;
 import com.alirnp.salizsalon.Model.JSON.Result;
 import com.alirnp.salizsalon.Model.User;
 import com.alirnp.salizsalon.MyApplication;
@@ -36,6 +35,7 @@ public class ActivityRegister extends AppCompatActivity implements View.OnClickL
 
     private OnLoginUser onLoginUser;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +43,7 @@ public class ActivityRegister extends AppCompatActivity implements View.OnClickL
 
         initViews();
         initViews();
-        initLoginListener();
+
     }
 
     private void initViews() {
@@ -57,10 +57,6 @@ public class ActivityRegister extends AppCompatActivity implements View.OnClickL
 
     }
 
-    private void initLoginListener() {
-        InterfaceModel interfaceModel = getIntent().getParcelableExtra(Constants.INTERFACE_ON_LOGIN_USER);
-        onLoginUser = interfaceModel.getOnLoginUser();
-    }
 
     @Override
     public void onClick(View v) {

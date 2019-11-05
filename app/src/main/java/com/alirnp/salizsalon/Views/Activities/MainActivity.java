@@ -18,6 +18,7 @@ import com.alirnp.salizsalon.Interface.OnLogoutUser;
 import com.alirnp.salizsalon.Model.User;
 import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.R;
+import com.alirnp.salizsalon.Utils.Utils;
 import com.alirnp.salizsalon.Views.Fragments.FragmentHome;
 import com.alirnp.salizsalon.Views.Fragments.FragmentOrder;
 import com.alirnp.salizsalon.Views.Fragments.FragmentUser;
@@ -165,6 +166,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onLogin() {
         replace(fragmentHome);
+        Utils.log(getClass(), "mainActivity login");
     }
 
     @Override

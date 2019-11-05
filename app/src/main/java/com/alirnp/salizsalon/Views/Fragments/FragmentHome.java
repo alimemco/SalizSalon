@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -45,6 +46,42 @@ public class FragmentHome extends Fragment
 
     private RecyclerView rcvCategory;
     private RecyclerView rcvItems;
+
+
+    public FragmentHome() {
+
+    }
+
+    public static FragmentHome newInstance() {
+
+        Bundle args = new Bundle();
+
+        FragmentHome fragment = new FragmentHome();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        initView();
+
+        initItemsRecyclerView();
+
+        return view;
+    }
+
+    private void initItemsRecyclerView() {
+
+        rcvItems.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+
+        ItemsAdapter itemsAdapter = new ItemsAdapter(DataGenerator.getHomeItems());
+        itemsAdapter.setOnItemClick(this);
+        rcvItems.setAdapter(itemsAdapter);
+
+    }
 
     private Callback<ArrayList<Banner>> callbackBanner = new Callback<ArrayList<Banner>>() {
         @Override
@@ -108,46 +145,11 @@ public class FragmentHome extends Fragment
         }
     };
 
-    public FragmentHome() {
-
-    }
-
-    public static FragmentHome newInstance() {
-
-        Bundle args = new Bundle();
-
-        FragmentHome fragment = new FragmentHome();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_home, container, false);
-
-        initView();
-
-        initItemsRecyclerView();
-
-        return view;
-    }
-
-    private void initItemsRecyclerView() {
-
-        rcvItems.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-
-        ItemsAdapter itemsAdapter = new ItemsAdapter(DataGenerator.getHomeItems());
-        itemsAdapter.setOnItemClick(this);
-        rcvItems.setAdapter(itemsAdapter);
-
-    }
-
     @Override
     public void onStart() {
         super.onStart();
 
-        initSlider();
+
     }
 
     private void initView() {
@@ -158,18 +160,25 @@ public class FragmentHome extends Fragment
 
         rcvCategory.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
 
+        if (getContext() != null)
+            if (Utils.isConnected(getContext())) {
+                initSlider();
+                initApiServices();
+            }
 
 
 
     }
 
-    private void initSlider() {
-        Slider.init(new PicassoImageLoadingService(getContext()));
+    private void initApiServices() {
 
         MyApplication.getApi().getBannerImages().enqueue(callbackBanner);
         MyApplication.getApi().getCategory("category").enqueue(callbackCategory);
         MyApplication.getApi().getCategory("posts").enqueue(callbackPosts);
+    }
 
+    private void initSlider() {
+        Slider.init(new PicassoImageLoadingService(getContext()));
     }
 
     @Override
@@ -181,9 +190,10 @@ public class FragmentHome extends Fragment
                 break;
 
             case 1:
-
+                Toast.makeText(getContext(), "به زودی", Toast.LENGTH_SHORT).show();
                 break;
         }
 
     }
+
 }

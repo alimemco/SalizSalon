@@ -12,9 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import com.alirnp.salizsalon.CustomViews.MyButton;
 import com.alirnp.salizsalon.Interface.OnLoginUser;
-import com.alirnp.salizsalon.Model.InterfaceModel;
 import com.alirnp.salizsalon.R;
-import com.alirnp.salizsalon.Utils.Constants;
 import com.alirnp.salizsalon.Views.Activities.ActivityLogin;
 import com.alirnp.salizsalon.Views.Activities.ActivityRegister;
 
@@ -30,7 +28,6 @@ public class FragmentUser extends Fragment implements
     public FragmentUser(OnLoginUser onLoginUser) {
         this.onLoginUser = onLoginUser;
     }
-
 
 
     @Override
@@ -56,13 +53,17 @@ public class FragmentUser extends Fragment implements
         switch (v.getId()) {
             case R.id.fragment_user_btn_register:
                 Intent register = new Intent(getContext(), ActivityRegister.class);
-                register.putExtra(Constants.INTERFACE_ON_LOGIN_USER, new InterfaceModel(onLoginUser));
+
+                //   register.putExtra(Constants.INTERFACE_ON_LOGIN_USER, new InterfaceModel(onLoginUser));
                 startActivity(register);
                 break;
 
             case R.id.fragment_user_btn_login:
+
+                Bundle bundle = new Bundle();
                 Intent login = new Intent(getContext(), ActivityLogin.class);
-                login.putExtra(Constants.INTERFACE_ON_LOGIN_USER, new InterfaceModel(onLoginUser));
+                //        bundle.putSerializable(Constants.INTERFACE_ON_LOGIN_USER,onLoginUser);
+                login.putExtras(bundle);
                 startActivity(login);
                 break;
         }
