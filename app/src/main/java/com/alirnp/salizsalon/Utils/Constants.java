@@ -12,6 +12,7 @@ public class Constants {
 
     public static String REGISTER = "REGISTER";
     public static String LOGIN = "LOGIN";
+    public static String USER_RESERVE_LIST = "USER_RESERVE_LIST";
 
     public static String FIRST_NAME = "first_name";
     public static String LAST_NAME = "last_name";
@@ -21,6 +22,7 @@ public class Constants {
     public static String SHARED_PREF_NAME = "sharedPrefName";
 
     public static String INTERFACE_ON_LOGIN_USER = "onLoginUser";
+    public static String EVENT_LOGIN = "EVENT_LOGIN";
 
 
     public enum resultMap {
@@ -34,6 +36,23 @@ public class Constants {
         DAY,
         HOUR,
         SERVICES
+    }
+
+    public enum statusReserve {
+        PENDING("pending"),
+        FINALIZED("finalized"),
+        DENIED("denied"),
+        DONE("done");
+
+        private String status;
+
+        statusReserve(String status) {
+            this.status = status;
+        }
+
+        public String getStatus() {
+            return status;
+        }
     }
 
     public enum state {

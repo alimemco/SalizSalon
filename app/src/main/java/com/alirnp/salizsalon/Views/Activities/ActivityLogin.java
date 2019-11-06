@@ -53,14 +53,6 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
         // initLoginListener();
     }
 
-    public void setOnLoginUser(OnLoginUser onLoginUser) {
-        this.onLoginUser = onLoginUser;
-    }
-
-  /*  private void initLoginListener() {
-        InterfaceModel interfaceModel = getIntent().getParcelableExtra(Constants.INTERFACE_ON_LOGIN_USER);
-        onLoginUser = interfaceModel.getOnLoginUser();
-    }*/
 
     private void initViews() {
         phoneEdt = findViewById(R.id.activity_login_phone);
@@ -93,20 +85,9 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
                     if (response.body() != null) {
                         Result result = response.body().get(0);
                         if (Boolean.parseBoolean(result.getSuccess())) {
-                            String firstName = result.getFirst_name();
-                            String lastName = result.getFirst_name();
 
-                            Toast.makeText(ActivityLogin.this, "با موفقیت وارد شدید", Toast.LENGTH_SHORT).show();
-                            User user = new User(firstName, lastName, phone);
-                            MyApplication.saveUserInSharePreference(ActivityLogin.this, user);
 
-                            if (onLoginUser != null) {
-                                Utils.log(getClass(), "AcLogin login");
-                                onLoginUser.onLogin();
-                                finish();
-                            } else {
-                                Utils.log(getClass(), "AcLogin login null");
-                            }
+                            loginSuccess(result);
 
 
                         } else {
@@ -126,6 +107,18 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
                 dismissLoading();
             }
         };
+    }
+
+    private void loginSuccess(Result result) {
+        String firstName = result.getFirst_name();
+        String lastName = result.getFirst_name();
+
+        Toast.makeText(ActivityLogin.this, "با موفقیت وارد شدید", Toast.LENGTH_SHORT).show();
+
+        User user = new User(firstName, lastName, phone);
+        MyApplication.saveUserInSharePreference(ActivityLogin.this, user);
+        finish();
+        Utils.sendMessageLogin(ActivityLogin.this);
     }
 
     private boolean validatedInfo() {
@@ -153,4 +146,9 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
     private void dismissLoading() {
         dialog.dismiss();
     }
+
+   /* private void sendMessage() {
+        Intent intent = new Intent(Constants.EVENT_LOGIN);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }*/
 }

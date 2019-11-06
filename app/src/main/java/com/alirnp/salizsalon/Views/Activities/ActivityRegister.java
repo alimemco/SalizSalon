@@ -16,6 +16,7 @@ import com.alirnp.salizsalon.Model.User;
 import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
+import com.alirnp.salizsalon.Utils.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -79,9 +80,9 @@ public class ActivityRegister extends AppCompatActivity implements View.OnClickL
                 passwordEdt.getText() != null) {
 
             firstName = firstNameEdt.getText().toString();
-            lastName = firstNameEdt.getText().toString();
-            phone = firstNameEdt.getText().toString();
-            password = firstNameEdt.getText().toString();
+            lastName = lastNameEdt.getText().toString();
+            phone = phoneEdt.getText().toString();
+            password = passwordEdt.getText().toString();
 
             if (!firstName.equals("") &&
                     !lastName.equals("") &&
@@ -113,13 +114,13 @@ public class ActivityRegister extends AppCompatActivity implements View.OnClickL
 
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
-                        if (Boolean.parseBoolean(response.body().get(0).getSuccess())) {
-                            Toast.makeText(ActivityRegister.this, "ثبت نام با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
-                            MyApplication.saveUserInSharePreference(ActivityRegister.this, new User());
-                            finish();
+                        Result result = response.body().get(0);
+                        if (Boolean.parseBoolean(result.getSuccess())) {
+
+                            registerSuccess();
 
                         } else {
-                            if (response.body().get(0).getMessage().equals("userExist"))
+                            if (result.getMessage().equals("userExist"))
                                 Toast.makeText(ActivityRegister.this, "شماره تلفن تکراری است", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -134,6 +135,13 @@ public class ActivityRegister extends AppCompatActivity implements View.OnClickL
                 dismissLoading();
             }
         };
+    }
+
+    private void registerSuccess() {
+        Toast.makeText(ActivityRegister.this, "ثبت نام با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
+        MyApplication.saveUserInSharePreference(ActivityRegister.this, new User(firstName, lastName, phone));
+        finish();
+        Utils.sendMessageLogin(ActivityRegister.this);
     }
 /*
     private void saveUserInSharePreference() {

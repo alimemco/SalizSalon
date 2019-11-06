@@ -10,17 +10,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alirnp.salizsalon.CustomViews.MyTextView;
-import com.alirnp.salizsalon.NestedJson.Result;
+import com.alirnp.salizsalon.NestedJson.ResultItems;
 import com.alirnp.salizsalon.R;
 
 import java.util.List;
 
 
 public class ItemsVerticalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<Result> models;
+    private List<ResultItems> models;
 
 
-    public ItemsVerticalAdapter(List<Result> models) {
+    public ItemsVerticalAdapter(List<ResultItems> models) {
         this.models = models;
     }
 
@@ -63,7 +63,7 @@ public class ItemsVerticalAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         }
 
-        void bind(Result result) {
+        void bind(ResultItems result) {
             title.setText(result.getTitle());
 
             rcv.setAdapter(new ItemsHorizontalAdapter(result.getItems()));

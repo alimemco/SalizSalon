@@ -46,4 +46,10 @@ public interface ApiService {
             @QueryMap Map<String, String> info);
 
 
+    @GET("api/v1/get.php")
+    Call<ResponseJson> getUserReserveList(
+            @Query("request") String request,
+            @Query("phone") String phone);
+
+
 }

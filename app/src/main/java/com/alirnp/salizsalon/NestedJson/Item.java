@@ -38,6 +38,31 @@ public class Item {
     @Expose
     private String open;
 
+
+    @SerializedName("dayName")
+    @Expose
+    private String dayName;
+
+    @SerializedName("dayOfMonth")
+    @Expose
+    private String dayOfMonth;
+
+
+    @SerializedName("monthName")
+    @Expose
+    private String monthName;
+
+
+    @SerializedName("services")
+    @Expose
+    private String services;
+
+    @SerializedName("status")
+    @Expose
+    private String status;
+
+
+
     public String getID() {
         return iD;
     }
@@ -109,5 +134,45 @@ public class Item {
 
     public void setOpen(String open) {
         this.open = open;
+    }
+
+    public String getDayName() {
+        return dayName;
+    }
+
+    public void setDayName(String dayName) {
+        this.dayName = dayName;
+    }
+
+    public String getDayOfMonth() {
+        return dayOfMonth;
+    }
+
+    public void setDayOfMonth(String dayOfMonth) {
+        this.dayOfMonth = dayOfMonth;
+    }
+
+    public String getMonthName() {
+        return monthName;
+    }
+
+    public void setMonthName(String monthName) {
+        this.monthName = monthName;
+    }
+
+    public String getServices() {
+        return services;
+    }
+
+    public void setServices(String services) {
+        this.services = services;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

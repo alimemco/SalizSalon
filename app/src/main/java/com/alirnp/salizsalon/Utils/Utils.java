@@ -1,8 +1,11 @@
 package com.alirnp.salizsalon.Utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.util.Log;
+
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -26,4 +29,8 @@ Utils {
         return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 
+    public static void sendMessageLogin(Context context) {
+        Intent intent = new Intent(Constants.EVENT_LOGIN);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+    }
 }

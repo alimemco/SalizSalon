@@ -9,13 +9,13 @@ public class ResponseJson {
 
     @SerializedName("result")
     @Expose
-    private List<Result> result = null;
+    private List<ResultItems> result = null;
 
-    public List<Result> getResult() {
+    public List<ResultItems> getResult() {
         return result;
     }
 
-    public void setResult(List<Result> result) {
+    public void setResult(List<ResultItems> result) {
         this.result = result;
     }
 

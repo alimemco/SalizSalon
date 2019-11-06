@@ -31,8 +31,8 @@ public class SharedPrefManager {
     public User getUser() {
         User user = new User();
         user.setFirstName(sharedPreferences.getString(Constants.FIRST_NAME, null));
-        user.setFirstName(sharedPreferences.getString(Constants.LAST_NAME, null));
-        user.setFirstName(sharedPreferences.getString(Constants.PHONE, null));
+        user.setLastName(sharedPreferences.getString(Constants.LAST_NAME, null));
+        user.setPhone(sharedPreferences.getString(Constants.PHONE, null));
         return user;
     }
 }

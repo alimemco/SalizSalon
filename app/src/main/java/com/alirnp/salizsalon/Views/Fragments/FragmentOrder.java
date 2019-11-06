@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alirnp.salizsalon.Adapters.ItemsVerticalAdapter;
 import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.NestedJson.ResponseJson;
-import com.alirnp.salizsalon.NestedJson.Result;
+import com.alirnp.salizsalon.NestedJson.ResultItems;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Utils;
 import com.alirnp.salizsalon.Views.Activities.MainActivity;
@@ -39,7 +39,7 @@ public class FragmentOrder extends Fragment {
 
             if (response.body() != null) {
 
-                List<Result> result = response.body().getResult();
+                List<ResultItems> result = response.body().getResult();
 
                 rcv.setAdapter(new ItemsVerticalAdapter(result));
 

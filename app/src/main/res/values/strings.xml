@@ -16,4 +16,9 @@
     <string name="choose_hour">انتخاب ساعت</string>
     <string name="reserved">رزرو شد !</string>
     <string name="saliz_beautiful_salon">سالن زیبایی سالیز</string>
+
+    <string name="status_pending">در انتظار تایید</string>
+    <string name="status_denied">عدم موافقت</string>
+    <string name="status_finalized">تایید شده</string>
+    <string name="status_done">انجام شده</string>
 </resources>

@@ -1,5 +1,9 @@
 package com.alirnp.salizsalon.Views.Activities;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MenuItem;
@@ -12,13 +16,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.alirnp.salizsalon.Interface.OnLoginUser;
 import com.alirnp.salizsalon.Interface.OnLogoutUser;
 import com.alirnp.salizsalon.Model.User;
 import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.R;
-import com.alirnp.salizsalon.Utils.Utils;
+import com.alirnp.salizsalon.Utils.Constants;
 import com.alirnp.salizsalon.Views.Fragments.FragmentHome;
 import com.alirnp.salizsalon.Views.Fragments.FragmentOrder;
 import com.alirnp.salizsalon.Views.Fragments.FragmentUser;
@@ -28,31 +32,31 @@ import com.google.android.material.internal.BaselineLayout;
 
 public class MainActivity extends AppCompatActivity implements
         BottomNavigationView.OnNavigationItemSelectedListener,
-        OnLogoutUser, OnLoginUser {
+        OnLogoutUser {
 
     FragmentManager fragmentManager;
     boolean doubleBackToExitPressedOnce = false;
     private BottomNavigationView btmView;
     private FragmentHome fragmentHome = FragmentHome.newInstance();
-    private FragmentUser fragmentUser = new FragmentUser(this);
+    boolean isHome = true;
     private FragmentOrder fragmentOrder = FragmentOrder.newInstance();
     private FragmentUserInfo fragmentUserInfo = new FragmentUserInfo(this);
+    private FragmentUser fragmentUser = new FragmentUser();
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            isHome = true;
+        }
+    };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected void onStart() {
+        super.onStart();
 
-        initViews();
-
-        setNavigationTypeface();
-
-        replace(fragmentHome);
-
-
-
+        if (isHome) {
+            btmView.setSelectedItemId(R.id.home);
+        }
     }
-
 
 
     private void initViews() {
@@ -66,6 +70,21 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        initViews();
+
+        setNavigationTypeface();
+
+        replace(fragmentHome);
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+                new IntentFilter(Constants.EVENT_LOGIN));
+    }
+
+    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
 
@@ -75,14 +94,16 @@ public class MainActivity extends AppCompatActivity implements
 
             case R.id.account:
                 User user = MyApplication.getSharedPrefManager().getUser();
+
                 if (user != null) {
                     String firstName = user.getFirstName();
                     if (firstName != null)
                         replace(fragmentUserInfo);
                     else
                         replace(fragmentUser);
-                }
 
+
+                }
                 return true;
 
             case R.id.order:
@@ -94,13 +115,6 @@ public class MainActivity extends AppCompatActivity implements
         return false;
     }
 
-
-
-    private void replace(Fragment fragment) {
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.activity_main_fragment, fragment);
-        fragmentTransaction.commit();
-    }
 
     public void setNavigationTypeface() {
         ViewGroup navigationGroup = (ViewGroup) btmView.getChildAt(0);
@@ -163,16 +177,20 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    @Override
-    public void onLogin() {
-        replace(fragmentHome);
-        Utils.log(getClass(), "mainActivity login");
-    }
 
     @Override
     public void onLogout() {
         MyApplication.getSharedPrefManager().saveUser(null);
         btmView.setSelectedItemId(R.id.home);
+    }
+
+    private void replace(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.activity_main_fragment, fragment);
+        fragmentTransaction.commit();
+
+        isHome = fragment instanceof FragmentHome;
+
     }
 
 

@@ -23,7 +23,7 @@ import com.alirnp.salizsalon.BannerSlider.PicassoImageLoadingService;
 import com.alirnp.salizsalon.Generator.DataGenerator;
 import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.NestedJson.ResponseJson;
-import com.alirnp.salizsalon.NestedJson.Result;
+import com.alirnp.salizsalon.NestedJson.ResultItems;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Utils;
 import com.alirnp.salizsalon.Views.Activities.ActivityChooseTime;
@@ -104,7 +104,7 @@ public class FragmentHome extends Fragment
 
             if (response.body() != null) {
 
-                Result result = response.body().getResult().get(0);
+                ResultItems result = response.body().getResult().get(0);
                 if (Boolean.parseBoolean(result.getSuccess())) {
 
                     rcvCategory.setAdapter(new CategoryAdapter(result.getItems()));
@@ -127,7 +127,7 @@ public class FragmentHome extends Fragment
 
             if (response.body() != null) {
 
-                List<Result> result = response.body().getResult();
+                List<ResultItems> result = response.body().getResult();
 
                 ItemsVerticalAdapter verticalAdapter = new ItemsVerticalAdapter(result);
 
