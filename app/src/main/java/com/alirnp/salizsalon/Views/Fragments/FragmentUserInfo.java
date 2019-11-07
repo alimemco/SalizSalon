@@ -5,24 +5,27 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 
 import com.alirnp.salizsalon.CustomViews.MyButton;
+import com.alirnp.salizsalon.CustomViews.MyTextView;
+import com.alirnp.salizsalon.Dialog.BottomSheetEditUser;
 import com.alirnp.salizsalon.Interface.OnLogoutUser;
 import com.alirnp.salizsalon.Model.User;
 import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.R;
 
 
-public class FragmentUserInfo extends Fragment implements View.OnClickListener {
+public class FragmentUserInfo extends Fragment implements View.OnClickListener,
+        BottomSheetEditUser.OnUserUpdate {
 
     private View view;
-    private TextView textView;
+    private MyTextView nameTv, phoneTv;
     private MyButton exitBtn;
-    // private RecyclerView rcv;
+    private AppCompatImageView editImg;
 
     private OnLogoutUser onLogoutUser;
 
@@ -38,72 +41,57 @@ public class FragmentUserInfo extends Fragment implements View.OnClickListener {
         view = inflater.inflate(R.layout.fragment_user_info, container, false);
         initViews();
 
-        initSharedPreferences();
+        setValuesFromSharedPref();
 
         return view;
     }
 
-    private void initSharedPreferences() {
+    private void setValuesFromSharedPref() {
         User user = MyApplication.getSharedPrefManager().getUser();
         if (user != null) {
-            String firstName = user.getFirstName();
-            //  String phone = user.getPhone();
-            if (firstName != null
-                /*&& phone != null*/) {
-                textView.setText(firstName);
-                //   MyApplication.getApi().getUserReserveList(Constants.USER_RESERVE_LIST, phone).enqueue(callback());
-            }
+            String name = user.getFirstName() + " " + user.getLastName();
+            String phone = user.getPhone();
 
+            if (phone != null)
+                phoneTv.setText(phone);
+            nameTv.setText(name);
         }
     }
 
     private void initViews() {
-        textView = view.findViewById(R.id.fragment_user_info_txt);
+        nameTv = view.findViewById(R.id.fragment_user_info_txt_name);
+        phoneTv = view.findViewById(R.id.fragment_user_info_txt_phone);
         exitBtn = view.findViewById(R.id.fragment_user_info_btn_exit);
-        /*
-        rcv = view.findViewById(R.id.fragment_user_info_rcv);
-        rcv.setLayoutManager(new LinearLayoutManager(getContext()));*/
-
+        editImg = view.findViewById(R.id.fragment_user_info_img_edit);
         exitBtn.setOnClickListener(this);
+        editImg.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.fragment_user_info_btn_exit) {
 
-            if (onLogoutUser != null) {
-                onLogoutUser.onLogout();
-            }
+        switch (v.getId()) {
+            case R.id.fragment_user_info_btn_exit:
+                if (onLogoutUser != null)
+                    onLogoutUser.onLogout();
+                break;
+
+
+            case R.id.fragment_user_info_img_edit:
+                showBottomDialog();
+                break;
         }
 
     }
-/*
-    private Callback<ResponseJson> callback() {
-        return new Callback<ResponseJson>() {
-            @Override
-            public void onResponse(Call<ResponseJson> call, Response<ResponseJson> response) {
-                if (response.isSuccessful())
-                    if (response.body() != null) {
-                        ResultItems result = response.body().getResult().get(0);
-                        boolean success = Boolean.parseBoolean(result.getSuccess());
-                        if (success) {
 
-                            UserReserveAdapter adapter = new UserReserveAdapter(result.getItems());
-                            rcv.setAdapter(adapter);
+    private void showBottomDialog() {
+        BottomSheetEditUser bottomSheetEditUser = new BottomSheetEditUser(this);
+        bottomSheetEditUser.show(getChildFragmentManager(), bottomSheetEditUser.getTag());
 
-                        } else {
-                            String msg = result.getMessage();
-                            Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseJson> call, Throwable t) {
-                Toast.makeText(getContext(), t.toString(), Toast.LENGTH_SHORT).show();
-            }
-        };
     }
-*/
+
+    @Override
+    public void OnUpdate() {
+        setValuesFromSharedPref();
+    }
 }

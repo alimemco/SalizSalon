@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:orientation="vertical"
+    tools:context=".Dialog.BottomSheetEditUser">
+
+    <View
+        android:layout_width="25dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/standard_margin2x"
+        android:background="@drawable/bg_bottom_sheet_arrow" />
+
+
+    <com.alirnp.salizsalon.CustomViews.MyTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/standard_margin2x"
+        android:gravity="center_horizontal"
+        android:text="تغییر اطلاعات کاربری"
+        android:textSize="@dimen/large_2X_sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="@dimen/standard_margin2x"
+        android:background="@color/gray_blue_100" />
+
+    <com.alirnp.salizsalon.CustomViews.MyEditText
+        android:id="@+id/bottom_sheet_edit_user_firstName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/standard_margin2x"
+        android:background="@drawable/bg_edit_text"
+        android:gravity="center"
+        android:hint="نام"
+        android:inputType="text"
+        android:maxLength="11"
+        android:maxLines="1"
+        android:textSize="@dimen/large_2X_sp"
+        app:drawableRightCompat="@drawable/ic_user_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@id/appCompatImageView4" />
+
+    <com.alirnp.salizsalon.CustomViews.MyEditText
+        android:id="@+id/bottom_sheet_edit_user_lastName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/standard_margin2x"
+        android:layout_marginRight="@dimen/standard_margin2x"
+        android:layout_marginBottom="@dimen/standard_margin2x"
+        android:background="@drawable/bg_edit_text"
+        android:gravity="center"
+        android:hint="نام خانوادگی"
+        android:inputType="text"
+        android:maxLength="11"
+        android:maxLines="1"
+        android:textSize="@dimen/large_2X_sp"
+        app:drawableRightCompat="@drawable/ic_user_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@id/appCompatImageView4" />
+
+    <com.alirnp.salizsalon.CustomViews.MyEditText
+        android:id="@+id/bottom_sheet_edit_user_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/standard_margin2x"
+        android:layout_marginRight="@dimen/standard_margin2x"
+        android:background="@drawable/bg_edit_text"
+        android:gravity="center"
+        android:hint="شماره تلفن"
+        android:inputType="number"
+        android:maxLength="11"
+        android:maxLines="1"
+        android:textSize="@dimen/large_2X_sp"
+        app:drawableRightCompat="@drawable/ic_phone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@id/appCompatImageView4" />
+
+    <com.alirnp.salizsalon.CustomViews.MyEditText
+        android:id="@+id/bottom_sheet_edit_user_newPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/standard_margin2x"
+        android:background="@drawable/bg_edit_text"
+        android:gravity="center"
+        android:hint="پسورد جدید"
+        android:inputType="textPassword"
+        android:maxLength="11"
+        android:maxLines="1"
+        android:textSize="@dimen/large_2X_sp"
+        app:drawableRightCompat="@drawable/ic_key" />
+
+    <com.alirnp.salizsalon.CustomViews.MyButton
+        android:id="@+id/bottom_sheet_edit_user_btn_edit"
+        style="@style/buttonPrimaryRadius"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/standard_margin2x"
+        android:layout_marginRight="@dimen/standard_margin2x"
+        android:layout_marginBottom="@dimen/standard_margin2x"
+        android:text="تغییر اطلاعات"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/activity_login_password" />
+
+</LinearLayout>

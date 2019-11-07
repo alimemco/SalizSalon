@@ -68,7 +68,7 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
 
             if (validatedInfo()) {
                 showLoading();
-                MyApplication.getApi().registerOrLogin(Constants.LOGIN, loginInfo).enqueue(callback());
+                MyApplication.getApi().userManager(Constants.LOGIN, loginInfo).enqueue(callback());
             }
 
 
@@ -111,7 +111,7 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
 
     private void loginSuccess(Result result) {
         String firstName = result.getFirst_name();
-        String lastName = result.getFirst_name();
+        String lastName = result.getLast_name();
 
         Toast.makeText(ActivityLogin.this, "با موفقیت وارد شدید", Toast.LENGTH_SHORT).show();
 

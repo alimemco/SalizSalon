@@ -24,4 +24,5 @@
     <string name="loginOrRegisterForReserve">برای رزرو نوبت وارد حساب کاربری شوید</string>
     <string name="login">ورود</string>
     <string name="register">ثبت نام</string>
+    <string name="user_normal">کاربر عادی</string>
 </resources>

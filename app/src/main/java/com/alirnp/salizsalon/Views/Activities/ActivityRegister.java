@@ -10,7 +10,6 @@ import androidx.fragment.app.FragmentManager;
 import com.alirnp.salizsalon.CustomViews.MyButton;
 import com.alirnp.salizsalon.CustomViews.MyEditText;
 import com.alirnp.salizsalon.Dialog.LoadingDialog;
-import com.alirnp.salizsalon.Interface.OnLoginUser;
 import com.alirnp.salizsalon.Model.JSON.Result;
 import com.alirnp.salizsalon.Model.User;
 import com.alirnp.salizsalon.MyApplication;
@@ -33,8 +32,6 @@ public class ActivityRegister extends AppCompatActivity implements View.OnClickL
     private Map<String, String> infoMap = new HashMap<>();
 
     private LoadingDialog dialog;
-
-    private OnLoginUser onLoginUser;
 
 
     @Override
@@ -102,7 +99,7 @@ public class ActivityRegister extends AppCompatActivity implements View.OnClickL
 
 
     private void registerToServer() {
-        MyApplication.getApi().registerOrLogin(Constants.REGISTER, infoMap).enqueue(callback());
+        MyApplication.getApi().userManager(Constants.REGISTER, infoMap).enqueue(callback());
         showLoading();
     }
 
@@ -143,12 +140,6 @@ public class ActivityRegister extends AppCompatActivity implements View.OnClickL
         finish();
         Utils.sendMessageLogin(ActivityRegister.this);
     }
-/*
-    private void saveUserInSharePreference() {
-
-        SharedPrefManager sharedPrefManager = new SharedPrefManager(ActivityRegister.this);
-        sharedPrefManager.saveUser(new User(firstName, lastName, phone));
-    }*/
 
     private void showLoading() {
         FragmentManager fm = getSupportFragmentManager();

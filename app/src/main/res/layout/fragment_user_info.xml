@@ -14,21 +14,21 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_margin="50dp"
-        android:background="@drawable/bg_square"
-        android:src="@mipmap/ic_launcher"
+        app:srcCompat="@drawable/ic_girl"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <com.alirnp.salizsalon.CustomViews.MyTextView
-        android:id="@+id/fragment_user_info_name"
+        android:id="@+id/fragment_user_info_txt_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginRight="30dp"
-        android:text="علی مقدم"
+        style="chi"
         android:textColor="@android:color/black"
+        tools:text="علی مقدم"
         android:textSize="@dimen/large_4X_sp"
         app:fontCustom="iranSansBold"
         app:layout_constraintRight_toLeftOf="@id/fragment_user_info_img"
@@ -44,13 +44,23 @@
         android:paddingTop="2dp"
         android:paddingRight="12dp"
         android:paddingBottom="2dp"
-        android:text="کاربر عادی"
+        android:text="@string/user_normal"
         android:textColor="#4FC3F7"
         android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@+id/fragment_user_info_name"
+        app:layout_constraintEnd_toEndOf="@+id/fragment_user_info_txt_name"
         app:layout_constraintRight_toLeftOf="@id/fragment_user_info_img"
-        app:layout_constraintTop_toBottomOf="@id/fragment_user_info_name" />
+        app:layout_constraintTop_toBottomOf="@id/fragment_user_info_txt_name" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/fragment_user_info_img_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/standard_margin4x"
+        android:padding="@dimen/standard_margin2x"
+        app:layout_constraintBottom_toBottomOf="@id/fragment_user_info_txt_name"
+        app:layout_constraintRight_toLeftOf="@id/fragment_user_info_txt_name"
+        app:layout_constraintTop_toTopOf="@id/fragment_user_info_txt_name"
+        app:srcCompat="@drawable/ic_edit" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -81,29 +91,22 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="60dp"
             android:layout_marginRight="100dp"
-            android:text="09169501905"
+            tools:text="09169501905"
             android:textSize="@dimen/large_2X_sp"
             app:layout_constraintRight_toRightOf="@id/constraintLayout"
             app:layout_constraintTop_toTopOf="@id/constraintLayout" />
 
-        <TextView
-            android:id="@+id/fragment_user_info_txt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="@dimen/large_4X_sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:text="@string/hello_blank_fragment" />
 
 
         <com.alirnp.salizsalon.CustomViews.MyButton
             android:id="@+id/fragment_user_info_btn_exit"
-            style="@style/buttonPrimaryRadius"
+            style="@style/buttonStrokePrimary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="30dp"
+            android:textSize="@dimen/normal_sp"
             android:text="خروج از حساب کاربری"
-            app:layout_constraintBottom_toTopOf="@id/fragment_user_info_txt" />
+            app:layout_constraintBottom_toBottomOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

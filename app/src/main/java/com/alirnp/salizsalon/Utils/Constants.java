@@ -18,6 +18,7 @@ public class Constants {
 
     public static String REGISTER = "REGISTER";
     public static String LOGIN = "LOGIN";
+    public static String EDIT = "EDIT";
     public static String USER_RESERVE_LIST = "USER_RESERVE_LIST";
 
     public static String FIRST_NAME = "first_name";

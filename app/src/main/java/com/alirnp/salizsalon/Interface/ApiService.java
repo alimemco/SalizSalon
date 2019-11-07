@@ -39,11 +39,11 @@ public interface ApiService {
 
 
     /**
-     * @param request {REGISTER , LOGIN}
+     * @param request {REGISTER , LOGIN , EDIT}
      * @param info    { first_name , last_name , phone , password }
      */
     @POST("api/v1/users.php")
-    Call<ArrayList<Result>> registerOrLogin(
+    Call<ArrayList<Result>> userManager(
             @Query("request") String request,
             @QueryMap Map<String, String> info);
 
