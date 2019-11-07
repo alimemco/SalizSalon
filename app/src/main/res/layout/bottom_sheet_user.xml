@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.alirnp.salizsalon.CustomViews.MyTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/standard_margin2x"
+        android:gravity="center"
+        android:text="@string/loginOrRegisterForReserve"
+        android:textSize="@dimen/large_3X_sp" />
+
+
+    <com.alirnp.salizsalon.CustomViews.MyButton
+        android:id="@+id/bottom_sheet_user_login"
+        style="@style/buttonStrokePrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/standard_margin2x"
+        android:layout_marginRight="@dimen/standard_margin2x"
+        android:text="@string/login" />
+
+    <com.alirnp.salizsalon.CustomViews.MyButton
+        android:id="@+id/bottom_sheet_user_register"
+        style="@style/buttonStrokePrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/standard_margin2x"
+        android:layout_marginTop="@dimen/standard_margin2x"
+        android:layout_marginRight="@dimen/standard_margin2x"
+        android:layout_marginBottom="@dimen/standard_margin2x"
+        android:text="@string/register" />
+
+
+</LinearLayout>

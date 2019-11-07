@@ -1,36 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray_100"
     android:orientation="vertical"
     tools:context=".Views.Fragments.FragmentUserInfo">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/fragment_user_info_rcv"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/fragment_user_info_img"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_margin="50dp"
+        android:background="@drawable/bg_square"
+        android:src="@mipmap/ic_launcher"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.alirnp.salizsalon.CustomViews.MyTextView
+        android:id="@+id/fragment_user_info_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="30dp"
+        android:text="علی مقدم"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/large_4X_sp"
+        app:fontCustom="iranSansBold"
+        app:layout_constraintRight_toLeftOf="@id/fragment_user_info_img"
+        app:layout_constraintTop_toTopOf="@+id/fragment_user_info_img" />
+
+    <com.alirnp.salizsalon.CustomViews.MyTextView
+        android:id="@+id/fragment_user_info_level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_chip_blue"
+        android:paddingLeft="12dp"
+        android:paddingTop="2dp"
+        android:paddingRight="12dp"
+        android:paddingBottom="2dp"
+        android:text="کاربر عادی"
+        android:textColor="#4FC3F7"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/fragment_user_info_name"
+        app:layout_constraintRight_toLeftOf="@id/fragment_user_info_img"
+        app:layout_constraintTop_toBottomOf="@id/fragment_user_info_name" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        tools:listitem="@layout/rcv_user_reserve">
-
-    </androidx.recyclerview.widget.RecyclerView>
-
-    <TextView
-        android:id="@+id/fragment_user_info_txt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        tools:text="@string/hello_blank_fragment"
-        android:textSize="@dimen/large_4X_sp" />
+        android:background="@drawable/bg_material_ui"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_user_info_img">
 
 
-    <com.alirnp.salizsalon.CustomViews.MyButton
-        android:id="@+id/fragment_user_info_btn_exit"
-        style="@style/buttonPrimaryRadius"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp"
-        android:text="خروج از حساب کاربری" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/fragment_user_info_img_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/standard_margin4x"
+            android:layout_marginRight="@dimen/standard_margin2x"
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_user_info_txt_phone"
+            app:layout_constraintLeft_toRightOf="@id/fragment_user_info_txt_phone"
+            app:layout_constraintTop_toTopOf="@+id/fragment_user_info_txt_phone"
+            app:srcCompat="@drawable/ic_phone_call" />
+
+        <com.alirnp.salizsalon.CustomViews.MyTextView
+            android:id="@+id/fragment_user_info_txt_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginRight="100dp"
+            android:text="09169501905"
+            android:textSize="@dimen/large_2X_sp"
+            app:layout_constraintRight_toRightOf="@id/constraintLayout"
+            app:layout_constraintTop_toTopOf="@id/constraintLayout" />
+
+        <TextView
+            android:id="@+id/fragment_user_info_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/large_4X_sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="@string/hello_blank_fragment" />
 
 
-</LinearLayout>
+        <com.alirnp.salizsalon.CustomViews.MyButton
+            android:id="@+id/fragment_user_info_btn_exit"
+            style="@style/buttonPrimaryRadius"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:text="خروج از حساب کاربری"
+            app:layout_constraintBottom_toTopOf="@id/fragment_user_info_txt" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

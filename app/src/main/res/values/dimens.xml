@@ -3,6 +3,7 @@
     <dimen name="standard_margin">8dp</dimen>
     <dimen name="standard_margin2x">16dp</dimen>
     <dimen name="standard_margin3x">25dp</dimen>
+    <dimen name="standard_margin4x">30dp</dimen>
     <dimen name="normal_sp">15sp</dimen>
     <dimen name="large_sp">17sp</dimen>
     <dimen name="large_2X_sp">17sp</dimen>

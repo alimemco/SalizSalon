@@ -38,25 +38,18 @@ public class MainActivity extends AppCompatActivity implements
     boolean doubleBackToExitPressedOnce = false;
     private BottomNavigationView btmView;
     private FragmentHome fragmentHome = FragmentHome.newInstance();
-    boolean isHome = true;
     private FragmentOrder fragmentOrder = FragmentOrder.newInstance();
     private FragmentUserInfo fragmentUserInfo = new FragmentUserInfo(this);
     private FragmentUser fragmentUser = new FragmentUser();
+
+    Constants.fragmentToShow fragmentToShow = Constants.fragmentToShow.HOME;
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            isHome = true;
+
+            fragmentToShow = Constants.fragmentToShow.HOME;
         }
     };
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        if (isHome) {
-            btmView.setSelectedItemId(R.id.home);
-        }
-    }
 
 
     private void initViews() {
@@ -67,6 +60,33 @@ public class MainActivity extends AppCompatActivity implements
 
         fragmentManager = getSupportFragmentManager();
 
+    }
+
+    private BroadcastReceiver mBroadcastReserved = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            fragmentToShow = Constants.fragmentToShow.ORDER;
+        }
+    };
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+
+        switch (fragmentToShow) {
+            case HOME:
+                btmView.setSelectedItemId(R.id.home);
+                break;
+
+            case USER:
+                btmView.setSelectedItemId(R.id.user);
+                break;
+
+            case ORDER:
+                btmView.setSelectedItemId(R.id.order);
+                break;
+        }
     }
 
     @Override
@@ -80,39 +100,8 @@ public class MainActivity extends AppCompatActivity implements
 
         replace(fragmentHome);
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
-                new IntentFilter(Constants.EVENT_LOGIN));
-    }
+        initBroadcasts();
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-
-            case R.id.home:
-                replace(fragmentHome);
-                return true;
-
-            case R.id.account:
-                User user = MyApplication.getSharedPrefManager().getUser();
-
-                if (user != null) {
-                    String firstName = user.getFirstName();
-                    if (firstName != null)
-                        replace(fragmentUserInfo);
-                    else
-                        replace(fragmentUser);
-
-
-                }
-                return true;
-
-            case R.id.order:
-                replace(fragmentOrder);
-                return true;
-
-        }
-
-        return false;
     }
 
 
@@ -184,12 +173,54 @@ public class MainActivity extends AppCompatActivity implements
         btmView.setSelectedItemId(R.id.home);
     }
 
+    private void initBroadcasts() {
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+                new IntentFilter(Constants.EVENT_LOGIN));
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mBroadcastReserved,
+                new IntentFilter(Constants.EVENT_RESERVED));
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+
+            case R.id.home:
+                replace(fragmentHome);
+                return true;
+
+            case R.id.user:
+                User user = MyApplication.getSharedPrefManager().getUser();
+
+                if (user != null) {
+                    String firstName = user.getFirstName();
+                    if (firstName != null)
+                        replace(fragmentUserInfo);
+                    else
+                        replace(fragmentUser);
+
+
+                }
+                return true;
+
+            case R.id.order:
+                replace(fragmentOrder);
+                return true;
+
+        }
+
+        return false;
+    }
+
     private void replace(Fragment fragment) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.activity_main_fragment, fragment);
         fragmentTransaction.commit();
 
-        isHome = fragment instanceof FragmentHome;
+        if (fragment instanceof FragmentHome) {
+            fragmentToShow = Constants.fragmentToShow.HOME;
+        }
+
 
     }
 

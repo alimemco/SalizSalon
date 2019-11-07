@@ -1,5 +1,9 @@
 package com.alirnp.salizsalon.Views.Activities;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -7,8 +11,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.alirnp.salizsalon.CustomViews.MyButton;
+import com.alirnp.salizsalon.Dialog.BottomSheetFragment;
 import com.alirnp.salizsalon.Interface.OnStepReady;
 import com.alirnp.salizsalon.Model.Day;
 import com.alirnp.salizsalon.Model.Hour;
@@ -17,6 +23,7 @@ import com.alirnp.salizsalon.Model.Service;
 import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
+import com.alirnp.salizsalon.Utils.Utils;
 import com.alirnp.salizsalon.Views.Fragments.FragmentStepOne;
 import com.alirnp.salizsalon.Views.Fragments.FragmentStepThree;
 import com.alirnp.salizsalon.Views.Fragments.FragmentStepTwo;
@@ -24,6 +31,7 @@ import com.shuhart.stepview.StepView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,6 +49,8 @@ public class ActivityChooseTime extends AppCompatActivity implements
     private StepView stepView;
     private MyButton nextStepBtn;
 
+    private BottomSheetFragment bottomSheetFragment;
+
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private FragmentStepOne fragmentStepOne = new FragmentStepOne(this);
     private FragmentStepTwo fragmentStepTwo = new FragmentStepTwo(this);
@@ -54,6 +64,13 @@ public class ActivityChooseTime extends AppCompatActivity implements
         return data;
     }
 
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            runStepThree();
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +81,8 @@ public class ActivityChooseTime extends AppCompatActivity implements
         initViews();
 
         replace(fragmentStepOne);
+
+        initBroadcasts();
     }
 
     private void initViews() {
@@ -85,6 +104,18 @@ public class ActivityChooseTime extends AppCompatActivity implements
                 .typeface(MyApplication.getIranSans(this))
                 .commit();
 
+
+    }
+
+    private void showBottomDialog() {
+        bottomSheetFragment = new BottomSheetFragment();
+        bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
+
+    }
+
+    private void initBroadcasts() {
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+                new IntentFilter(Constants.EVENT_LOGIN));
 
     }
 
@@ -159,20 +190,34 @@ public class ActivityChooseTime extends AppCompatActivity implements
                 break;
 
             case 3:
-
-                MyApplication.getApi().reserve(
-                        day.getDayName(),
-                        day.getMonthName(),
-                        day.getDayOfMonth(),
-                        hour.getTime(),
-                        calculatorPrice(),
-                        explodeServices()
-                )
-                        .enqueue(callback());
-
-                nextStepBtn.setEnabled(true);
+                runStepThree();
                 break;
         }
+    }
+
+    private void runStepThree() {
+
+        String phone = MyApplication.getSharedPrefManager().getUser().getPhone();
+        if (phone == null) {
+            showBottomDialog();
+        } else {
+            Map<String, String> info = new HashMap<>();
+
+            info.put(Constants.PHONE, phone);
+            info.put(Constants.DAY_NAME, day.getDayName());
+            info.put(Constants.MONTH_NAME, day.getMonthName());
+            info.put(Constants.DAY_OF_MONTH, day.getDayOfMonth());
+            info.put(Constants.HOUR, hour.getTime());
+            info.put(Constants.PRICE, String.valueOf(calculatorPrice()));
+            info.put(Constants.SERVICES, explodeServices());
+
+            MyApplication.getApi().reserve(
+                    Constants.RESERVE,
+                    info
+            ).enqueue(callback());
+        }
+
+        nextStepBtn.setEnabled(true);
     }
 
     private int calculatorPrice() {
@@ -200,8 +245,17 @@ public class ActivityChooseTime extends AppCompatActivity implements
         return new Callback<ArrayList<Result>>() {
             @Override
             public void onResponse(Call<ArrayList<Result>> call, Response<ArrayList<Result>> response) {
-                if (response.body() != null)
-                    Toast.makeText(ActivityChooseTime.this, response.body().get(0).getMessage(), Toast.LENGTH_LONG).show();
+                if (response.body() != null) {
+                    Result result = response.body().get(0);
+                    if (Boolean.valueOf(result.getSuccess())) {
+                        Toast.makeText(ActivityChooseTime.this, "با موفقیت ارسال شد ، منتظر تایید باشید", Toast.LENGTH_LONG).show();
+                        finish();
+                        Utils.sendMessageReserved(ActivityChooseTime.this);
+
+                    } else {
+                        Toast.makeText(ActivityChooseTime.this, result.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
             }
 
             @Override
@@ -211,4 +265,6 @@ public class ActivityChooseTime extends AppCompatActivity implements
             }
         };
     }
+
+
 }

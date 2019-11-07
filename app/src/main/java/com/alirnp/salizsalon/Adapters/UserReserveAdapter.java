@@ -60,6 +60,13 @@ public class UserReserveAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
 
         void bind(Item item) {
+
+            statusTv.setText(getStatus(item));
+            priceTv.setText(Utils.numberToTextPrice(item.getPrice()));
+
+        }
+
+        private String getStatus(Item item) {
             String status = "";
             if (item.getStatus().equals(Constants.statusReserve.PENDING.getStatus())) {
                 status = itemView.getResources().getString(R.string.status_pending);
@@ -75,9 +82,7 @@ public class UserReserveAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             }
 
-            statusTv.setText(status);
-            priceTv.setText(Utils.numberToTextPrice(Integer.valueOf(item.getPrice())));
-
+            return status;
         }
     }
 

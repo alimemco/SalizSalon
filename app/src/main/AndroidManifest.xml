@@ -17,9 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Views.Activities.ActivityRegister">
-
-        </activity>
+        <activity android:name=".HolderForTestApp.ActivityShop"></activity>
+        <activity android:name=".Views.Activities.ActivityRegister"></activity>
         <activity android:name=".Views.Activities.ActivityLogin" />
         <activity android:name=".Views.Activities.ActivityChooseTime" />
         <activity android:name=".Views.Activities.MainActivity">

@@ -6,26 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.alirnp.salizsalon.Adapters.UserReserveAdapter;
 import com.alirnp.salizsalon.CustomViews.MyButton;
 import com.alirnp.salizsalon.Interface.OnLogoutUser;
 import com.alirnp.salizsalon.Model.User;
 import com.alirnp.salizsalon.MyApplication;
-import com.alirnp.salizsalon.NestedJson.ResponseJson;
-import com.alirnp.salizsalon.NestedJson.ResultItems;
 import com.alirnp.salizsalon.R;
-import com.alirnp.salizsalon.Utils.Constants;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class FragmentUserInfo extends Fragment implements View.OnClickListener {
@@ -33,7 +22,7 @@ public class FragmentUserInfo extends Fragment implements View.OnClickListener {
     private View view;
     private TextView textView;
     private MyButton exitBtn;
-    private RecyclerView rcv;
+    // private RecyclerView rcv;
 
     private OnLogoutUser onLogoutUser;
 
@@ -58,10 +47,11 @@ public class FragmentUserInfo extends Fragment implements View.OnClickListener {
         User user = MyApplication.getSharedPrefManager().getUser();
         if (user != null) {
             String firstName = user.getFirstName();
-            String phone = user.getPhone();
-            if (firstName != null && phone != null) {
+            //  String phone = user.getPhone();
+            if (firstName != null
+                /*&& phone != null*/) {
                 textView.setText(firstName);
-                MyApplication.getApi().getUserReserveList(Constants.USER_RESERVE_LIST, phone).enqueue(callback());
+                //   MyApplication.getApi().getUserReserveList(Constants.USER_RESERVE_LIST, phone).enqueue(callback());
             }
 
         }
@@ -70,8 +60,9 @@ public class FragmentUserInfo extends Fragment implements View.OnClickListener {
     private void initViews() {
         textView = view.findViewById(R.id.fragment_user_info_txt);
         exitBtn = view.findViewById(R.id.fragment_user_info_btn_exit);
+        /*
         rcv = view.findViewById(R.id.fragment_user_info_rcv);
-        rcv.setLayoutManager(new LinearLayoutManager(getContext()));
+        rcv.setLayoutManager(new LinearLayoutManager(getContext()));*/
 
         exitBtn.setOnClickListener(this);
     }
@@ -86,7 +77,7 @@ public class FragmentUserInfo extends Fragment implements View.OnClickListener {
         }
 
     }
-
+/*
     private Callback<ResponseJson> callback() {
         return new Callback<ResponseJson>() {
             @Override
@@ -114,4 +105,5 @@ public class FragmentUserInfo extends Fragment implements View.OnClickListener {
             }
         };
     }
+*/
 }

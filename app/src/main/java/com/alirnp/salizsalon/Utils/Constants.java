@@ -4,6 +4,12 @@ public class Constants {
 
     public static String TIMES = "times";
 
+    public static String DAY_NAME = "DAY_NAME";
+    public static String MONTH_NAME = "MONTH_NAME";
+    public static String DAY_OF_MONTH = "DAY_OF_MONTH";
+    public static String PRICE = "PRICE";
+    public static String RESERVE = "RESERVE";
+
     public static String POSITION = "POSITION";
     public static String IMAGE_LIST = "IMAGE_LIST";
     public static String DAY = "DAY";
@@ -23,6 +29,7 @@ public class Constants {
 
     public static String INTERFACE_ON_LOGIN_USER = "onLoginUser";
     public static String EVENT_LOGIN = "EVENT_LOGIN";
+    public static String EVENT_RESERVED = "EVENT_RESERVED";
 
 
     public enum resultMap {
@@ -64,6 +71,22 @@ public class Constants {
 
         state(int status) {
             this.status = status ;
+        }
+
+        public int getStatus() {
+            return status;
+        }
+    }
+
+    public enum fragmentToShow {
+        HOME(1),
+        USER(2),
+        ORDER(3);
+
+        private int status;
+
+        fragmentToShow(int status) {
+            this.status = status;
         }
 
         public int getStatus() {

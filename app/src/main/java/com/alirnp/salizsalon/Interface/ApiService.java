@@ -10,6 +10,7 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
@@ -25,14 +26,15 @@ public interface ApiService {
     @GET("salizGet.php")
     Call<ResponseJson> getTimes(@Query("get") String get, @Query("day") String day);
 
-    @GET("reserve.php")
+
+    /**
+     * @param request {RESERVE}
+     * @param info    {DAY_NAME, MONTH_NAME, DAY_OF_MONTH, HOUR, PRICE, PRICE, SERVICES}
+     */
+    @PUT("api/v1/service.php")
     Call<ArrayList<Result>> reserve(
-            @Query("DAY_NAME") String dayName,
-            @Query("MONTH_NAME") String monthName,
-            @Query("DAY_OF_MONTH") String dayOfMonth,
-            @Query("HOUR") String hour,
-            @Query("PRICE") int price,
-            @Query("SERVICES") String services
+            @Query("request") String request,
+            @QueryMap Map<String, String> info
     );
 
 
