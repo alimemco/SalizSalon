@@ -100,14 +100,16 @@ public class BottomSheetEditUser extends BottomSheetDialogFragment implements Vi
             newPhone = phoneEdt.getText().toString();
             phone = MyApplication.getSharedPrefManager().getUser().getPhone();
 
+            infoMap.put(Constants.PHONE, phone);
+
             if (!firstName.equals("") &&
                     !lastName.equals("") &&
                     !newPhone.equals("")) {
 
                 infoMap.put(Constants.FIRST_NAME, firstName);
                 infoMap.put(Constants.LAST_NAME, lastName);
-                infoMap.put(Constants.NEW_PHONE, newPhone);
-                infoMap.put(Constants.PHONE, phone);
+                infoMap.put(Constants.NEW_PHONE, "11111");
+
 
                 if (newPasswordEdt.getText() != null) {
                     password = newPasswordEdt.getText().toString();

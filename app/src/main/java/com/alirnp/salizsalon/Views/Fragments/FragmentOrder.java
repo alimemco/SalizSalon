@@ -82,7 +82,6 @@ public class FragmentOrder extends Fragment {
                             Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
                         }
                     }
-
             }
 
             @Override

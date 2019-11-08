@@ -2,7 +2,9 @@ package com.alirnp.salizsalon.Utils;
 
 public class Constants {
 
-    public static String TIMES = "times";
+    public static final String POSTS = "POSTS";
+    public static final String CATEGORY = "CATEGORY";
+    public static String TIMES = "TIMES";
 
     public static String DAY_NAME = "DAY_NAME";
     public static String MONTH_NAME = "MONTH_NAME";
@@ -21,11 +23,11 @@ public class Constants {
     public static String EDIT = "EDIT";
     public static String USER_RESERVE_LIST = "USER_RESERVE_LIST";
 
-    public static String FIRST_NAME = "first_name";
-    public static String LAST_NAME = "last_name";
-    public static String PHONE = "phone";
-    public static String NEW_PHONE = "new_phone";
-    public static String PASSWORD = "password";
+    public static String FIRST_NAME = "FIRST_NAME";
+    public static String LAST_NAME = "LAST_NAME";
+    public static String PHONE = "PHONE";
+    public static String NEW_PHONE = "NEW_PHONE";
+    public static String PASSWORD = "PASSWORD";
 
     public static String SHARED_PREF_NAME = "sharedPrefName";
 
@@ -33,13 +35,6 @@ public class Constants {
     public static String EVENT_LOGIN = "EVENT_LOGIN";
     public static String EVENT_RESERVED = "EVENT_RESERVED";
 
-
-    public enum resultMap {
-        DAY_NAME,
-        MONTH_NAME,
-        DAY_OF_MONTH,
-        HOUR
-    }
 
     public enum data {
         DAY,

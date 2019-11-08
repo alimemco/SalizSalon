@@ -38,6 +38,10 @@ public class Item {
     @Expose
     private String open;
 
+    @SerializedName("reserved")
+    @Expose
+    private String reserved;
+
 
     @SerializedName("dayName")
     @Expose
@@ -174,5 +178,13 @@ public class Item {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getReserved() {
+        return reserved;
+    }
+
+    public void setReserved(String reserved) {
+        this.reserved = reserved;
     }
 }

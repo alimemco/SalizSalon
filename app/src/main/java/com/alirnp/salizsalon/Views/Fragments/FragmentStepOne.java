@@ -212,8 +212,8 @@ public class FragmentStepOne extends Fragment implements
 
                     for (int i = 0; i < result.getItems().size(); i++) {
                         String time = result.getItems().get(i).getHour();
-                        boolean open = Boolean.valueOf(result.getItems().get(i).getOpen());
-                        list.add(new Hour(time, open));
+                        boolean reserved = Boolean.valueOf(result.getItems().get(i).getReserved());
+                        list.add(new Hour(time, reserved));
                     }
                     switchState(Constants.state.SUCCESS);
                     hoursAdapter.setData(list, this);

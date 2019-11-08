@@ -81,9 +81,6 @@ public class MyApplication extends Application {
 
     private OkHttpClient OkHttpClientWithoutCache() {
         return new OkHttpClient.Builder()
-                /* .readTimeout(60, TimeUnit.SECONDS)
-                 .connectTimeout(60 / 2, TimeUnit.SECONDS)
-                 .writeTimeout(60, TimeUnit.SECONDS)*/
                 .cache(null)
                 .build();
     }

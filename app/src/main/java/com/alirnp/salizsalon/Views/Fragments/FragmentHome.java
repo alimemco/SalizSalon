@@ -25,6 +25,7 @@ import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.NestedJson.ResponseJson;
 import com.alirnp.salizsalon.NestedJson.ResultItems;
 import com.alirnp.salizsalon.R;
+import com.alirnp.salizsalon.Utils.Constants;
 import com.alirnp.salizsalon.Utils.Utils;
 import com.alirnp.salizsalon.Views.Activities.ActivityChooseTime;
 import com.alirnp.salizsalon.Views.Activities.MainActivity;
@@ -173,8 +174,8 @@ public class FragmentHome extends Fragment
     private void initApiServices() {
 
         MyApplication.getApi().getBannerImages().enqueue(callbackBanner);
-        MyApplication.getApi().getCategory("category").enqueue(callbackCategory);
-        MyApplication.getApi().getCategory("posts").enqueue(callbackPosts);
+        MyApplication.getApi().getCategory(Constants.CATEGORY).enqueue(callbackCategory);
+        MyApplication.getApi().getCategory(Constants.POSTS).enqueue(callbackPosts);
     }
 
     private void initSlider() {

@@ -11,6 +11,7 @@ import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.NestedJson.ResponseJson;
 import com.alirnp.salizsalon.NestedJson.ResultItems;
 import com.alirnp.salizsalon.R;
+import com.alirnp.salizsalon.Utils.Constants;
 import com.alirnp.salizsalon.Utils.Utils;
 import com.alirnp.salizsalon.Views.Activities.MainActivity;
 
@@ -57,7 +58,7 @@ public class ActivityShop extends AppCompatActivity {
         rcv = findViewById(R.id.activity_shop_rcv);
         rcv.setLayoutManager(new LinearLayoutManager(this));
 
-        MyApplication.getApi().getCategory("posts").enqueue(callbackPosts);
+        MyApplication.getApi().getCategory(Constants.POSTS).enqueue(callbackPosts);
 
     }
 
