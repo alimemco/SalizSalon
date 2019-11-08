@@ -55,13 +55,12 @@ public class FragmentOrder extends Fragment {
         rcv.setLayoutManager(new LinearLayoutManager(getContext()));
 
         User user = MyApplication.getSharedPrefManager().getUser();
-        if (user != null) {
-            String phone = user.getPhone();
+
+        String phone = user.getPhone();
             if (phone != null) {
                 MyApplication.getApi().getUserReserveList(Constants.USER_RESERVE_LIST, phone).enqueue(callback());
             }
 
-        }
     }
 
 

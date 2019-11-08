@@ -1,25 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="right"
-    android:orientation="vertical"
-    android:padding="@dimen/standard_margin2x">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardUseCompatPadding="true">
 
-    <com.alirnp.salizsalon.CustomViews.MyTextView
-        android:id="@+id/rcv_user_reserve_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/large_3X_sp"
-        tools:text="در انتظار تایید" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <com.alirnp.salizsalon.CustomViews.MyTextView
-        android:id="@+id/rcv_user_reserve_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/green_500"
-        android:textSize="@dimen/large_3X_sp"
-        tools:text="2500 تومان" />
+        <View
+            android:id="@+id/rcv_user_reserve_lineTime"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="@color/gray_blue_100"
+            app:layout_constraintBottom_toBottomOf="@id/rcv_user_reserve_date"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/rcv_user_reserve_date" />
 
-</LinearLayout>
+        <com.alirnp.salizsalon.CustomViews.MyTextView
+            android:id="@+id/rcv_user_reserve_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/standard_margin"
+            android:text="شنبه 25 آبان"
+            android:textSize="@dimen/large_sp"
+            app:layout_constraintLeft_toRightOf="@id/rcv_user_reserve_lineTime"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.alirnp.salizsalon.CustomViews.MyTextView
+            android:id="@+id/rcv_user_reserve_hour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/standard_margin2x"
+            android:layout_marginRight="@dimen/standard_margin2x"
+            android:text="16:00"
+            android:textSize="@dimen/large_sp"
+            app:layout_constraintBottom_toBottomOf="@id/rcv_user_reserve_date"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/rcv_user_reserve_lineTime"
+            app:layout_constraintTop_toTopOf="@id/rcv_user_reserve_date" />
+
+
+        <View
+            android:id="@+id/rcv_user_reserve_line2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/standard_margin"
+            android:background="@color/gray_100"
+            app:layout_constraintTop_toBottomOf="@id/rcv_user_reserve_date" />
+
+        <com.alirnp.salizsalon.CustomViews.MyTextView
+            android:id="@+id/rcv_user_reserve_services"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/standard_margin2x"
+            android:layout_marginTop="@dimen/standard_margin2x"
+            android:layout_marginRight="@dimen/standard_margin2x"
+            android:text="@string/lorem"
+            android:textSize="@dimen/normal_sp"
+            app:layout_constraintBottom_toTopOf="@id/rcv_user_reserve_line3"
+            app:layout_constraintTop_toBottomOf="@id/rcv_user_reserve_line2" />
+
+        <View
+            android:id="@+id/rcv_user_reserve_line3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="@dimen/standard_margin"
+            android:background="@color/gray_100"
+            app:layout_constraintBottom_toTopOf="@id/rcv_user_reserve_status" />
+
+
+        <View
+            android:id="@+id/rcv_user_reserve_statusImage"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginLeft="@dimen/standard_margin2x"
+            android:layout_marginRight="@dimen/standard_margin2x"
+            android:background="@drawable/bg_circle_gray"
+            app:layout_constraintBottom_toBottomOf="@id/rcv_user_reserve_status"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/rcv_user_reserve_status" />
+
+        <com.alirnp.salizsalon.CustomViews.MyTextView
+            android:id="@+id/rcv_user_reserve_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/standard_margin2x"
+            android:layout_marginBottom="4dp"
+            android:textSize="@dimen/large_sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/rcv_user_reserve_statusImage"
+            tools:text="در انتظار تایید" />
+
+        <com.alirnp.salizsalon.CustomViews.MyTextView
+            android:id="@+id/rcv_user_reserve_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/standard_margin2x"
+            android:layout_marginRight="@dimen/standard_margin2x"
+            android:layout_marginBottom="4dp"
+            android:textColor="@color/green_500"
+            android:textSize="@dimen/large_sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            tools:text="2500 تومان" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>

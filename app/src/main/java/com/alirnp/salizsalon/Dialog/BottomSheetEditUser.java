@@ -16,6 +16,7 @@ import com.alirnp.salizsalon.Model.User;
 import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
+import com.alirnp.salizsalon.Utils.Utils;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class BottomSheetEditUser extends BottomSheetDialogFragment implements Vi
 
 
     private MyEditText firstNameEdt, lastNameEdt, phoneEdt, newPasswordEdt;
-    private String firstName, lastName, phone, password;
+    private String firstName, lastName, phone, newPhone, password;
     private MyButton editBtn;
     private View view;
 
@@ -96,15 +97,16 @@ public class BottomSheetEditUser extends BottomSheetDialogFragment implements Vi
 
             firstName = firstNameEdt.getText().toString();
             lastName = lastNameEdt.getText().toString();
-            phone = phoneEdt.getText().toString();
-            password = newPasswordEdt.getText().toString();
+            newPhone = phoneEdt.getText().toString();
+            phone = MyApplication.getSharedPrefManager().getUser().getPhone();
 
             if (!firstName.equals("") &&
                     !lastName.equals("") &&
-                    !phone.equals("")) {
+                    !newPhone.equals("")) {
 
                 infoMap.put(Constants.FIRST_NAME, firstName);
                 infoMap.put(Constants.LAST_NAME, lastName);
+                infoMap.put(Constants.NEW_PHONE, newPhone);
                 infoMap.put(Constants.PHONE, phone);
 
                 if (newPasswordEdt.getText() != null) {
@@ -146,13 +148,11 @@ public class BottomSheetEditUser extends BottomSheetDialogFragment implements Vi
                             editSuccess();
 
                         } else {
-
+                            Utils.log(getClass(), result.getMessage());
                             Toast.makeText(getContext(), "خطا در تغییر اطلاعات", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
-
-
             }
 
             @Override
@@ -165,7 +165,7 @@ public class BottomSheetEditUser extends BottomSheetDialogFragment implements Vi
 
     private void editSuccess() {
         Toast.makeText(getContext(), "اطلاعات با موفقیت تغییر کرد", Toast.LENGTH_SHORT).show();
-        MyApplication.saveUserInSharePreference(getContext(), new User(firstName, lastName, phone));
+        MyApplication.saveUserInSharePreference(getContext(), new User(firstName, lastName, newPhone));
         dismiss();
         if (onUserUpdate != null)
             onUserUpdate.OnUpdate();

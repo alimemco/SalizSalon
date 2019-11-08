@@ -24,6 +24,7 @@ public class Constants {
     public static String FIRST_NAME = "first_name";
     public static String LAST_NAME = "last_name";
     public static String PHONE = "phone";
+    public static String NEW_PHONE = "new_phone";
     public static String PASSWORD = "password";
 
     public static String SHARED_PREF_NAME = "sharedPrefName";

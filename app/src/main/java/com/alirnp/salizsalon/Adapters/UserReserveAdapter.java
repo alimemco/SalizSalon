@@ -1,11 +1,13 @@
 package com.alirnp.salizsalon.Adapters;
 
 
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alirnp.salizsalon.CustomViews.MyTextView;
@@ -48,14 +50,20 @@ public class UserReserveAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     public class UserReserveHolder extends RecyclerView.ViewHolder {
-        private MyTextView statusTv;
-        private MyTextView priceTv;
+
+        private MyTextView dateTv, hourTv, servicesTv, statusTv, priceTv;
+        private View statusView;
 
         UserReserveHolder(View itemView) {
             super(itemView);
 
             statusTv = itemView.findViewById(R.id.rcv_user_reserve_status);
             priceTv = itemView.findViewById(R.id.rcv_user_reserve_price);
+            dateTv = itemView.findViewById(R.id.rcv_user_reserve_date);
+            hourTv = itemView.findViewById(R.id.rcv_user_reserve_hour);
+            servicesTv = itemView.findViewById(R.id.rcv_user_reserve_services);
+
+            statusView = itemView.findViewById(R.id.rcv_user_reserve_statusImage);
 
         }
 
@@ -63,26 +71,57 @@ public class UserReserveAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             statusTv.setText(getStatus(item));
             priceTv.setText(Utils.numberToTextPrice(item.getPrice()));
+            hourTv.setText(item.getHour());
+
+            String date = item.getDayName() + " " + item.getDayOfMonth() + " " + item.getMonthName();
+            dateTv.setText(date);
+
+            servicesTv.setText(SplitServices(item.getServices()));
+            statusView.setBackground(getDrawableFromStatus(item));
 
         }
 
+        private String SplitServices(String services) {
+            StringBuilder sb = new StringBuilder();
+            String[] split = services.split(",");
+
+            for (String service : split) {
+                sb.append(" *  ").append(service).append("\n");
+            }
+            return sb.toString();
+        }
+
         private String getStatus(Item item) {
-            String status = "";
+
             if (item.getStatus().equals(Constants.statusReserve.PENDING.getStatus())) {
-                status = itemView.getResources().getString(R.string.status_pending);
+                return itemView.getResources().getString(R.string.status_pending);
 
             } else if (item.getStatus().equals(Constants.statusReserve.DENIED.getStatus())) {
-                status = itemView.getResources().getString(R.string.status_denied);
+                return itemView.getResources().getString(R.string.status_denied);
 
             } else if (item.getStatus().equals(Constants.statusReserve.FINALIZED.getStatus())) {
-                status = itemView.getResources().getString(R.string.status_finalized);
+                return itemView.getResources().getString(R.string.status_finalized);
 
-            } else if (item.getStatus().equals(Constants.statusReserve.DONE.getStatus())) {
-                status = itemView.getResources().getString(R.string.status_done);
+            } else {
+                return itemView.getResources().getString(R.string.status_done);
 
             }
+        }
 
-            return status;
+        private Drawable getDrawableFromStatus(Item item) {
+
+            if (item.getStatus().equals(Constants.statusReserve.DENIED.getStatus())) {
+                return ContextCompat.getDrawable(itemView.getContext(), R.drawable.bg_circle_red);
+
+            } else if (item.getStatus().equals(Constants.statusReserve.FINALIZED.getStatus())) {
+                return ContextCompat.getDrawable(itemView.getContext(), R.drawable.bg_circle_green);
+
+            } else if (item.getStatus().equals(Constants.statusReserve.DONE.getStatus())) {
+                return ContextCompat.getDrawable(itemView.getContext(), R.drawable.bg_circle_blue);
+
+            } else {
+                return ContextCompat.getDrawable(itemView.getContext(), R.drawable.bg_circle_gray);
+            }
         }
     }
 

@@ -29,6 +29,10 @@ public class FragmentUserInfo extends Fragment implements View.OnClickListener,
 
     private OnLogoutUser onLogoutUser;
 
+
+    public FragmentUserInfo() {
+    }
+
     public FragmentUserInfo(OnLogoutUser onLogoutUser) {
         this.onLogoutUser = onLogoutUser;
     }

@@ -12,6 +12,7 @@ import com.alirnp.salizsalon.Utils.SharedPrefManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -63,6 +64,7 @@ public class MyApplication extends Application {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://khodemon.ir/SalizApp/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(OkHttpClientWithoutCache())
                 .build();
 
 
@@ -75,6 +77,15 @@ public class MyApplication extends Application {
     public static void saveUserInSharePreference(Context context, User user) {
         SharedPrefManager sharedPrefManager = new SharedPrefManager(context);
         sharedPrefManager.saveUser(user);
+    }
+
+    private OkHttpClient OkHttpClientWithoutCache() {
+        return new OkHttpClient.Builder()
+                /* .readTimeout(60, TimeUnit.SECONDS)
+                 .connectTimeout(60 / 2, TimeUnit.SECONDS)
+                 .writeTimeout(60, TimeUnit.SECONDS)*/
+                .cache(null)
+                .build();
     }
 
 

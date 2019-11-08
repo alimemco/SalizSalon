@@ -36,13 +36,12 @@ public class MainActivity extends AppCompatActivity implements
 
     FragmentManager fragmentManager;
     boolean doubleBackToExitPressedOnce = false;
+    Constants.fragmentToShow fragmentToShow;
     private BottomNavigationView btmView;
     private FragmentHome fragmentHome = FragmentHome.newInstance();
     private FragmentOrder fragmentOrder = FragmentOrder.newInstance();
     private FragmentUserInfo fragmentUserInfo = new FragmentUserInfo(this);
     private FragmentUser fragmentUser = new FragmentUser();
-
-    Constants.fragmentToShow fragmentToShow = Constants.fragmentToShow.HOME;
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -50,7 +49,12 @@ public class MainActivity extends AppCompatActivity implements
             fragmentToShow = Constants.fragmentToShow.HOME;
         }
     };
-
+    private BroadcastReceiver mBroadcastReserved = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            fragmentToShow = Constants.fragmentToShow.ORDER;
+        }
+    };
 
     private void initViews() {
 
@@ -62,16 +66,12 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
-    private BroadcastReceiver mBroadcastReserved = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            fragmentToShow = Constants.fragmentToShow.ORDER;
-        }
-    };
-
     @Override
     protected void onStart() {
         super.onStart();
+
+        if (fragmentToShow == null)
+            fragmentToShow = Constants.fragmentToShow.HOME;
 
 
         switch (fragmentToShow) {
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements
 
         setNavigationTypeface();
 
-        replace(fragmentHome);
+        // replace(fragmentHome);
 
         initBroadcasts();
 
@@ -192,15 +192,13 @@ public class MainActivity extends AppCompatActivity implements
             case R.id.user:
                 User user = MyApplication.getSharedPrefManager().getUser();
 
-                if (user != null) {
-                    String firstName = user.getFirstName();
-                    if (firstName != null)
-                        replace(fragmentUserInfo);
-                    else
-                        replace(fragmentUser);
+                String firstName = user.getFirstName();
+                if (firstName != null)
+                    replace(fragmentUserInfo);
+                else
+                    replace(fragmentUser);
 
 
-                }
                 return true;
 
             case R.id.order:
@@ -219,6 +217,10 @@ public class MainActivity extends AppCompatActivity implements
 
         if (fragment instanceof FragmentHome) {
             fragmentToShow = Constants.fragmentToShow.HOME;
+        } else if (fragment instanceof FragmentUser || fragment instanceof FragmentUserInfo) {
+            fragmentToShow = Constants.fragmentToShow.USER;
+        } else if (fragment instanceof FragmentOrder) {
+            fragmentToShow = Constants.fragmentToShow.ORDER;
         }
 
 
