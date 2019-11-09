@@ -9,7 +9,9 @@ import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +21,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.alirnp.salizsalon.Interface.OnLogoutUser;
+import com.alirnp.salizsalon.Model.JSON.Result;
 import com.alirnp.salizsalon.Model.User;
 import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.R;
@@ -30,25 +33,46 @@ import com.alirnp.salizsalon.Views.Fragments.FragmentUserInfo;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.internal.BaselineLayout;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class MainActivity extends AppCompatActivity implements
         BottomNavigationView.OnNavigationItemSelectedListener,
+        View.OnClickListener,
         OnLogoutUser {
 
     FragmentManager fragmentManager;
     boolean doubleBackToExitPressedOnce = false;
     Constants.fragmentToShow fragmentToShow;
-    private BottomNavigationView btmView;
+    private BottomNavigationView bottomNavigationView;
+    private ImageView kingImg;
+
     private FragmentHome fragmentHome = FragmentHome.newInstance();
     private FragmentOrder fragmentOrder = FragmentOrder.newInstance();
     private FragmentUserInfo fragmentUserInfo = new FragmentUserInfo(this);
     private FragmentUser fragmentUser = new FragmentUser();
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver mLoginReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
 
             fragmentToShow = Constants.fragmentToShow.HOME;
+
+            showAdminManager();
         }
     };
+
+    private void showAdminManager() {
+        boolean visible;
+        String userLevel = MyApplication.getSharedPrefManager().getUser().getLevel();
+        visible = userLevel.equals(Constants.user_level.ADMIN.getLevel());
+        kingImg.setVisibility(visible ? View.VISIBLE : View.GONE);
+    }
+
     private BroadcastReceiver mBroadcastReserved = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -58,9 +82,13 @@ public class MainActivity extends AppCompatActivity implements
 
     private void initViews() {
 
-        btmView = findViewById(R.id.activity_main_bottomNav);
+        bottomNavigationView = findViewById(R.id.activity_main_bottomNav);
+        kingImg = findViewById(R.id.activity_main_toolbar_king);
+        kingImg.setOnClickListener(this);
 
-        btmView.setOnNavigationItemSelectedListener(this);
+        showAdminManager();
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
 
         fragmentManager = getSupportFragmentManager();
 
@@ -76,15 +104,15 @@ public class MainActivity extends AppCompatActivity implements
 
         switch (fragmentToShow) {
             case HOME:
-                btmView.setSelectedItemId(R.id.home);
+                bottomNavigationView.setSelectedItemId(R.id.home);
                 break;
 
             case USER:
-                btmView.setSelectedItemId(R.id.user);
+                bottomNavigationView.setSelectedItemId(R.id.user);
                 break;
 
             case ORDER:
-                btmView.setSelectedItemId(R.id.order);
+                bottomNavigationView.setSelectedItemId(R.id.order);
                 break;
         }
     }
@@ -98,15 +126,13 @@ public class MainActivity extends AppCompatActivity implements
 
         setNavigationTypeface();
 
-        // replace(fragmentHome);
-
         initBroadcasts();
 
     }
 
 
     public void setNavigationTypeface() {
-        ViewGroup navigationGroup = (ViewGroup) btmView.getChildAt(0);
+        ViewGroup navigationGroup = (ViewGroup) bottomNavigationView.getChildAt(0);
         for (int i = 0; i < navigationGroup.getChildCount(); i++) {
             ViewGroup navUnit = (ViewGroup) navigationGroup.getChildAt(i);
             for (int j = 0; j < navUnit.getChildCount(); j++) {
@@ -170,11 +196,12 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onLogout() {
         MyApplication.getSharedPrefManager().saveUser(null);
-        btmView.setSelectedItemId(R.id.home);
+        bottomNavigationView.setSelectedItemId(R.id.home);
+        showAdminManager();
     }
 
     private void initBroadcasts() {
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+        LocalBroadcastManager.getInstance(this).registerReceiver(mLoginReceiver,
                 new IntentFilter(Constants.EVENT_LOGIN));
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mBroadcastReserved,
@@ -227,4 +254,28 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.activity_main_toolbar_king) {
+            User user = MyApplication.getSharedPrefManager().getUser();
+            Map<String, String> info = new HashMap<>();
+            info.put(Constants.PHONE, user.getPhone());
+            MyApplication.getApi().userManager(Constants.CHECK_ADMIN, info).enqueue(callback());
+        }
+    }
+
+    private Callback<ArrayList<Result>> callback() {
+
+        return new Callback<ArrayList<Result>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Result>> call, Response<ArrayList<Result>> response) {
+                Toast.makeText(MainActivity.this, "alan dg mitoni vared beshi ^_^", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Result>> call, Throwable t) {
+                Toast.makeText(MainActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
+            }
+        };
+    }
 }

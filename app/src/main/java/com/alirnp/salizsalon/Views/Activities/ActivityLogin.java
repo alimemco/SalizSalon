@@ -112,10 +112,11 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
     private void loginSuccess(Result result) {
         String firstName = result.getFirst_name();
         String lastName = result.getLast_name();
+        String level = result.getLevel();
 
         Toast.makeText(ActivityLogin.this, "با موفقیت وارد شدید", Toast.LENGTH_SHORT).show();
 
-        User user = new User(firstName, lastName, phone);
+        User user = new User(firstName, lastName, phone, level);
         MyApplication.saveUserInSharePreference(ActivityLogin.this, user);
         finish();
         Utils.sendMessageLogin(ActivityLogin.this);

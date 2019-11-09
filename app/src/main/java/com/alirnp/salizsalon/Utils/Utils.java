@@ -15,8 +15,8 @@ Utils {
 
     private static final String TAG = "UtilsApp";
 
-    public static void log(Class cls , String txt){
-        Log.i(TAG, cls.getName()+" | "+txt);
+    public static void log(Class cls, String txt) {
+        Log.i(TAG, cls.getName() + " | " + txt);
     }
 
     public static String numberToTextPrice(int price) {
@@ -32,6 +32,29 @@ Utils {
         } else {
             return ".";
         }
+
+    }
+
+    public static String parseUserLevel(String user_level) {
+
+        if (user_level == null) {
+            return Constants.NEW_COMER_PER;
+
+        } else {
+            if (user_level.equals(Constants.user_level.NORMAL.getLevel())) {
+                return Constants.NORMAL_PER;
+
+            } else if (user_level.equals(Constants.user_level.GOLD.getLevel())) {
+                return Constants.GOLD_PER;
+
+            } else if (user_level.equals(Constants.user_level.ADMIN.getLevel())) {
+                return Constants.ADMIN_PER;
+
+            } else {
+                return Constants.NEW_COMER_PER;
+            }
+        }
+
 
     }
 

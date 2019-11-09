@@ -99,8 +99,8 @@ public class ActivityRegister extends AppCompatActivity implements View.OnClickL
 
 
     private void registerToServer() {
-        MyApplication.getApi().userManager(Constants.REGISTER, infoMap).enqueue(callback());
         showLoading();
+        MyApplication.getApi().userManager(Constants.REGISTER, infoMap).enqueue(callback());
     }
 
     private Callback<ArrayList<Result>> callback() {
@@ -136,7 +136,12 @@ public class ActivityRegister extends AppCompatActivity implements View.OnClickL
 
     private void registerSuccess() {
         Toast.makeText(ActivityRegister.this, "ثبت نام با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
-        MyApplication.saveUserInSharePreference(ActivityRegister.this, new User(firstName, lastName, phone));
+        MyApplication.saveUserInSharePreference(ActivityRegister.this,
+                new User(
+                        firstName,
+                        lastName,
+                        phone,
+                        Constants.user_level.NEW_COMER.getLevel()));
         finish();
         Utils.sendMessageLogin(ActivityRegister.this);
     }

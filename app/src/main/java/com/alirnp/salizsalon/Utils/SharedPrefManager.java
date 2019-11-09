@@ -20,10 +20,12 @@ public class SharedPrefManager {
             editor.putString(Constants.FIRST_NAME, user.getFirstName());
             editor.putString(Constants.LAST_NAME, user.getLastName());
             editor.putString(Constants.PHONE, user.getPhone());
+            editor.putString(Constants.LEVEL, user.getLevel());
         } else {
             editor.putString(Constants.FIRST_NAME, null);
             editor.putString(Constants.LAST_NAME, null);
             editor.putString(Constants.PHONE, null);
+            editor.putString(Constants.LEVEL, null);
         }
         editor.apply();
     }
@@ -33,6 +35,7 @@ public class SharedPrefManager {
         user.setFirstName(sharedPreferences.getString(Constants.FIRST_NAME, null));
         user.setLastName(sharedPreferences.getString(Constants.LAST_NAME, null));
         user.setPhone(sharedPreferences.getString(Constants.PHONE, null));
+        user.setLevel(sharedPreferences.getString(Constants.LEVEL, Constants.user_level.NEW_COMER.getLevel()));
         return user;
     }
 }

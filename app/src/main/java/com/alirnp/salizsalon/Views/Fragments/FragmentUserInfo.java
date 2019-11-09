@@ -17,13 +17,14 @@ import com.alirnp.salizsalon.Interface.OnLogoutUser;
 import com.alirnp.salizsalon.Model.User;
 import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.R;
+import com.alirnp.salizsalon.Utils.Utils;
 
 
 public class FragmentUserInfo extends Fragment implements View.OnClickListener,
         BottomSheetEditUser.OnUserUpdate {
 
     private View view;
-    private MyTextView nameTv, phoneTv;
+    private MyTextView nameTv, phoneTv, levelTv;
     private MyButton exitBtn;
     private AppCompatImageView editImg;
 
@@ -56,9 +57,13 @@ public class FragmentUserInfo extends Fragment implements View.OnClickListener,
             String name = user.getFirstName() + " " + user.getLastName();
             String phone = user.getPhone();
 
+
+            levelTv.setText(Utils.parseUserLevel(user.getLevel()));
+            nameTv.setText(name);
+
             if (phone != null)
                 phoneTv.setText(phone);
-            nameTv.setText(name);
+
         }
     }
 
@@ -67,6 +72,8 @@ public class FragmentUserInfo extends Fragment implements View.OnClickListener,
         phoneTv = view.findViewById(R.id.fragment_user_info_txt_phone);
         exitBtn = view.findViewById(R.id.fragment_user_info_btn_exit);
         editImg = view.findViewById(R.id.fragment_user_info_img_edit);
+        levelTv = view.findViewById(R.id.fragment_user_info_level);
+
         exitBtn.setOnClickListener(this);
         editImg.setOnClickListener(this);
     }

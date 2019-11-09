@@ -21,6 +21,7 @@ public class Constants {
     public static String REGISTER = "REGISTER";
     public static String LOGIN = "LOGIN";
     public static String EDIT = "EDIT";
+    public static String CHECK_ADMIN = "CHECK_ADMIN";
     public static String USER_RESERVE_LIST = "USER_RESERVE_LIST";
 
     public static String FIRST_NAME = "FIRST_NAME";
@@ -28,6 +29,7 @@ public class Constants {
     public static String PHONE = "PHONE";
     public static String NEW_PHONE = "NEW_PHONE";
     public static String PASSWORD = "PASSWORD";
+    public static String LEVEL = "LEVEL";
 
     public static String SHARED_PREF_NAME = "sharedPrefName";
 
@@ -35,6 +37,27 @@ public class Constants {
     public static String EVENT_LOGIN = "EVENT_LOGIN";
     public static String EVENT_RESERVED = "EVENT_RESERVED";
 
+    public static String NEW_COMER_PER = "تازه وارد";
+    public static String NORMAL_PER = "کاربر عادی";
+    public static String GOLD_PER = "کاربر طلایی";
+    public static String ADMIN_PER = "مدیر کل";
+
+    public enum user_level {
+        NEW_COMER("NEW_COMER"),
+        NORMAL("NORMAL"),
+        GOLD("GOLD"),
+        ADMIN("ADMIN");
+
+        private String lvl;
+
+        user_level(String lvl) {
+            this.lvl = lvl;
+        }
+
+        public String getLevel() {
+            return lvl;
+        }
+    }
 
     public enum data {
         DAY,
@@ -64,10 +87,10 @@ public class Constants {
         ITEM_NOT_FOUND(2),
         SEARCHING(3);
 
-        private int status ;
+        private int status;
 
         state(int status) {
-            this.status = status ;
+            this.status = status;
         }
 
         public int getStatus() {

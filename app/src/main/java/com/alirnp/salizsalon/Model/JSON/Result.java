@@ -21,7 +21,18 @@ public class Result {
     @Expose
     private String last_name;
 
+    @SerializedName("level")
+    @Expose
+    private String level;
 
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
 
     public String getSuccess() {
         return success;

@@ -17,18 +17,6 @@ import retrofit2.http.QueryMap;
 
 public interface ApiService {
 
-/*
-    @GET("salizBanner.json")
-    Call<ArrayList<Banner>> getBannerImages();
-
-
-    @GET("salizGet.php")
-    Call<ResponseJson> get(@Query("get") String get);
-
-    @Headers("Cache-control: no-cache")
-    @GET("salizGet.php")
-    Call<ResponseJson> getTimes(@Query("get") String get, @Query("day") String day);
-*/
 
     @GET("salizBanner.json")
     Call<ArrayList<Banner>> getBannerImages();

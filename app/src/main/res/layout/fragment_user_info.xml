@@ -44,7 +44,7 @@
         android:paddingTop="2dp"
         android:paddingRight="12dp"
         android:paddingBottom="2dp"
-        android:text="@string/user_normal"
+        tools:text="@string/user_normal"
         android:textColor="#4FC3F7"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/fragment_user_info_txt_name"
