@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.alirnp.salizsalon.ADMIN.Views.Activity.ActivityManage;
 import com.alirnp.salizsalon.Interface.OnLogoutUser;
 import com.alirnp.salizsalon.Model.JSON.Result;
 import com.alirnp.salizsalon.Model.User;
@@ -269,7 +270,7 @@ public class MainActivity extends AppCompatActivity implements
         return new Callback<ArrayList<Result>>() {
             @Override
             public void onResponse(Call<ArrayList<Result>> call, Response<ArrayList<Result>> response) {
-                Toast.makeText(MainActivity.this, "alan dg mitoni vared beshi ^_^", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, ActivityManage.class));
             }
 
             @Override

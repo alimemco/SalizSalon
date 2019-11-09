@@ -2,6 +2,7 @@ package com.alirnp.salizsalon.Utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.util.Log;
 
@@ -82,4 +83,17 @@ Utils {
         }
         return true;
     }
+
+    public static int pxToDp(int px) {
+        return (int) (px / Resources.getSystem().getDisplayMetrics().density);
+    }
+
+    public static int dpToPx(int dp) {
+        return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
+    }
+
+    public static float dpToPxFloat(float dp) {
+        return (float) (dp * Resources.getSystem().getDisplayMetrics().density);
+    }
+
 }
