@@ -58,7 +58,7 @@ public class ActivityShop extends AppCompatActivity {
         rcv = findViewById(R.id.activity_shop_rcv);
         rcv.setLayoutManager(new LinearLayoutManager(this));
 
-        MyApplication.getApi().getCategory(Constants.POSTS).enqueue(callbackPosts);
+        MyApplication.getApi().get(Constants.POSTS).enqueue(callbackPosts);
 
     }
 

@@ -23,7 +23,7 @@ public interface ApiService {
 
 
     @GET("salizGet.php")
-    Call<ResponseJson> getCategory(@Query("get") String get);
+    Call<ResponseJson> get(@Query("get") String get);
 
     @Headers("Cache-control: no-cache")
     @GET("salizGet.php")
@@ -35,7 +35,7 @@ public interface ApiService {
 
 
     @GET("api/v1/get.php")
-    Call<ResponseJson> getCategory(@Query("request") String request);
+    Call<ResponseJson> get(@Query("request") String request);
 
     @Headers("Cache-control: no-cache")
     @GET("api/v1/get.php")

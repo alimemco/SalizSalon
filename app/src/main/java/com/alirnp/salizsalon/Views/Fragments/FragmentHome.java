@@ -174,8 +174,8 @@ public class FragmentHome extends Fragment
     private void initApiServices() {
 
         MyApplication.getApi().getBannerImages().enqueue(callbackBanner);
-        MyApplication.getApi().getCategory(Constants.CATEGORY).enqueue(callbackCategory);
-        MyApplication.getApi().getCategory(Constants.POSTS).enqueue(callbackPosts);
+        MyApplication.getApi().get(Constants.CATEGORY).enqueue(callbackCategory);
+        MyApplication.getApi().get(Constants.POSTS).enqueue(callbackPosts);
     }
 
     private void initSlider() {

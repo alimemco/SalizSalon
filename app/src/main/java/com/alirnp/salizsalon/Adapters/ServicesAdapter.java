@@ -12,21 +12,20 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alirnp.salizsalon.CustomViews.MyTextView;
-import com.alirnp.salizsalon.Model.Service;
+import com.alirnp.salizsalon.NestedJson.Item;
 import com.alirnp.salizsalon.R;
+import com.alirnp.salizsalon.Utils.Utils;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ServicesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private ArrayList<Service> models;
+    private List<Item> models;
     private SparseBooleanArray booleanArray = new SparseBooleanArray();
     private onServiceSelect onServiceSelect;
 
-    public ServicesAdapter(ArrayList<Service> models) {
+    public ServicesAdapter(List<Item> models) {
         this.models = models;
     }
 
@@ -55,24 +54,23 @@ public class ServicesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return models == null ? 0 : models.size();
     }
 
-    private ArrayList<Service> applyFilter(List<Service> models) {
-        ArrayList<Service> list = new ArrayList<>();
-        for (Service service : models) {
-            if (service.isChecked())
-                list.add(service);
+    private ArrayList<Item> applyFilter(List<Item> models) {
+        ArrayList<Item> list = new ArrayList<>();
+        for (Item item : models) {
+            if (item.isChecked())
+                list.add(item);
         }
         return list;
     }
 
     public interface onServiceSelect {
-        void services(ArrayList<Service> model);
+        void services(ArrayList<Item> model);
     }
 
     public class ServiceHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
             CompoundButton.OnCheckedChangeListener {
 
-        private MyTextView title;
-        private MyTextView price;
+        private MyTextView title, price, period;
         private CheckBox chb;
         private ConstraintLayout root;
 
@@ -82,6 +80,7 @@ public class ServicesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             title = itemView.findViewById(R.id.rcv_service_txt_title);
             price = itemView.findViewById(R.id.rcv_service_txt_price);
+            period = itemView.findViewById(R.id.rcv_service_txt_period);
             chb = itemView.findViewById(R.id.rcv_service_chb);
 
             root = itemView.findViewById(R.id.rcv_service_root);
@@ -89,6 +88,7 @@ public class ServicesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             itemView.setOnClickListener(this);
             title.setOnClickListener(this);
             price.setOnClickListener(this);
+            period.setOnClickListener(this);
             root.setOnClickListener(this);
 
             chb.setOnCheckedChangeListener(this);
@@ -97,19 +97,21 @@ public class ServicesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         void bind(final int position) {
 
-            final Service service = models.get(position);
+            final Item item = models.get(position);
 
-            title.setText(service.getName());
-
-            NumberFormat formatter = new DecimalFormat("#,###,###,###");
-            String value = formatter.format(service.getPrice()) + " تومان ";
-            price.setText(value);
+            title.setText(item.getName());
+            price.setText(Utils.numberToTextPrice(item.getPrice()));
+            period.setText(Approximate(item.getPeriod()));
 
             if (!booleanArray.get(position, false)) {
                 notify(position, false, false);
             } else {
                 notify(position, false, true);
             }
+        }
+
+        private String Approximate(String period) {
+            return " ~ " + period + " دقیقه ";
         }
 
         @Override

@@ -65,7 +65,27 @@ public class Item {
     @Expose
     private String status;
 
+    @SerializedName("period")
+    @Expose
+    private String period;
 
+    private boolean checked;
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+
+    public String getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(String period) {
+        this.period = period;
+    }
 
     public String getID() {
         return iD;

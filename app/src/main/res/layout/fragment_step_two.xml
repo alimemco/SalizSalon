@@ -11,8 +11,7 @@
         android:id="@+id/fragment_step_two_rcv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="@dimen/standard_margin2x" />
+        android:layout_weight="1" />
 
 
     <com.alirnp.salizsalon.CustomViews.MyTextView
@@ -20,10 +19,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="@dimen/standard_margin2x"
+        android:layout_marginTop="@dimen/standard_margin2x"
+        android:layout_marginBottom="@dimen/standard_margin"
         android:gravity="center"
         android:textColor="@color/green_500"
         android:textSize="@dimen/large_sp"
         tools:text="قیمت نهایی : 26000" />
+
+    <com.alirnp.salizsalon.CustomViews.MyTextView
+        android:id="@+id/fragment_step_two_finalPeriod"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/standard_margin2x"
+        android:gravity="center"
+        android:textColor="@color/gray_blue_500"
+        tools:text="زمان تقریبی 120 دقیقه" />
 
 </LinearLayout>
