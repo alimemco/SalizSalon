@@ -27,9 +27,8 @@ import retrofit2.Response;
 
 public class FragmentOrder extends Fragment {
 
-
     private View view;
-    private RecyclerView rcv;
+    private UserReserveAdapter adapter = new UserReserveAdapter();
 
     public FragmentOrder() {
     }
@@ -51,8 +50,9 @@ public class FragmentOrder extends Fragment {
     }
 
     private void initViews() {
-        rcv = view.findViewById(R.id.fragment_order_rcv);
+        RecyclerView rcv = view.findViewById(R.id.fragment_order_rcv);
         rcv.setLayoutManager(new LinearLayoutManager(getContext()));
+        rcv.setAdapter(adapter);
 
         User user = MyApplication.getSharedPrefManager().getUser();
 
@@ -74,8 +74,7 @@ public class FragmentOrder extends Fragment {
                         boolean success = Boolean.parseBoolean(result.getSuccess());
                         if (success) {
 
-                            UserReserveAdapter adapter = new UserReserveAdapter(result.getItems());
-                            rcv.setAdapter(adapter);
+                            adapter.setData(result.getItems());
 
                         } else {
                             String msg = result.getMessage();

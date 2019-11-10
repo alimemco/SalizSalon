@@ -65,7 +65,8 @@ public interface ApiService {
     @Headers("Cache-control: no-cache")
     @GET("api/v1/manager.php")
     Call<ResponseJson> manage(
-            @Query("request") String request);
+            @Query("request") String request,
+            @Query("TOKEN") String TOKEN);
 
 
 }

@@ -3,14 +3,15 @@ package com.alirnp.salizsalon.Utils;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.util.Log;
 
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
+import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.alirnp.salizsalon.Dialog.LoadingDialog;
+import com.alirnp.salizsalon.NestedJson.Item;
+import com.alirnp.salizsalon.R;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -100,6 +101,49 @@ Utils {
 
     public static float dpToPxFloat(float dp) {
         return (float) (dp * Resources.getSystem().getDisplayMetrics().density);
+    }
+
+    public static String splitServices(String services) {
+        StringBuilder sb = new StringBuilder();
+        String[] split = services.split(",");
+
+        for (String service : split) {
+            sb.append(" *  ").append(service).append("\n");
+        }
+        return sb.toString();
+    }
+
+    public static String getStatus(Context context, Item item) {
+
+        if (item.getStatus().equals(Constants.statusReserve.PENDING.getStatus())) {
+            return context.getResources().getString(R.string.status_pending);
+
+        } else if (item.getStatus().equals(Constants.statusReserve.DENIED.getStatus())) {
+            return context.getResources().getString(R.string.status_denied);
+
+        } else if (item.getStatus().equals(Constants.statusReserve.FINALIZED.getStatus())) {
+            return context.getResources().getString(R.string.status_finalized);
+
+        } else {
+            return context.getResources().getString(R.string.status_done);
+
+        }
+    }
+
+    public static Drawable getDrawableFromStatus(Context context, Item item) {
+
+        if (item.getStatus().equals(Constants.statusReserve.DENIED.getStatus())) {
+            return ContextCompat.getDrawable(context, R.drawable.bg_circle_red);
+
+        } else if (item.getStatus().equals(Constants.statusReserve.FINALIZED.getStatus())) {
+            return ContextCompat.getDrawable(context, R.drawable.bg_circle_green);
+
+        } else if (item.getStatus().equals(Constants.statusReserve.DONE.getStatus())) {
+            return ContextCompat.getDrawable(context, R.drawable.bg_circle_blue);
+
+        } else {
+            return ContextCompat.getDrawable(context, R.drawable.bg_circle_gray);
+        }
     }
 
 

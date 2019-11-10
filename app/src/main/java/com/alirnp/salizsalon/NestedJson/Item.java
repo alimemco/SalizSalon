@@ -80,6 +80,9 @@ public class Item implements Parcelable {
     @Expose
     private String last_name;
 
+    @SerializedName("phone")
+    @Expose
+    private String phone;
 
 
     private boolean checked;
@@ -237,19 +240,6 @@ public class Item implements Parcelable {
         this.reserved = reserved;
     }
 
-    @SuppressWarnings("unused")
-    public static final Parcelable.Creator<Item> CREATOR = new Parcelable.Creator<Item>() {
-        @Override
-        public Item createFromParcel(Parcel in) {
-            return new Item(in);
-        }
-
-        @Override
-        public Item[] newArray(int size) {
-            return new Item[size];
-        }
-    };
-
     protected Item(Parcel in) {
         category = in.readString();
         price = in.readString();
@@ -269,7 +259,29 @@ public class Item implements Parcelable {
         period = in.readString();
         first_name = in.readString();
         last_name = in.readString();
+        phone = in.readString();
         checked = in.readByte() != 0x00;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Item> CREATOR = new Parcelable.Creator<Item>() {
+        @Override
+        public Item createFromParcel(Parcel in) {
+            return new Item(in);
+        }
+
+        @Override
+        public Item[] newArray(int size) {
+            return new Item[size];
+        }
+    };
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     @Override
@@ -297,6 +309,7 @@ public class Item implements Parcelable {
         dest.writeString(period);
         dest.writeString(first_name);
         dest.writeString(last_name);
+        dest.writeString(phone);
         dest.writeByte((byte) (checked ? 0x01 : 0x00));
     }
 }

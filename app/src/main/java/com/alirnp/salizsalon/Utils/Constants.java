@@ -2,6 +2,7 @@ package com.alirnp.salizsalon.Utils;
 
 public class Constants {
 
+    public static final String TOKEN = "AliRnpVAgT8AV195s";
     public static final String POSTS = "POSTS";
     public static final String CATEGORY = "CATEGORY";
     public static String TIMES = "TIMES";

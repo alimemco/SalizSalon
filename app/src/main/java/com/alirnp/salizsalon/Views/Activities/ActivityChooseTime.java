@@ -49,7 +49,7 @@ public class ActivityChooseTime extends AppCompatActivity implements
     private StepView stepView;
     private MyButton nextStepBtn;
 
-    private static boolean active = false;
+    private boolean active = false;
 
     private BottomSheetFragment bottomSheetFragment;
 
@@ -70,7 +70,7 @@ public class ActivityChooseTime extends AppCompatActivity implements
         @Override
         public void onReceive(Context context, Intent intent) {
             if (active)
-                runStepThree();
+                submitReserve();
         }
     };
 
@@ -193,12 +193,12 @@ public class ActivityChooseTime extends AppCompatActivity implements
                 break;
 
             case 3:
-                runStepThree();
+                submitReserve();
                 break;
         }
     }
 
-    private void runStepThree() {
+    private void submitReserve() {
 
         String phone = MyApplication.getSharedPrefManager().getUser().getPhone();
         if (phone == null) {
