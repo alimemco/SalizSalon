@@ -72,6 +72,16 @@ public class Item implements Parcelable {
     @Expose
     private String period;
 
+    @SerializedName("first_name")
+    @Expose
+    private String first_name;
+
+    @SerializedName("last_name")
+    @Expose
+    private String last_name;
+
+
+
     private boolean checked;
 
     public boolean isChecked() {
@@ -80,6 +90,22 @@ public class Item implements Parcelable {
 
     public void setChecked(boolean checked) {
         this.checked = checked;
+    }
+
+    public String getFirst_name() {
+        return first_name;
+    }
+
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
+    }
+
+    public String getLast_name() {
+        return last_name;
+    }
+
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
     }
 
     public String getPeriod() {
@@ -241,6 +267,8 @@ public class Item implements Parcelable {
         services = in.readString();
         status = in.readString();
         period = in.readString();
+        first_name = in.readString();
+        last_name = in.readString();
         checked = in.readByte() != 0x00;
     }
 
@@ -267,6 +295,8 @@ public class Item implements Parcelable {
         dest.writeString(services);
         dest.writeString(status);
         dest.writeString(period);
+        dest.writeString(first_name);
+        dest.writeString(last_name);
         dest.writeByte((byte) (checked ? 0x01 : 0x00));
     }
 }

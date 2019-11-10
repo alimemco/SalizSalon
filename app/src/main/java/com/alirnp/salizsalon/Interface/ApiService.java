@@ -27,7 +27,9 @@ public interface ApiService {
 
     @Headers("Cache-control: no-cache")
     @GET("api/v1/get.php")
-    Call<ResponseJson> getTimes(@Query("request") String request, @Query("DAY") String day);
+    Call<ResponseJson> getTimes(
+            @Query("request") String request,
+            @Query("DAY") String day);
 
     /**
      * @param request {RESERVE}
@@ -55,6 +57,15 @@ public interface ApiService {
     Call<ResponseJson> getUserReserveList(
             @Query("request") String request,
             @Query("PHONE") String phone);
+
+
+    /**
+     * @param request {ORDERS , TIMES}
+     */
+    @Headers("Cache-control: no-cache")
+    @GET("api/v1/manager.php")
+    Call<ResponseJson> manage(
+            @Query("request") String request);
 
 
 }

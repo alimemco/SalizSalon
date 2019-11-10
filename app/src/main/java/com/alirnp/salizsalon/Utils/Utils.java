@@ -6,13 +6,19 @@ import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.util.Log;
 
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
+import com.alirnp.salizsalon.Dialog.LoadingDialog;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
 public class
 Utils {
+
+
 
     private static final String TAG = "UtilsApp";
 
@@ -95,5 +101,6 @@ Utils {
     public static float dpToPxFloat(float dp) {
         return (float) (dp * Resources.getSystem().getDisplayMetrics().density);
     }
+
 
 }

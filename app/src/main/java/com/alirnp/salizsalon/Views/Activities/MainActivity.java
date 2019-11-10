@@ -21,6 +21,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.alirnp.salizsalon.ADMIN.Views.Activity.ActivityManage;
+import com.alirnp.salizsalon.Dialog.LoadingDialog;
 import com.alirnp.salizsalon.Interface.OnLogoutUser;
 import com.alirnp.salizsalon.Model.JSON.Result;
 import com.alirnp.salizsalon.Model.User;
@@ -52,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements
     Constants.fragmentToShow fragmentToShow;
     private BottomNavigationView bottomNavigationView;
     private ImageView kingImg;
+
+    private LoadingDialog dialog;
 
     private FragmentHome fragmentHome = FragmentHome.newInstance();
     private FragmentOrder fragmentOrder = FragmentOrder.newInstance();
@@ -262,6 +265,7 @@ public class MainActivity extends AppCompatActivity implements
             Map<String, String> info = new HashMap<>();
             info.put(Constants.PHONE, user.getPhone());
             MyApplication.getApi().userManager(Constants.CHECK_ADMIN, info).enqueue(callback());
+            showLoading();
         }
     }
 
@@ -271,12 +275,25 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public void onResponse(Call<ArrayList<Result>> call, Response<ArrayList<Result>> response) {
                 startActivity(new Intent(MainActivity.this, ActivityManage.class));
+                dismissLoading();
             }
 
             @Override
             public void onFailure(Call<ArrayList<Result>> call, Throwable t) {
                 Toast.makeText(MainActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
+                dismissLoading();
             }
         };
+    }
+
+    private void showLoading() {
+        FragmentManager fm = getSupportFragmentManager();
+        dialog = new LoadingDialog();
+        dialog.show(fm, "LoadingDialog");
+    }
+
+    private void dismissLoading() {
+        if (dialog !=null)
+        dialog.dismiss();
     }
 }

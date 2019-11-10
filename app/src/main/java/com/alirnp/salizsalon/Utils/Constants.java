@@ -5,6 +5,7 @@ public class Constants {
     public static final String POSTS = "POSTS";
     public static final String CATEGORY = "CATEGORY";
     public static String TIMES = "TIMES";
+    public static String ORDERS = "ORDERS";
 
     public static String DAY_NAME = "DAY_NAME";
     public static String MONTH_NAME = "MONTH_NAME";

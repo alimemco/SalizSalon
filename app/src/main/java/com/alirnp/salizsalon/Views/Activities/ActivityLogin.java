@@ -37,20 +37,14 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
 
     private LoadingDialog dialog;
 
-    private OnLoginUser onLoginUser;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         initViews();
-
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null)
-            onLoginUser = (OnLoginUser) bundle.getSerializable(Constants.INTERFACE_ON_LOGIN_USER);
-
-
-        // initLoginListener();
     }
 
 
@@ -145,11 +139,9 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
     }
 
     private void dismissLoading() {
+        if (dialog !=null)
         dialog.dismiss();
     }
 
-   /* private void sendMessage() {
-        Intent intent = new Intent(Constants.EVENT_LOGIN);
-        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-    }*/
+
 }

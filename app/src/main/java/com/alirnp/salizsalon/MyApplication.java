@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 
 import androidx.appcompat.app.AppCompatDelegate;
 
+import com.alirnp.salizsalon.Dialog.LoadingDialog;
 import com.alirnp.salizsalon.Interface.ApiService;
 import com.alirnp.salizsalon.Model.User;
 import com.alirnp.salizsalon.Utils.SharedPrefManager;
@@ -22,7 +23,6 @@ public class MyApplication extends Application {
 
     public static Typeface iranSans;
     public static Typeface iranSansBold;
-
 
 
     public static SharedPrefManager sharedPrefManager;
@@ -71,6 +71,7 @@ public class MyApplication extends Application {
         api = retrofit.create(ApiService.class);
 
         sharedPrefManager = new SharedPrefManager(getApplicationContext());
+
 
     }
 
