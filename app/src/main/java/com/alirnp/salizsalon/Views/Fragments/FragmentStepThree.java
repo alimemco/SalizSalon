@@ -17,7 +17,7 @@ import com.alirnp.salizsalon.CustomViews.MyTextView;
 import com.alirnp.salizsalon.Interface.OnStepReady;
 import com.alirnp.salizsalon.Model.Day;
 import com.alirnp.salizsalon.Model.Hour;
-import com.alirnp.salizsalon.Model.Service;
+import com.alirnp.salizsalon.NestedJson.Item;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
 import com.alirnp.salizsalon.Utils.Utils;
@@ -44,7 +44,7 @@ public class FragmentStepThree extends Fragment {
         if (getArguments() != null) {
             Day day = getArguments().getParcelable(Constants.DAY);
             Hour hour = getArguments().getParcelable(Constants.HOUR);
-            ArrayList<Service> services = getArguments().getParcelableArrayList(Constants.SERVICES);
+            ArrayList<Item> services = getArguments().getParcelableArrayList(Constants.SERVICES);
 
             adapter = new FinalAdapter(day, hour, services);
 
@@ -53,11 +53,11 @@ public class FragmentStepThree extends Fragment {
         }
     }
 
-    private void initFinalPrice(ArrayList<Service> services) {
+    private void initFinalPrice(ArrayList<Item> services) {
         finalPrice = 0;
         if (services != null)
             for (int i = 0; i < services.size(); i++) {
-                finalPrice += services.get(i).getPrice();
+                finalPrice += Integer.valueOf(services.get(i).getPrice());
             }
     }
 

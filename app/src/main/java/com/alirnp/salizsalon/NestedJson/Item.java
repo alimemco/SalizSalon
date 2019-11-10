@@ -1,9 +1,12 @@
 package com.alirnp.salizsalon.NestedJson;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Item {
+public class Item implements Parcelable {
 
 
     @SerializedName("category")
@@ -206,5 +209,64 @@ public class Item {
 
     public void setReserved(String reserved) {
         this.reserved = reserved;
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Item> CREATOR = new Parcelable.Creator<Item>() {
+        @Override
+        public Item createFromParcel(Parcel in) {
+            return new Item(in);
+        }
+
+        @Override
+        public Item[] newArray(int size) {
+            return new Item[size];
+        }
+    };
+
+    protected Item(Parcel in) {
+        category = in.readString();
+        price = in.readString();
+        title = in.readString();
+        iD = in.readString();
+        name = in.readString();
+        image = in.readString();
+        day = in.readString();
+        hour = in.readString();
+        open = in.readString();
+        reserved = in.readString();
+        dayName = in.readString();
+        dayOfMonth = in.readString();
+        monthName = in.readString();
+        services = in.readString();
+        status = in.readString();
+        period = in.readString();
+        checked = in.readByte() != 0x00;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(category);
+        dest.writeString(price);
+        dest.writeString(title);
+        dest.writeString(iD);
+        dest.writeString(name);
+        dest.writeString(image);
+        dest.writeString(day);
+        dest.writeString(hour);
+        dest.writeString(open);
+        dest.writeString(reserved);
+        dest.writeString(dayName);
+        dest.writeString(dayOfMonth);
+        dest.writeString(monthName);
+        dest.writeString(services);
+        dest.writeString(status);
+        dest.writeString(period);
+        dest.writeByte((byte) (checked ? 0x01 : 0x00));
     }
 }

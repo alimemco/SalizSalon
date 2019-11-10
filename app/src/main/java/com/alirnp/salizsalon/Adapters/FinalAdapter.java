@@ -11,23 +11,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alirnp.salizsalon.CustomViews.MyTextView;
 import com.alirnp.salizsalon.Model.Day;
 import com.alirnp.salizsalon.Model.Hour;
-import com.alirnp.salizsalon.Model.Service;
+import com.alirnp.salizsalon.NestedJson.Item;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
+import com.alirnp.salizsalon.Utils.Utils;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 
 
 public class FinalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private ArrayList<Service> models;
+    private ArrayList<Item> models;
     private Day day;
     private Hour hour;
 
 
-    public FinalAdapter(Day day, Hour hour, ArrayList<Service> services) {
+    public FinalAdapter(Day day, Hour hour, ArrayList<Item> services) {
         this.models = services;
         this.day = day;
         this.hour = hour;
@@ -106,12 +105,10 @@ public class FinalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         void bind(int position) {
 
-            Service service = models.get(position);
-            NumberFormat format = new DecimalFormat("#,###,###");
-            String prc = format.format(service.getPrice()) + " تومان ";
+            Item item = models.get(position);
 
-            title.setText(service.getName());
-            price.setText(prc);
+            title.setText(item.getName());
+            price.setText(Utils.numberToTextPrice(item.getPrice()));
 
         }
     }

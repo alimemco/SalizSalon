@@ -19,8 +19,8 @@ import com.alirnp.salizsalon.Interface.OnStepReady;
 import com.alirnp.salizsalon.Model.Day;
 import com.alirnp.salizsalon.Model.Hour;
 import com.alirnp.salizsalon.Model.JSON.Result;
-import com.alirnp.salizsalon.Model.Service;
 import com.alirnp.salizsalon.MyApplication;
+import com.alirnp.salizsalon.NestedJson.Item;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
 import com.alirnp.salizsalon.Utils.Utils;
@@ -44,7 +44,7 @@ public class ActivityChooseTime extends AppCompatActivity implements
     private static HashMap<Constants.data, Object> data = new HashMap<>();
     private Day day;
     private Hour hour;
-    private ArrayList<Service> services;
+    private ArrayList<Item> services;
 
     private StepView stepView;
     private MyButton nextStepBtn;
@@ -175,7 +175,7 @@ public class ActivityChooseTime extends AppCompatActivity implements
 
                 day = (Day) data.get(Constants.data.DAY);
                 hour = (Hour) data.get(Constants.data.HOUR);
-                services = (ArrayList<Service>) data.get(Constants.data.SERVICES);
+                services = (ArrayList<Item>) data.get(Constants.data.SERVICES);
 
                 //TODO Change Generic java :)
 
@@ -223,7 +223,7 @@ public class ActivityChooseTime extends AppCompatActivity implements
     private int calculatorPrice() {
         int price = 0;
         for (int i = 0; i < services.size(); i++) {
-            price += services.get(i).getPrice();
+            price += Integer.valueOf(services.get(i).getPrice());
         }
         return price;
     }

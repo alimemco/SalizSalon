@@ -54,9 +54,9 @@ public class ActivityManage extends AppCompatActivity {
         for (int j = 0; j < tabsCount; j++) {
             ViewGroup vgTab = (ViewGroup) vg.getChildAt(j);
 
-            int tabChildsCount = vgTab.getChildCount();
+            int childCount = vgTab.getChildCount();
 
-            for (int i = 0; i < tabChildsCount; i++) {
+            for (int i = 0; i < childCount; i++) {
                 View tabViewChild = vgTab.getChildAt(i);
                 if (tabViewChild instanceof TextView) {
                     ((TextView) tabViewChild).setTypeface(MyApplication.getIranSans(ActivityManage.this));
