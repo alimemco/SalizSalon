@@ -49,6 +49,8 @@ public class ActivityChooseTime extends AppCompatActivity implements
     private StepView stepView;
     private MyButton nextStepBtn;
 
+    private static boolean active = false;
+
     private BottomSheetFragment bottomSheetFragment;
 
     private FragmentManager fragmentManager = getSupportFragmentManager();
@@ -64,10 +66,11 @@ public class ActivityChooseTime extends AppCompatActivity implements
         return data;
     }
 
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver mLoginReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            runStepThree();
+            if (active)
+                runStepThree();
         }
     };
 
@@ -114,7 +117,7 @@ public class ActivityChooseTime extends AppCompatActivity implements
     }
 
     private void initBroadcasts() {
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+        LocalBroadcastManager.getInstance(this).registerReceiver(mLoginReceiver,
                 new IntentFilter(Constants.EVENT_LOGIN));
 
     }
@@ -266,5 +269,15 @@ public class ActivityChooseTime extends AppCompatActivity implements
         };
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        active = true;
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        active = false;
+    }
 }
