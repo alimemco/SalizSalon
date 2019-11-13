@@ -6,7 +6,6 @@ import android.graphics.Typeface;
 
 import androidx.appcompat.app.AppCompatDelegate;
 
-import com.alirnp.salizsalon.Dialog.LoadingDialog;
 import com.alirnp.salizsalon.Interface.ApiService;
 import com.alirnp.salizsalon.Model.User;
 import com.alirnp.salizsalon.Utils.SharedPrefManager;
@@ -53,6 +52,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
