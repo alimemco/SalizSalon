@@ -196,7 +196,6 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-
     @Override
     public void onLogout() {
         MyApplication.getSharedPrefManager().saveUser(null);
@@ -296,4 +295,6 @@ public class MainActivity extends AppCompatActivity implements
         if (dialog !=null)
         dialog.dismiss();
     }
+
+
 }

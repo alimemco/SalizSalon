@@ -18,19 +18,20 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".Views.Activities.ActivitySplash">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".ADMIN.Views.Activity.ActivityManage" />
         <activity android:name=".HolderForTestApp.ActivityShop" />
         <activity android:name=".Views.Activities.ActivityRegister" />
         <activity android:name=".Views.Activities.ActivityLogin" />
         <activity android:name=".Views.Activities.ActivityChooseTime" />
-        <activity android:name=".Views.Activities.MainActivity">
+        <activity android:name=".Views.Activities.MainActivity" />
+        <activity android:name=".ADMIN.Sticky.StickyActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

@@ -10,11 +10,13 @@ import android.util.Log;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.alirnp.salizsalon.Model.Day;
 import com.alirnp.salizsalon.NestedJson.Item;
 import com.alirnp.salizsalon.R;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Calendar;
 
 public class
 Utils {
@@ -145,6 +147,61 @@ Utils {
             return ContextCompat.getDrawable(context, R.drawable.bg_circle_gray);
         }
     }
+
+    public static String getDayByNumber(Day day) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(day.getDate());
+        int dayInt = cal.get(Calendar.DAY_OF_WEEK);
+
+        switch (dayInt) {
+            case 1:
+                return "Sunday";
+            case 2:
+                return "Monday";
+            case 3:
+                return "Tuesday";
+            case 4:
+                return "Wednesday";
+            case 5:
+                return "Thursday";
+            case 6:
+                return "Friday";
+            case 7:
+                return "Saturday";
+        }
+        return null;
+    }
+
+    public static String convertDayNameToPersian(String day) {
+
+        switch (day) {
+            case "Sunday":
+                return "یکشنبه";
+
+            case "Monday":
+                return "دوشنبه";
+
+            case "Tuesday":
+                return "سه شنبه";
+
+            case "Wednesday":
+                return "چهارشنبه";
+
+            case "Thursday":
+                return "پنجشنبه";
+
+            case "Friday":
+                return "جمعه";
+
+            case "Saturday":
+                return "شنبه";
+
+            default:
+                return "ParseError";
+        }
+    }
+
+
 
 
 }

@@ -87,10 +87,11 @@ public class FragmentHome extends Fragment
     private Callback<ArrayList<Banner>> callbackBanner = new Callback<ArrayList<Banner>>() {
         @Override
         public void onResponse(Call<ArrayList<Banner>> call, Response<ArrayList<Banner>> response) {
-            if (response.body() != null) {
-                slider.setAdapter(new MainSliderAdapter(response.body()));
+            if (response.isSuccessful())
+                if (response.body() != null) {
+                    slider.setAdapter(new MainSliderAdapter(response.body()));
 
-            }
+                }
         }
 
         @Override

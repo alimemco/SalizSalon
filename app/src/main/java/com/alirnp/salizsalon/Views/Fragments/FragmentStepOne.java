@@ -23,6 +23,7 @@ import com.alirnp.salizsalon.NestedJson.ResponseJson;
 import com.alirnp.salizsalon.NestedJson.ResultItems;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
+import com.alirnp.salizsalon.Utils.Utils;
 import com.alirnp.salizsalon.Views.Activities.ActivityChooseTime;
 
 import java.util.ArrayList;
@@ -132,7 +133,7 @@ public class FragmentStepOne extends Fragment implements
     }
 
     private void getHours(Day day) {
-        MyApplication.getApi().getTimes(Constants.TIMES, getDayByNumber(day)).enqueue(this);
+        MyApplication.getApi().getTimes(Constants.TIMES, Utils.getDayByNumber(day)).enqueue(this);
 
         switchState(Constants.state.SEARCHING);
 
@@ -174,31 +175,31 @@ public class FragmentStepOne extends Fragment implements
         return new GridLayoutManager(getContext(), count, RecyclerView.VERTICAL, false);
     }
 
+    /*
+        private String getDayByNumber(Day day) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(day.getDate());
+            int dayInt = cal.get(Calendar.DAY_OF_WEEK);
 
-    private String getDayByNumber(Day day) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(day.getDate());
-        int dayInt = cal.get(Calendar.DAY_OF_WEEK);
-
-        switch (dayInt) {
-            case 1:
-                return "Sunday";
-            case 2:
-                return "Monday";
-            case 3:
-                return "Tuesday";
-            case 4:
-                return "Wednesday";
-            case 5:
-                return "Thursday";
-            case 6:
-                return "Friday";
-            case 7:
-                return "Saturday";
+            switch (dayInt) {
+                case 1:
+                    return "Sunday";
+                case 2:
+                    return "Monday";
+                case 3:
+                    return "Tuesday";
+                case 4:
+                    return "Wednesday";
+                case 5:
+                    return "Thursday";
+                case 6:
+                    return "Friday";
+                case 7:
+                    return "Saturday";
+            }
+            return null;
         }
-        return null;
-    }
-
+    */
     @Override
     public void onResponse(Call<ResponseJson> call, Response<ResponseJson> response) {
 

@@ -1,7 +1,9 @@
 package com.alirnp.salizsalon.Interface;
 
+import com.alirnp.salizsalon.ADMIN.Model.time.Week;
 import com.alirnp.salizsalon.BannerSlider.Banner;
 import com.alirnp.salizsalon.Model.JSON.Result;
+import com.alirnp.salizsalon.MyUnitTest.ResultAdmin;
 import com.alirnp.salizsalon.NestedJson.ResponseJson;
 
 import java.util.ArrayList;
@@ -65,6 +67,23 @@ public interface ApiService {
     @Headers("Cache-control: no-cache")
     @GET("api/v1/manager.php")
     Call<ResponseJson> manage(
+            @Query("request") String request,
+            @Query("TOKEN") String TOKEN);
+
+
+    /**
+     * @param request {ORDERS , TIMES}
+     */
+    @Headers("Cache-control: no-cache")
+    @GET("api/v1/manager.php")
+    Call<Week> manageTime(
+            @Query("request") String request,
+            @Query("TOKEN") String TOKEN);
+
+
+    @Headers("Cache-control: no-cache")
+    @GET("api/v1/manager.php")
+    Call<ResultAdmin> manageV2(
             @Query("request") String request,
             @Query("TOKEN") String TOKEN);
 

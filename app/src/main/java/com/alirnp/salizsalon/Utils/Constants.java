@@ -7,6 +7,7 @@ public class Constants {
     public static final String CATEGORY = "CATEGORY";
     public static String TIMES = "TIMES";
     public static String ORDERS = "ORDERS";
+    public static String BANNERS = "BANNERS";
 
     public static String DAY_NAME = "DAY_NAME";
     public static String MONTH_NAME = "MONTH_NAME";
@@ -35,9 +36,17 @@ public class Constants {
 
     public static String SHARED_PREF_NAME = "sharedPrefName";
 
-    public static String INTERFACE_ON_LOGIN_USER = "onLoginUser";
     public static String EVENT_LOGIN = "EVENT_LOGIN";
     public static String EVENT_RESERVED = "EVENT_RESERVED";
+
+    public static String Saturday = "Saturday";
+    public static String Sunday = "Sunday";
+    public static String Monday = "Monday";
+    public static String Tuesday = "Tuesday";
+    public static String Wednesday = "Wednesday";
+    public static String Thursday = "Thursday";
+    public static String Friday = "Friday";
+
 
     public static String NEW_COMER_PER = "تازه وارد";
     public static String NORMAL_PER = "کاربر عادی";
@@ -87,7 +96,10 @@ public class Constants {
     public enum state {
         SUCCESS(1),
         ITEM_NOT_FOUND(2),
-        SEARCHING(3);
+        SEARCHING(3),
+        HEADER(4),
+        MAIN(4),
+        FOOTER(5);
 
         private int status;
 

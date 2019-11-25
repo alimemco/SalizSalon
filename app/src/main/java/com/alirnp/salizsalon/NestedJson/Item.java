@@ -9,6 +9,7 @@ import com.google.gson.annotations.SerializedName;
 public class Item implements Parcelable {
 
 
+
     @SerializedName("category")
     @Expose
     private String category;
@@ -84,6 +85,18 @@ public class Item implements Parcelable {
     @Expose
     private String phone;
 
+
+    @SerializedName("url")
+    @Expose
+    private String url;
+
+    public Item() {
+
+    }
+
+    public String getUrl() {
+        return url;
+    }
 
     private boolean checked;
 
@@ -240,6 +253,9 @@ public class Item implements Parcelable {
         this.reserved = reserved;
     }
 
+    public void setUrl(String url) {
+        this.url = url;
+    }
     protected Item(Parcel in) {
         category = in.readString();
         price = in.readString();

@@ -25,4 +25,5 @@
     <string name="login">ورود</string>
     <string name="register">ثبت نام</string>
     <string name="user_normal">کاربر عادی</string>
+    <string name="can_reserve">قابل رزرو</string>
 </resources>

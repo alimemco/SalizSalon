@@ -1,0 +1,72 @@
+{
+  "result": {
+    "success": "true",
+    "message": "successfully",
+    "items": [
+      {
+        "day": "shanbe",
+        "child": [
+          {
+            "ID": "1",
+            "day_of_week": "1",
+            "day": "shanbe",
+            "hour": "44:55",
+            "reserved": "true"
+          },
+          {
+            "ID": "3",
+            "day_of_week": "1",
+            "day": "shanbe",
+            "hour": "54655",
+            "reserved": "true"
+          },
+          {
+            "ID": "6",
+            "day_of_week": "1",
+            "day": "shanbe",
+            "hour": "14:05",
+            "reserved": "true"
+          }
+        ]
+      },
+      {
+        "day": "doshanbe",
+        "child": [
+          {
+            "ID": "5",
+            "day_of_week": "3",
+            "day": "doshanbe",
+            "hour": "14:05",
+            "reserved": "true"
+          },
+          {
+            "ID": "7",
+            "day_of_week": "3",
+            "day": "doshanbe",
+            "hour": "14:05",
+            "reserved": "true"
+          }
+        ]
+      },
+      {
+        "day": "charshanbe",
+        "child": [
+          {
+            "ID": "9",
+            "day_of_week": "5",
+            "day": "charshanbe",
+            "hour": "01:10",
+            "reserved": "false"
+          },
+          {
+            "ID": "10",
+            "day_of_week": "5",
+            "day": "charshanbe",
+            "hour": "12:50",
+            "reserved": "true"
+          }
+        ]
+      }
+    ]
+  }
+}
