@@ -3,6 +3,7 @@ package com.alirnp.salizsalon.ADMIN.Sticky;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alirnp.salizsalon.CustomViews.MyTextView;
 import com.alirnp.salizsalon.R;
 import com.kodmap.library.kmrecyclerviewstickyheader.KmStickyListener;
 
@@ -19,7 +21,7 @@ public class RecyclerViewAdapter extends ListAdapter<Model, RecyclerView.ViewHol
             new DiffUtil.ItemCallback<Model>() {
                 @Override
                 public boolean areItemsTheSame(@NonNull Model model, @NonNull Model t1) {
-                    return model.title.equals(t1.title);
+                    return model.getType().equals(t1.getName());
                 }
 
                 @Override
@@ -56,7 +58,7 @@ public class RecyclerViewAdapter extends ListAdapter<Model, RecyclerView.ViewHol
 
     @Override
     public int getItemViewType(int position) {
-        return getItem(position).type;
+        return getItem(position).getType();
     }
 
     @Override
@@ -79,16 +81,16 @@ public class RecyclerViewAdapter extends ListAdapter<Model, RecyclerView.ViewHol
     @Override
     public void bindHeaderData(View header, Integer headerPosition) {
         TextView tv = header.findViewById(R.id.title_header);
-        tv.setText(getItem(headerPosition).title);
+        tv.setText(getItem(headerPosition).getName());
     }
 
     @Override
     public Boolean isHeader(Integer itemPosition) {
-        return getItem(itemPosition).type.equals(ItemType.Header);
+        return getItem(itemPosition).getType().equals(ItemType.Header);
     }
 
     class HeaderViewHolder extends RecyclerView.ViewHolder {
-        public TextView title;
+        public MyTextView title;
 
         public HeaderViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -96,20 +98,23 @@ public class RecyclerViewAdapter extends ListAdapter<Model, RecyclerView.ViewHol
         }
 
         public void bind(Model model) {
-            title.setText(model.title);
+            title.setText(model.getName());
         }
     }
 
     class PostViewHolder extends RecyclerView.ViewHolder {
-        public TextView title;
+        public MyTextView title;
+        public Switch reservedSw;
 
         public PostViewHolder(@NonNull View itemView) {
             super(itemView);
-            title = itemView.findViewById(R.id.title_post);
+            title = itemView.findViewById(R.id.item_post_title);
+            reservedSw = itemView.findViewById(R.id.item_post_switch);
         }
 
         public void bind(Model model) {
-            title.setText(model.title);
+            title.setText(model.getName());
+            reservedSw.setChecked(model.isReserved());
         }
     }
 }

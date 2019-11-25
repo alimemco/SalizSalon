@@ -1,8 +1,9 @@
 package com.alirnp.salizsalon.ADMIN.Sticky;
 
 public class Model {
-    String title;
-    Integer type;
+    private String title;
+    private Integer type;
+    private boolean reserved;
 
 
     public Model() {
@@ -12,6 +13,12 @@ public class Model {
     public Model(String name, Integer type) {
         this.title = name;
         this.type = type;
+    }
+
+    public Model(String name, Integer type, boolean reserved) {
+        this.title = name;
+        this.type = type;
+        this.reserved = reserved;
     }
 
 
@@ -31,6 +38,13 @@ public class Model {
         this.type = type;
     }
 
+    public boolean isReserved() {
+        return reserved;
+    }
+
+    public void setReserved(boolean reserved) {
+        this.reserved = reserved;
+    }
 
     @Override
     public boolean equals(Object obj) {

@@ -92,7 +92,7 @@ public class StickyActivity extends AppCompatActivity {
 
                             for (int j = 0; j < times.size(); j++) {
                                 Time time = times.get(j);
-                                Model model = new Model(time.getHour(), ItemType.Post);
+                                Model model = new Model(time.getHour(), ItemType.Post, time.isReserved());
                                 modelList.add(model);
                             }
 
