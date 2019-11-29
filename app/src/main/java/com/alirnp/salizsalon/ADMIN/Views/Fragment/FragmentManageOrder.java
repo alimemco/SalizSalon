@@ -13,25 +13,34 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alirnp.salizsalon.ADMIN.Adapter.ManageOrderAdapter;
+import com.alirnp.salizsalon.Dialog.LoadingDialog;
 import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.NestedJson.Item;
 import com.alirnp.salizsalon.NestedJson.ResponseJson;
+import com.alirnp.salizsalon.NestedJson.ResultItems;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class FragmentManageOrder extends Fragment {
+public class FragmentManageOrder extends Fragment
+        implements ManageOrderAdapter.OnChangeOrderStatus {
 
     private View view;
     private RecyclerView rcv;
     private ManageOrderAdapter adapter;
+    private LoadingDialog dialog;
 
+    private int posotionOrder;
     public FragmentManageOrder() {
 
     }
@@ -48,10 +57,20 @@ public class FragmentManageOrder extends Fragment {
     }
 
     private void getOrders() {
-
         MyApplication.getApi()
                 .manage(Constants.ORDERS, Constants.TOKEN)
                 .enqueue(callback());
+    }
+
+    private void editOrders(int id, String status) {
+        Map<String, String> map = new HashMap<>();
+        map.put(Constants.ID, String.valueOf(id));
+        map.put(Constants.STATUS, status);
+        MyApplication.getApi()
+                .manageEdit(Constants.EDIT_ORDERS, Constants.TOKEN, map)
+                .enqueue(callbackEditOrder());
+
+
     }
 
     private void initViews() {
@@ -59,6 +78,7 @@ public class FragmentManageOrder extends Fragment {
         rcv.setLayoutManager(new LinearLayoutManager(getContext()));
 
         adapter = new ManageOrderAdapter();
+        adapter.setOnChangeOrderStatus(this);
         adapter.setSearching();
 
         rcv.setAdapter(adapter);
@@ -89,4 +109,47 @@ public class FragmentManageOrder extends Fragment {
     }
 
 
+    private Callback<ResponseJson> callbackEditOrder() {
+        return new Callback<ResponseJson>() {
+            @Override
+            public void onResponse(Call<ResponseJson> call, Response<ResponseJson> response) {
+                dialog.dismiss();
+
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        ResultItems result = response.body().getResult().get(0);
+                        boolean success = Boolean.parseBoolean(result.getSuccess());
+                        if (success) {
+
+                            adapter.changeOrder(result.getItems(), posotionOrder);
+                            // Toast.makeText(getContext(), "success", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseJson> call, Throwable t) {
+                Toast.makeText(getContext(), t.toString(), Toast.LENGTH_LONG).show();
+                adapter.setNotFound();
+
+            }
+        };
+    }
+
+
+    @Override
+    public void onOrderStatusChange(int id, int position, Constants.statusReserve status) {
+
+        dialog = new LoadingDialog();
+        if (getFragmentManager() != null)
+            dialog.show(getFragmentManager(), "dialog");
+
+        posotionOrder = position;
+        editOrders(id, status.getStatus());
+    }
 }

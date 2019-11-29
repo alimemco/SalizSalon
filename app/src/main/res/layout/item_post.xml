@@ -1,30 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:layoutDirection="rtl"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
-    <com.alirnp.salizsalon.CustomViews.MyTextView
-        android:id="@+id/item_post_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/standard_margin2x"
-        android:layout_weight="1"
-        android:gravity="right"
-        android:textSize="@dimen/large_sp"
-        tools:text="@string/app_name" />
+    <View
+        android:id="@+id/item_post_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_blue_500" />
 
-    <Switch
-        android:id="@+id/item_post_switch"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:switchPadding="@dimen/standard_margin"
-        android:text="رزرو شده است" />
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/gray_blue_100"
+            android:padding="@dimen/standard_margin2x"
+            app:srcCompat="@drawable/ic_edit" />
+
+        <com.alirnp.salizsalon.CustomViews.MyTextView
+            android:id="@+id/item_post_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/standard_margin2x"
+            android:layout_marginTop="@dimen/standard_margin2x"
+            android:layout_marginRight="@dimen/standard_margin2x"
+            android:layout_marginBottom="@dimen/standard_margin2x"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:textSize="@dimen/large_sp"
+            tools:text="سه شنبه" />
+
+        <com.alirnp.salizsalon.CustomViews.MyTextView
+            android:id="@+id/item_post_hour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginLeft="@dimen/standard_margin2x"
+            android:layout_marginTop="@dimen/standard_margin2x"
+            android:layout_marginRight="@dimen/standard_margin2x"
+            android:layout_marginBottom="@dimen/standard_margin2x"
+            android:layout_weight="1"
+            android:gravity="right|center_vertical"
+            android:textSize="@dimen/large_sp"
+            tools:text="8:00" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/item_post_img_reserved"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/standard_margin2x"
+            android:layout_marginBottom="@dimen/standard_margin2x"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_reserved" />
+    </LinearLayout>
 
 
 </LinearLayout>

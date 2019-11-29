@@ -3,11 +3,15 @@ package com.alirnp.salizsalon.Utils;
 public class Constants {
 
     public static final String TOKEN = "AliRnpVAgT8AV195s";
+    public static final String ID = "ID";
+    public static final String STATUS = "STATUS";
     public static final String POSTS = "POSTS";
     public static final String CATEGORY = "CATEGORY";
-    public static String TIMES = "TIMES";
-    public static String ORDERS = "ORDERS";
-    public static String BANNERS = "BANNERS";
+    public static String TIMES = "GET_TIMES";
+    public static String ORDERS = "GET_ORDERS";
+    public static String BANNERS = "GET_BANNERS";
+
+    public static String EDIT_ORDERS = "EDIT_ORDER";
 
     public static String DAY_NAME = "DAY_NAME";
     public static String MONTH_NAME = "MONTH_NAME";
@@ -98,8 +102,8 @@ public class Constants {
         ITEM_NOT_FOUND(2),
         SEARCHING(3),
         HEADER(4),
-        MAIN(4),
-        FOOTER(5);
+        MAIN(5),
+        FOOTER(6);
 
         private int status;
 

@@ -10,10 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@color/gray_100"
+        android:background="#7986CB"
+        android:padding="@dimen/standard_margin2x"
         android:gravity="center"
-        android:layout_margin="@dimen/standard_margin2x"
+        android:textColor="@color/white"
         tools:text="@string/lorem"
-        android:textSize="@dimen/large_sp" />
+        android:textSize="@dimen/large_3X_sp" />
 
 </LinearLayout>

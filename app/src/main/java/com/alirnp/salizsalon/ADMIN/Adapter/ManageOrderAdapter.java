@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -25,6 +27,7 @@ public class ManageOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private List<Item> models;
     private Constants.state state;
+    private OnChangeOrderStatus onChangeOrderStatus;
 
 
     public ManageOrderAdapter() {
@@ -32,10 +35,18 @@ public class ManageOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         notifyDataSetChanged();
     }
 
+    public void setOnChangeOrderStatus(OnChangeOrderStatus onChangeOrderStatus) {
+        this.onChangeOrderStatus = onChangeOrderStatus;
+    }
 
     private void setState(Constants.state state) {
         this.state = state;
         notifyDataSetChanged();
+    }
+
+    public void changeOrder(List<Item> models, int position) {
+        this.models = models;
+        notifyItemChanged(position);
     }
 
     @Override
@@ -107,10 +118,16 @@ public class ManageOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         return models == null ? 1 : models.size();
     }
 
+    public interface OnChangeOrderStatus {
+        void onOrderStatusChange(int id, int position, Constants.statusReserve status);
+    }
+
     public class ManageOrderHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private MyTextView nameTv, priceTv, phoneTv, dateTv, hourTv, servicesTv, statusTv;
+        private ImageView confirmImg, deniedImg, doneImg;
         private ConstraintLayout constraintLayout;
+        private View statusView;
 
         ManageOrderHolder(View itemView) {
             super(itemView);
@@ -122,9 +139,18 @@ public class ManageOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             hourTv = itemView.findViewById(R.id.rcv_manage_order_hour);
             servicesTv = itemView.findViewById(R.id.rcv_manage_order_services);
             statusTv = itemView.findViewById(R.id.rcv_manage_order_status);
+            statusView = itemView.findViewById(R.id.rcv_manage_order_statusView);
+
+            confirmImg = itemView.findViewById(R.id.rcv_manage_order_confirm);
+            deniedImg = itemView.findViewById(R.id.rcv_manage_order_denied);
+            doneImg = itemView.findViewById(R.id.rcv_manage_order_done);
 
             constraintLayout = itemView.findViewById(R.id.rcv_manage_order_constraintHeader);
+
             constraintLayout.setOnClickListener(this);
+            confirmImg.setOnClickListener(this);
+            deniedImg.setOnClickListener(this);
+            doneImg.setOnClickListener(this);
         }
 
         void bind(int position) {
@@ -139,19 +165,44 @@ public class ManageOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             hourTv.setText(item.getHour());
             servicesTv.setText(Utils.splitServices(item.getServices()));
             statusTv.setText(Utils.getStatus(itemView.getContext(), item));
+            statusTv.setTextColor(Utils.getStatusColor(itemView.getContext(), item));
             priceTv.setText(Utils.numberToTextPrice(item.getPrice()));
+
+            statusView.setBackground(Utils.getDrawableFromStatus(itemView.getContext(), item));
         }
 
         @Override
         public void onClick(View v) {
-            if (v.getId() == R.id.rcv_manage_order_constraintHeader) {
-                String phone = models.get(getAdapterPosition()).getPhone();
 
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:" + phone));
-                v.getContext().startActivity(intent);
+            int id = Integer.parseInt(models.get(getAdapterPosition()).getID());
+
+            switch (v.getId()) {
+                case R.id.rcv_manage_order_constraintHeader:
+                    String phone = models.get(getAdapterPosition()).getPhone();
+
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    intent.setData(Uri.parse("tel:" + phone));
+                    v.getContext().startActivity(intent);
+                    break;
+
+                case R.id.rcv_manage_order_confirm:
+                    onChangeOrderStatus.onOrderStatusChange(id, getAdapterPosition(), Constants.statusReserve.FINALIZED);
+
+                    break;
+                case R.id.rcv_manage_order_denied:
+                    onChangeOrderStatus.onOrderStatusChange(id, getAdapterPosition(), Constants.statusReserve.DENIED);
+
+                    break;
+
+                case R.id.rcv_manage_order_done:
+                    onChangeOrderStatus.onOrderStatusChange(id, getAdapterPosition(), Constants.statusReserve.DONE);
+
+                    break;
             }
+
         }
+
+
     }
 }
 

@@ -70,7 +70,10 @@ Utils {
 
     public static boolean isConnected(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
+        if (cm != null)
+            return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
+        else
+            return false;
     }
 
     public static void sendMessageLogin(Context context) {
@@ -131,6 +134,25 @@ Utils {
 
         }
     }
+
+
+    public static int getStatusColor(Context context, Item item) {
+
+        if (item.getStatus().equals(Constants.statusReserve.PENDING.getStatus())) {
+            return ContextCompat.getColor(context, R.color.gray_blue_500);
+
+        } else if (item.getStatus().equals(Constants.statusReserve.DENIED.getStatus())) {
+            return ContextCompat.getColor(context, R.color.red_500);
+
+        } else if (item.getStatus().equals(Constants.statusReserve.FINALIZED.getStatus())) {
+            return ContextCompat.getColor(context, R.color.green_500);
+
+        } else {
+            return ContextCompat.getColor(context, R.color.blue_500);
+
+        }
+    }
+
 
     public static Drawable getDrawableFromStatus(Context context, Item item) {
 

@@ -13,6 +13,10 @@ public class Time {
     @Expose
     private int day_of_week;
 
+    @SerializedName("day")
+    @Expose
+    private String day;
+
     @SerializedName("hour")
     @Expose
     private String hour;
@@ -43,6 +47,14 @@ public class Time {
 
     public void setHour(String hour) {
         this.hour = hour;
+    }
+
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
     }
 
     public boolean isReserved() {

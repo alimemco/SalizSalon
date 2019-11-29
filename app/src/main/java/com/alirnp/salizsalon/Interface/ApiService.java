@@ -9,6 +9,7 @@ import com.alirnp.salizsalon.NestedJson.ResponseJson;
 import java.util.ArrayList;
 import java.util.Map;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -71,21 +72,34 @@ public interface ApiService {
             @Query("TOKEN") String TOKEN);
 
 
+
+    @Headers("Cache-control: no-cache")
+    @GET("api/v1/manager.php")
+    Call<ResultAdmin> manageTime(
+            @Query("request") String request,
+            @Query("TOKEN") String TOKEN);
+
+
+    @Headers("Cache-control: no-cache")
+    @GET("api/v1/manager.php")
+    Call<ResponseJson> manageEdit(
+            @Query("request") String request,
+            @Query("TOKEN") String TOKEN,
+            @QueryMap Map<String, String> map);
+
+    @Headers("Cache-control: no-cache")
+    @GET("api/v1/manager.php")
+    Call<ResponseBody> manageEdit2(
+            @Query("request") String request,
+            @Query("TOKEN") String TOKEN,
+            @QueryMap Map<String, String> map);
+
     /**
      * @param request {ORDERS , TIMES}
      */
     @Headers("Cache-control: no-cache")
     @GET("api/v1/manager.php")
-    Call<Week> manageTime(
+    Call<ResponseBody> manageTest(
             @Query("request") String request,
             @Query("TOKEN") String TOKEN);
-
-
-    @Headers("Cache-control: no-cache")
-    @GET("api/v1/manager.php")
-    Call<ResultAdmin> manageV2(
-            @Query("request") String request,
-            @Query("TOKEN") String TOKEN);
-
-
 }

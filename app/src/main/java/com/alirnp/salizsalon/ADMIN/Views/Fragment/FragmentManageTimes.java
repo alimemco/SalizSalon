@@ -11,15 +11,15 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.alirnp.salizsalon.ADMIN.Adapter.MyAdapterTime;
-import com.alirnp.salizsalon.ADMIN.Adapter.MyHeadFootAdapter;
-import com.alirnp.salizsalon.Expand.GroupList;
+import com.alirnp.salizsalon.ADMIN.Model.Model;
+import com.alirnp.salizsalon.ADMIN.Adapter.ManageTimeAdapter;
 import com.alirnp.salizsalon.MyApplication;
-import com.alirnp.salizsalon.NestedJson.Item;
-import com.alirnp.salizsalon.NestedJson.ResponseJson;
-import com.alirnp.salizsalon.NestedJson.ResultItems;
+import com.alirnp.salizsalon.MyUnitTest.Item;
+import com.alirnp.salizsalon.MyUnitTest.ResultAdmin;
+import com.alirnp.salizsalon.MyUnitTest.Time;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
+import com.kodmap.library.kmrecyclerviewstickyheader.KmHeaderItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +32,11 @@ import retrofit2.Response;
 public class FragmentManageTimes extends Fragment {
 
     private View view;
-    private RecyclerView rcv;
-    //  private ManageTimesAdapter adapter;
+
+    private ManageTimeAdapter adapter;
+    private RecyclerView recyclerView;
+    private LinearLayoutManager layoutManager;
+    private KmHeaderItemDecoration kmHeaderItemDecoration;
 
     public FragmentManageTimes() {
     }
@@ -42,109 +45,70 @@ public class FragmentManageTimes extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_manage_times, container, false);
+
         initViews();
         getTimes();
-
         return view;
     }
 
     private void initViews() {
-        rcv = view.findViewById(R.id.fragment_manager_times);
-        rcv.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        //TODO chan
-//        adapter = new ManageTimesAdapter();
-//        adapter.setSearching();
-//
-//
-//        rcv.setAdapter(adapter);
+        adapter = new ManageTimeAdapter();
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerView = view.findViewById(R.id.fragment_manager_times);
+        recyclerView.setLayoutManager(layoutManager);
+        kmHeaderItemDecoration = new KmHeaderItemDecoration(adapter);
+        recyclerView.setAdapter(adapter);
     }
 
     private void getTimes() {
         MyApplication.getApi()
-                .manage(Constants.TIMES, Constants.TOKEN)
+                .manageTime(Constants.TIMES, Constants.TOKEN)
                 .enqueue(callback());
     }
-/*
-    private Callback<Week> callback() {
-        return new Callback<Week>() {
+
+    private Callback<ResultAdmin> callback() {
+        return new Callback<ResultAdmin>() {
             @Override
-            public void onResponse(Call<Week> call, Response<Week> response) {
-                if (response.isSuccessful()) {
-                    if (response.body() != null) {
+            public void onResponse(Call<ResultAdmin> call, Response<ResultAdmin> response) {
+                ResultAdmin result = response.body();
+                if (result != null) {
+                    if (result.isSuccess()) {
 
-                        Result result = response.body().getResult().get(0);
-                        boolean success = Boolean.parseBoolean(result.getSuccess());
-                        if (success){
+                        List<Model> modelList = new ArrayList<>();
+                        List<Item> items = result.getItems();
 
-                            List<Item> items = result.getItems();
-                            adapter.setData(items);
-                        }else {
-                            Toast.makeText(getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
+                        for (int i = 0; i < items.size(); i++) {
+                            Item item = items.get(i);
+                            Model headerModel = new Model(item.getDay(), Constants.state.HEADER.getStatus());
+                            List<Time> times = item.getTimes();
+                            modelList.add(headerModel);
+
+                            for (int j = 0; j < times.size(); j++) {
+                                Time time = times.get(j);
+                                Model model = new Model(time.getDay(), time.getHour(), Constants.state.MAIN.getStatus(), time.isReserved());
+                                modelList.add(model);
+                            }
+
                         }
-
+                        adapter.submitList(modelList);
                     } else {
                         adapter.setNotFound();
+                        Toast.makeText(getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
                     }
+                } else {
+                    adapter.setNotFound();
                 }
+
             }
 
             @Override
-            public void onFailure(Call<Week> call, Throwable t) {
-                Toast.makeText(getContext(), t.toString(), Toast.LENGTH_LONG).show();
-                adapter.setNotFound();
-
-            }
-        };
-    }
-    */
-
-    private Callback<ResponseJson> callback() {
-        return new Callback<ResponseJson>() {
-            @Override
-            public void onResponse(Call<ResponseJson> call, Response<ResponseJson> response) {
-                if (response.isSuccessful()) {
-                    if (response.body() != null) {
-                        ResultItems result = response.body().getResult().get(0);
-                        boolean success = Boolean.parseBoolean(result.getSuccess());
-                        if (success) {
-                            List<Item> items = result.getItems();
-
-                            List<GroupList> groupItems = new ArrayList<>();
-                            List<Item> childItems = new ArrayList<>();
-
-                            for (int i = 0; i < items.size(); i++) {
-                                Item item = new Item();
-                                item.setHour("hour");
-                                item.setDay("day");
-                                item.setReserved("reserved");
-
-                                childItems.add(item);
-
-                            }
-                            groupItems.add(new GroupList("title", childItems));
-
-                            MyAdapterTime adapter = new MyAdapterTime(childItems);
-                            MyHeadFootAdapter wrappedAdapter = new MyHeadFootAdapter(adapter);
-
-                            rcv.setAdapter(wrappedAdapter);
-                            //  adapter.setData(groupItems);
-                        } else {
-                            //   adapter.setNotFound();
-                        }
-                    } else {
-                        //adapter.setNotFound();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseJson> call, Throwable t) {
+            public void onFailure(Call<ResultAdmin> call, Throwable t) {
                 Toast.makeText(getContext(), t.toString(), Toast.LENGTH_LONG).show();
                 // adapter.setNotFound();
 
             }
         };
     }
+
 
 }

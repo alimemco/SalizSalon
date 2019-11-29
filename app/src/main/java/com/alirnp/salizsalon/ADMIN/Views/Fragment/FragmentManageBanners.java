@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alirnp.salizsalon.ADMIN.Adapter.ManageBannersAdapter;
-import com.alirnp.salizsalon.ADMIN.Adapter.ManageOrderAdapter;
 import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.NestedJson.Item;
 import com.alirnp.salizsalon.NestedJson.ResponseJson;

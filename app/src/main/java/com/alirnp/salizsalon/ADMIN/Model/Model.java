@@ -1,7 +1,8 @@
-package com.alirnp.salizsalon.ADMIN.Sticky;
+package com.alirnp.salizsalon.ADMIN.Model;
 
 public class Model {
-    private String title;
+    private String day;
+    private String hour;
     private Integer type;
     private boolean reserved;
 
@@ -11,23 +12,24 @@ public class Model {
     }
 
     public Model(String name, Integer type) {
-        this.title = name;
+        this.day = name;
         this.type = type;
     }
 
-    public Model(String name, Integer type, boolean reserved) {
-        this.title = name;
+    public Model(String day, String hour, Integer type, boolean reserved) {
+        this.day = day;
+        this.hour = hour;
         this.type = type;
         this.reserved = reserved;
     }
 
 
-    public String getName() {
-        return title;
+    public String getDay() {
+        return day;
     }
 
-    public void setName(String name) {
-        this.title = name;
+    public void setDay(String name) {
+        this.day = name;
     }
 
     public Integer getType() {
@@ -44,6 +46,14 @@ public class Model {
 
     public void setReserved(boolean reserved) {
         this.reserved = reserved;
+    }
+
+    public String getHour() {
+        return hour;
+    }
+
+    public void setHour(String hour) {
+        this.hour = hour;
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.alirnp.salizsalon;
 
+import com.alirnp.salizsalon.Utils.Constants;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -12,8 +14,7 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
-        Man man = new Man();
-        // man.setSpeech(false);
+        //assertEquals(4, Constants.state.MAIN.getStatus());
+        assertEquals(4, Constants.state.HEADER.getStatus());
     }
 }
