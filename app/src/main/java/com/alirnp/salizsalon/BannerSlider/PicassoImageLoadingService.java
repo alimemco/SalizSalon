@@ -3,6 +3,7 @@ package com.alirnp.salizsalon.BannerSlider;
 import android.content.Context;
 import android.widget.ImageView;
 
+import com.alirnp.salizsalon.R;
 import com.squareup.picasso.Picasso;
 
 import ss.com.bannerslider.ImageLoadingService;
@@ -26,6 +27,6 @@ public class PicassoImageLoadingService implements ImageLoadingService {
 
     @Override
     public void loadImage(String url, int placeHolder, int errorDrawable, ImageView imageView) {
-        Picasso.get().load(url).placeholder(placeHolder).error(errorDrawable).into(imageView);
+        Picasso.get().load(url).placeholder(R.color.gray_100).error(errorDrawable).into(imageView);
     }
 }

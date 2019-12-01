@@ -1,7 +1,5 @@
 package com.alirnp.salizsalon.Interface;
 
-import com.alirnp.salizsalon.ADMIN.Model.time.Week;
-import com.alirnp.salizsalon.BannerSlider.Banner;
 import com.alirnp.salizsalon.Model.JSON.Result;
 import com.alirnp.salizsalon.MyUnitTest.ResultAdmin;
 import com.alirnp.salizsalon.NestedJson.ResponseJson;
@@ -20,9 +18,6 @@ import retrofit2.http.QueryMap;
 
 public interface ApiService {
 
-
-    @GET("salizBanner.json")
-    Call<ArrayList<Banner>> getBannerImages();
 
 
     @GET("api/v1/get.php")
@@ -87,19 +82,4 @@ public interface ApiService {
             @Query("TOKEN") String TOKEN,
             @QueryMap Map<String, String> map);
 
-    @Headers("Cache-control: no-cache")
-    @GET("api/v1/manager.php")
-    Call<ResponseBody> manageEdit2(
-            @Query("request") String request,
-            @Query("TOKEN") String TOKEN,
-            @QueryMap Map<String, String> map);
-
-    /**
-     * @param request {ORDERS , TIMES}
-     */
-    @Headers("Cache-control: no-cache")
-    @GET("api/v1/manager.php")
-    Call<ResponseBody> manageTest(
-            @Query("request") String request,
-            @Query("TOKEN") String TOKEN);
 }

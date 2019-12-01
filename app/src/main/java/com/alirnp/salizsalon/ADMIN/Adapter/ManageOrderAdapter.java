@@ -119,7 +119,7 @@ public class ManageOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     public interface OnChangeOrderStatus {
-        void onOrderStatusChange(int id, int position, Constants.statusReserve status);
+        void onOrderStatusChange(int id, int timeID, int position, Constants.statusReserve status);
     }
 
     public class ManageOrderHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -175,6 +175,7 @@ public class ManageOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         public void onClick(View v) {
 
             int id = Integer.parseInt(models.get(getAdapterPosition()).getID());
+            int timeID = Integer.parseInt(models.get(getAdapterPosition()).getTimeID());
 
             switch (v.getId()) {
                 case R.id.rcv_manage_order_constraintHeader:
@@ -186,16 +187,16 @@ public class ManageOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     break;
 
                 case R.id.rcv_manage_order_confirm:
-                    onChangeOrderStatus.onOrderStatusChange(id, getAdapterPosition(), Constants.statusReserve.FINALIZED);
+                    onChangeOrderStatus.onOrderStatusChange(id, timeID, getAdapterPosition(), Constants.statusReserve.FINALIZED);
 
                     break;
                 case R.id.rcv_manage_order_denied:
-                    onChangeOrderStatus.onOrderStatusChange(id, getAdapterPosition(), Constants.statusReserve.DENIED);
+                    onChangeOrderStatus.onOrderStatusChange(id, timeID, getAdapterPosition(), Constants.statusReserve.DENIED);
 
                     break;
 
                 case R.id.rcv_manage_order_done:
-                    onChangeOrderStatus.onOrderStatusChange(id, getAdapterPosition(), Constants.statusReserve.DONE);
+                    onChangeOrderStatus.onOrderStatusChange(id, timeID, getAdapterPosition(), Constants.statusReserve.DONE);
 
                     break;
             }

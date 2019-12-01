@@ -19,6 +19,7 @@ import com.alirnp.salizsalon.Interface.OnStepReady;
 import com.alirnp.salizsalon.Model.Day;
 import com.alirnp.salizsalon.Model.Hour;
 import com.alirnp.salizsalon.MyApplication;
+import com.alirnp.salizsalon.NestedJson.Item;
 import com.alirnp.salizsalon.NestedJson.ResponseJson;
 import com.alirnp.salizsalon.NestedJson.ResultItems;
 import com.alirnp.salizsalon.R;
@@ -113,7 +114,7 @@ public class FragmentStepOne extends Fragment implements
 
     @Override
     public void OnHourClick(Hour hour) {
-
+//TODO Add time id
         putToData(hour);
 
         HashMap data = ActivityChooseTime.getData();
@@ -175,31 +176,7 @@ public class FragmentStepOne extends Fragment implements
         return new GridLayoutManager(getContext(), count, RecyclerView.VERTICAL, false);
     }
 
-    /*
-        private String getDayByNumber(Day day) {
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(day.getDate());
-            int dayInt = cal.get(Calendar.DAY_OF_WEEK);
 
-            switch (dayInt) {
-                case 1:
-                    return "Sunday";
-                case 2:
-                    return "Monday";
-                case 3:
-                    return "Tuesday";
-                case 4:
-                    return "Wednesday";
-                case 5:
-                    return "Thursday";
-                case 6:
-                    return "Friday";
-                case 7:
-                    return "Saturday";
-            }
-            return null;
-        }
-    */
     @Override
     public void onResponse(Call<ResponseJson> call, Response<ResponseJson> response) {
 
@@ -212,9 +189,11 @@ public class FragmentStepOne extends Fragment implements
                     List<Hour> list = new ArrayList<>();
 
                     for (int i = 0; i < result.getItems().size(); i++) {
-                        String time = result.getItems().get(i).getHour();
-                        boolean reserved = Boolean.valueOf(result.getItems().get(i).getReserved());
-                        list.add(new Hour(time, reserved));
+                        Item item = result.getItems().get(i);
+                        String time = item.getHour();
+                        boolean reserved = Boolean.valueOf(item.getReserved());
+                        int timeId = Integer.valueOf(item.getID());
+                        list.add(new Hour(timeId, time, reserved));
                     }
                     switchState(Constants.state.SUCCESS);
                     hoursAdapter.setData(list, this);

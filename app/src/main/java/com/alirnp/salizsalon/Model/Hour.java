@@ -6,19 +6,30 @@ import android.os.Parcelable;
 public class Hour implements Parcelable {
 
     private String time;
+    private int timeID;
     private boolean selected;
     private boolean reserved;
 
 
-    public Hour(String time, boolean reserved) {
+    public Hour(int timeID, String time, boolean reserved) {
+        this.timeID = timeID;
         this.time = time;
         this.reserved = reserved;
     }
 
     protected Hour(Parcel in) {
+        timeID = in.readInt();
         time = in.readString();
         selected = in.readByte() != 0x00;
         reserved = in.readByte() != 0x00;
+    }
+
+    public int getTimeID() {
+        return timeID;
+    }
+
+    public void setTimeID(int timeID) {
+        this.timeID = timeID;
     }
 
     public boolean isReserved() {
@@ -65,6 +76,7 @@ public class Hour implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(timeID);
         dest.writeString(time);
         dest.writeByte((byte) (selected ? 0x01 : 0x00));
         dest.writeByte((byte) (reserved ? 0x01 : 0x00));

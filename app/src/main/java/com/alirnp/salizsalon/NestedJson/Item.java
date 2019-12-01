@@ -90,6 +90,18 @@ public class Item implements Parcelable {
     @Expose
     private String url;
 
+    @SerializedName("TIME_ID")
+    @Expose
+    private String timeID;
+
+    public String getTimeID() {
+        return timeID;
+    }
+
+    public void setTimeID(String timeID) {
+        this.timeID = timeID;
+    }
+
     public Item() {
 
     }

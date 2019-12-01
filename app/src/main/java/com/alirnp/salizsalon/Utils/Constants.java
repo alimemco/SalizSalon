@@ -18,6 +18,7 @@ public class Constants {
     public static String DAY_OF_MONTH = "DAY_OF_MONTH";
     public static String PRICE = "PRICE";
     public static String RESERVE = "RESERVE";
+    public static String TIME_ID = "TIME_ID";
 
     public static String POSITION = "POSITION";
     public static String IMAGE_LIST = "IMAGE_LIST";

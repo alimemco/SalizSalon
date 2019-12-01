@@ -16,8 +16,6 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.alirnp.salizsalon.Adapters.CategoryAdapter;
 import com.alirnp.salizsalon.Adapters.ItemsAdapter;
-import com.alirnp.salizsalon.Adapters.ItemsVerticalAdapter;
-import com.alirnp.salizsalon.BannerSlider.Banner;
 import com.alirnp.salizsalon.BannerSlider.MainSliderAdapter;
 import com.alirnp.salizsalon.BannerSlider.PicassoImageLoadingService;
 import com.alirnp.salizsalon.Generator.DataGenerator;
@@ -29,9 +27,6 @@ import com.alirnp.salizsalon.Utils.Constants;
 import com.alirnp.salizsalon.Utils.Utils;
 import com.alirnp.salizsalon.Views.Activities.ActivityChooseTime;
 import com.alirnp.salizsalon.Views.Activities.MainActivity;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -84,21 +79,23 @@ public class FragmentHome extends Fragment
 
     }
 
-    private Callback<ArrayList<Banner>> callbackBanner = new Callback<ArrayList<Banner>>() {
-        @Override
-        public void onResponse(Call<ArrayList<Banner>> call, Response<ArrayList<Banner>> response) {
-            if (response.isSuccessful())
-                if (response.body() != null) {
-                    slider.setAdapter(new MainSliderAdapter(response.body()));
+    /*
+        private Callback<ArrayList<Banner>> callbackBanner = new Callback<ArrayList<Banner>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Banner>> call, Response<ArrayList<Banner>> response) {
+                if (response.isSuccessful())
+                    if (response.body() != null) {
+                        slider.setAdapter(new MainSliderAdapter(response.body()));
 
-                }
-        }
+                    }
+            }
 
-        @Override
-        public void onFailure(Call<ArrayList<Banner>> call, Throwable t) {
-            Utils.log(MainActivity.class, "banner" + t.toString());
-        }
-    };
+            @Override
+            public void onFailure(Call<ArrayList<Banner>> call, Throwable t) {
+                Utils.log(MainActivity.class, "banner" + t.toString());
+            }
+        };
+        */
     private Callback<ResponseJson> callbackCategory = new Callback<ResponseJson>() {
 
         @Override
@@ -107,10 +104,10 @@ public class FragmentHome extends Fragment
             if (response.body() != null) {
 
                 ResultItems result = response.body().getResult().get(0);
-                if (Boolean.parseBoolean(result.getSuccess())) {
+                boolean success = Boolean.parseBoolean(result.getSuccess());
 
+                if (success) {
                     rcvCategory.setAdapter(new CategoryAdapter(result.getItems()));
-
                 } else {
                     Utils.log(FragmentHome.class, "UnSuccess");
                 }
@@ -122,28 +119,24 @@ public class FragmentHome extends Fragment
             Utils.log(MainActivity.class, t.toString());
         }
     };
-    private Callback<ResponseJson> callbackPosts = new Callback<ResponseJson>() {
-
+    private Callback<ResponseJson> callbackBanner = new Callback<ResponseJson>() {
         @Override
         public void onResponse(Call<ResponseJson> call, Response<ResponseJson> response) {
-
-            if (response.body() != null) {
-
-                List<ResultItems> result = response.body().getResult();
-
-                ItemsVerticalAdapter verticalAdapter = new ItemsVerticalAdapter(result);
-
-/*
-                for (int i = 0; i < result.getItems().size(); i++) {
-                    Utils.log(FragmentHome.class,result.getItems().get(i).getTitle());
-                }*/
-
-            }
+            if (response.isSuccessful())
+                if (response.body() != null) {
+                    ResultItems result = response.body().getResult().get(0);
+                    boolean success = Boolean.parseBoolean(result.getSuccess());
+                    if (success) {
+                        slider.setAdapter(new MainSliderAdapter(result.getItems()));
+                    } else {
+                        Toast.makeText(getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
         }
 
         @Override
         public void onFailure(Call<ResponseJson> call, Throwable t) {
-            Utils.log(MainActivity.class, t.toString());
+            Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -174,9 +167,10 @@ public class FragmentHome extends Fragment
 
     private void initApiServices() {
 
-        MyApplication.getApi().getBannerImages().enqueue(callbackBanner);
+        //  MyApplication.getApi().getBannerImages().enqueue(callbackBanner);
+        MyApplication.getApi().get(Constants.BANNERS).enqueue(callbackBanner);
         MyApplication.getApi().get(Constants.CATEGORY).enqueue(callbackCategory);
-        MyApplication.getApi().get(Constants.POSTS).enqueue(callbackPosts);
+        // MyApplication.getApi().get(Constants.POSTS).enqueue(callbackPosts);
     }
 
     private void initSlider() {

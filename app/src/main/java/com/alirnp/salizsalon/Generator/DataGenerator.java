@@ -27,7 +27,7 @@ public class DataGenerator {
 
 
                 case 1:
-                    itemList.add(new Item(i, "خدمات سالیز", R.drawable.ic_shop));
+                    itemList.add(new Item(i, "فروشگاه سالیز", R.drawable.ic_shop));
                     break;
 
 

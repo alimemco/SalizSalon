@@ -62,9 +62,10 @@ public class FragmentManageOrder extends Fragment
                 .enqueue(callback());
     }
 
-    private void editOrders(int id, String status) {
+    private void editOrders(int id, int timeID, String status) {
         Map<String, String> map = new HashMap<>();
         map.put(Constants.ID, String.valueOf(id));
+        map.put(Constants.TIME_ID, String.valueOf(timeID));
         map.put(Constants.STATUS, status);
         MyApplication.getApi()
                 .manageEdit(Constants.EDIT_ORDERS, Constants.TOKEN, map)
@@ -143,13 +144,13 @@ public class FragmentManageOrder extends Fragment
 
 
     @Override
-    public void onOrderStatusChange(int id, int position, Constants.statusReserve status) {
+    public void onOrderStatusChange(int id, int timeID, int position, Constants.statusReserve status) {
 
         dialog = new LoadingDialog();
         if (getFragmentManager() != null)
             dialog.show(getFragmentManager(), "dialog");
 
         posotionOrder = position;
-        editOrders(id, status.getStatus());
+        editOrders(id, timeID, status.getStatus());
     }
 }

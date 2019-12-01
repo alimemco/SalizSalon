@@ -206,6 +206,7 @@ public class ActivityChooseTime extends AppCompatActivity implements
         } else {
             Map<String, String> info = new HashMap<>();
 
+            info.put(Constants.TIME_ID, String.valueOf(hour.getTimeID()));
             info.put(Constants.PHONE, phone);
             info.put(Constants.DAY_NAME, day.getDayName());
             info.put(Constants.MONTH_NAME, day.getMonthName());
