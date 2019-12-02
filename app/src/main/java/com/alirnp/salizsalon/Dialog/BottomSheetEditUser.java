@@ -11,15 +11,15 @@ import androidx.fragment.app.FragmentManager;
 
 import com.alirnp.salizsalon.CustomViews.MyButton;
 import com.alirnp.salizsalon.CustomViews.MyEditText;
-import com.alirnp.salizsalon.Model.JSON.Result;
 import com.alirnp.salizsalon.Model.User;
 import com.alirnp.salizsalon.MyApplication;
+import com.alirnp.salizsalon.NestedJson.ResponseJson;
+import com.alirnp.salizsalon.NestedJson.ResultItems;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
 import com.alirnp.salizsalon.Utils.Utils;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -136,15 +136,15 @@ public class BottomSheetEditUser extends BottomSheetDialogFragment implements Vi
     }
 
 
-    private Callback<ArrayList<Result>> callback() {
-        return new Callback<ArrayList<Result>>() {
+    private Callback<ResponseJson> callback() {
+        return new Callback<ResponseJson>() {
             @Override
-            public void onResponse(Call<ArrayList<Result>> call, Response<ArrayList<Result>> response) {
+            public void onResponse(Call<ResponseJson> call, Response<ResponseJson> response) {
                 dismissLoading();
 
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
-                        Result result = response.body().get(0);
+                        ResultItems result = response.body().getResult().get(0);
                         if (Boolean.parseBoolean(result.getSuccess())) {
 
                             editSuccess();
@@ -158,7 +158,7 @@ public class BottomSheetEditUser extends BottomSheetDialogFragment implements Vi
             }
 
             @Override
-            public void onFailure(Call<ArrayList<Result>> call, Throwable t) {
+            public void onFailure(Call<ResponseJson> call, Throwable t) {
                 Toast.makeText(getContext(), t.toString(), Toast.LENGTH_SHORT).show();
                 dismissLoading();
             }

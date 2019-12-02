@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Item {
 
+
     @SerializedName("day")
     @Expose
     private String day;
@@ -22,6 +23,7 @@ public class Item {
     public void setDay(String day) {
         this.day = day;
     }
+
 
     public List<Time> getTimes() {
         return times;

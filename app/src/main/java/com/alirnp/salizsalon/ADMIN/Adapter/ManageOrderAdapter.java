@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -92,9 +91,6 @@ public class ManageOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         } else if (viewType == Constants.state.ITEM_NOT_FOUND.getStatus()) {
             return new NotFoundHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.rcv_not_found, parent, false));
 
-        } else if (viewType == Constants.state.SEARCHING.getStatus()) {
-            return new SearchingHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.rcv_searching, parent, false));
-
         } else {
             return new SearchingHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.rcv_searching, parent, false));
         }
@@ -173,10 +169,10 @@ public class ManageOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         @Override
         public void onClick(View v) {
-
-            int id = Integer.parseInt(models.get(getAdapterPosition()).getID());
-            int timeID = Integer.parseInt(models.get(getAdapterPosition()).getTimeID());
-
+            Item item = models.get(getAdapterPosition());
+            int id = Integer.parseInt(item.getID());
+            int timeID = Integer.parseInt(item.getTimeID());
+//TODO Bug Here
             switch (v.getId()) {
                 case R.id.rcv_manage_order_constraintHeader:
                     String phone = models.get(getAdapterPosition()).getPhone();

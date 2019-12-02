@@ -36,6 +36,8 @@
 
                 app:slider_interval="3000"
                 app:slider_loopSlides="true" />
+
+
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView

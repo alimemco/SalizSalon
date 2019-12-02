@@ -7,7 +7,6 @@ import com.alirnp.salizsalon.NestedJson.ResponseJson;
 import java.util.ArrayList;
 import java.util.Map;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -46,7 +45,7 @@ public interface ApiService {
      * @param info    { first_name , last_name , phone , password }
      */
     @POST("api/v1/users.php")
-    Call<ArrayList<Result>> userManager(
+    Call<ResponseJson> userManager(
             @Query("request") String request,
             @QueryMap Map<String, String> info);
 
@@ -81,5 +80,6 @@ public interface ApiService {
             @Query("request") String request,
             @Query("TOKEN") String TOKEN,
             @QueryMap Map<String, String> map);
+
 
 }

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <com.alirnp.salizsalon.CustomViews.MyTextView
+        android:id="@+id/dialog_manage_edit_time_tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_100"
+        android:gravity="center"
+        android:paddingLeft="100dp"
+        android:paddingTop="@dimen/standard_margin2x"
+        android:paddingRight="100dp"
+        android:paddingBottom="@dimen/standard_margin2x"
+        android:text="@string/change_time"
+        android:textSize="@dimen/large_2X_sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.alirnp.salizsalon.CustomViews.MyEditText
+        android:id="@+id/dialog_manage_edit_time_tv_hour"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/standard_margin2x"
+        android:gravity="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dialog_manage_edit_time_tv_title"
+        tools:text="hour" />
+
+    <CheckBox
+        android:id="@+id/dialog_manage_edit_time_chb_reserved"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/standard_margin2x"
+        android:text="@string/reservedForAdmin"
+        android:textSize="@dimen/large_2X_sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dialog_manage_edit_time_tv_hour" />
+
+
+    <com.alirnp.salizsalon.CustomViews.MyButton
+        android:id="@+id/dialog_manage_edit_time_btn_submit"
+        style="@style/buttonStrokePrimary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/standard_margin2x"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="@dimen/standard_margin2x"
+        android:layout_marginBottom="@dimen/standard_margin2x"
+        android:text="@string/submit_info"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dialog_manage_edit_time_chb_reserved" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

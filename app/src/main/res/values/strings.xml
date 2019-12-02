@@ -15,6 +15,7 @@
     <string name="itemNotFound">موردی یافت نشد</string>
     <string name="choose_hour">انتخاب ساعت</string>
     <string name="reserved">رزرو شد !</string>
+    <string name="reservedForAdmin">رزرو شده</string>
     <string name="saliz_beautiful_salon">سالن زیبایی سالیز</string>
 
     <string name="status_pending">در انتظار تایید</string>
@@ -27,4 +28,6 @@
     <string name="user_normal">کاربر عادی</string>
     <string name="can_reserve">قابل رزرو</string>
     <string name="address">ماهشهر ، شهرک بعثت (ممکو) ، گلستان  ، آلفا 164</string>
+    <string name="change_time">تغییر زمان بندی</string>
+    <string name="submit_info">ثبت اطلاعات</string>
 </resources>

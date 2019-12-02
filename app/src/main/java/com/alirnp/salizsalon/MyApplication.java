@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import com.alirnp.salizsalon.Interface.ApiService;
 import com.alirnp.salizsalon.Model.User;
+import com.alirnp.salizsalon.Utils.Constants;
 import com.alirnp.salizsalon.Utils.SharedPrefManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -62,7 +63,7 @@ public class MyApplication extends Application {
 
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://khodemon.ir/SalizApp/")
+                .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(OkHttpClientWithoutCache())
                 .build();

@@ -23,9 +23,9 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.alirnp.salizsalon.ADMIN.Views.Activity.ActivityManage;
 import com.alirnp.salizsalon.Dialog.LoadingDialog;
 import com.alirnp.salizsalon.Interface.OnLogoutUser;
-import com.alirnp.salizsalon.Model.JSON.Result;
 import com.alirnp.salizsalon.Model.User;
 import com.alirnp.salizsalon.MyApplication;
+import com.alirnp.salizsalon.NestedJson.ResponseJson;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
 import com.alirnp.salizsalon.Views.Fragments.FragmentHome;
@@ -35,7 +35,6 @@ import com.alirnp.salizsalon.Views.Fragments.FragmentUserInfo;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.internal.BaselineLayout;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -95,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
 
         fragmentManager = getSupportFragmentManager();
+
 
     }
 
@@ -268,17 +268,17 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    private Callback<ArrayList<Result>> callback() {
+    private Callback<ResponseJson> callback() {
 
-        return new Callback<ArrayList<Result>>() {
+        return new Callback<ResponseJson>() {
             @Override
-            public void onResponse(Call<ArrayList<Result>> call, Response<ArrayList<Result>> response) {
+            public void onResponse(Call<ResponseJson> call, Response<ResponseJson> response) {
                 startActivity(new Intent(MainActivity.this, ActivityManage.class));
                 dismissLoading();
             }
 
             @Override
-            public void onFailure(Call<ArrayList<Result>> call, Throwable t) {
+            public void onFailure(Call<ResponseJson> call, Throwable t) {
                 Toast.makeText(MainActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
                 dismissLoading();
             }

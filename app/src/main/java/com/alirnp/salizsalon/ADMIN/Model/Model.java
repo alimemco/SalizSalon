@@ -1,9 +1,12 @@
 package com.alirnp.salizsalon.ADMIN.Model;
 
+import com.alirnp.salizsalon.Utils.Constants;
+
 public class Model {
+    private int id;
     private String day;
     private String hour;
-    private Integer type;
+    private Constants.state type;
     private boolean reserved;
 
 
@@ -11,18 +14,26 @@ public class Model {
 
     }
 
-    public Model(String name, Integer type) {
+    public Model(String name, Constants.state type) {
         this.day = name;
         this.type = type;
     }
 
-    public Model(String day, String hour, Integer type, boolean reserved) {
+    public Model(int id, String day, String hour, Constants.state type, boolean reserved) {
+        this.id = id;
         this.day = day;
         this.hour = hour;
         this.type = type;
         this.reserved = reserved;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getDay() {
         return day;
@@ -32,11 +43,11 @@ public class Model {
         this.day = name;
     }
 
-    public Integer getType() {
+    public Constants.state getType() {
         return type;
     }
 
-    public void setType(Integer type) {
+    public void setType(Constants.state type) {
         this.type = type;
     }
 
@@ -55,6 +66,7 @@ public class Model {
     public void setHour(String hour) {
         this.hour = hour;
     }
+
 
     @Override
     public boolean equals(Object obj) {

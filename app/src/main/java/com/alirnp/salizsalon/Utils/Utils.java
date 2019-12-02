@@ -14,13 +14,13 @@ import com.alirnp.salizsalon.Model.Day;
 import com.alirnp.salizsalon.NestedJson.Item;
 import com.alirnp.salizsalon.R;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Calendar;
 
 public class
 Utils {
-
 
 
     private static final String TAG = "UtilsApp";
@@ -78,6 +78,11 @@ Utils {
 
     public static void sendMessageLogin(Context context) {
         Intent intent = new Intent(Constants.EVENT_LOGIN);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+    }
+
+    public static void sendMessageEditedTime(Context context) {
+        Intent intent = new Intent(Constants.EVENT_EDITED_TIME);
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
 
@@ -224,6 +229,34 @@ Utils {
     }
 
 
+    public static boolean isConnectedToThisServer(String host) {
+        Runtime runtime = Runtime.getRuntime();
+        try {
+            Process ipProcess = runtime.exec("/system/bin/ping -c 1 " + host);
+            int exitValue = ipProcess.waitFor();
+            return (exitValue == 0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static boolean connected(Context context) {
+        if (context != null) {
+
+            if (Utils.isConnected(context)) {
+                Utils.log(context.getClass(), "con 01");
+                return Utils.isConnectedToThisServer(Constants.URL);
+
+            } else {
+                Utils.log(context.getClass(), "dis 01");
+            }
+
+        }
+        return false;
+    }
 
 
 }

@@ -9,10 +9,15 @@ import com.google.gson.annotations.SerializedName;
 public class Item implements Parcelable {
 
 
+    @SerializedName("level")
+    @Expose
+    private String level;
+
 
     @SerializedName("category")
     @Expose
     private String category;
+
     @SerializedName("price")
     @Expose
     private String price;
@@ -94,6 +99,12 @@ public class Item implements Parcelable {
     @Expose
     private String timeID;
 
+
+    public Item() {
+
+    }
+
+
     public String getTimeID() {
         return timeID;
     }
@@ -102,8 +113,12 @@ public class Item implements Parcelable {
         this.timeID = timeID;
     }
 
-    public Item() {
+    public String getLevel() {
+        return level;
+    }
 
+    public void setLevel(String level) {
+        this.level = level;
     }
 
     public String getUrl() {

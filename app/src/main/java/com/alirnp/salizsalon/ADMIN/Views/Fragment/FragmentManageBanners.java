@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.alirnp.salizsalon.ADMIN.Adapter.ManageBannersAdapter;
 import com.alirnp.salizsalon.MyApplication;
@@ -26,11 +27,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class FragmentManageBanners extends Fragment {
+public class FragmentManageBanners extends Fragment implements
+        SwipeRefreshLayout.OnRefreshListener {
 
     private View view;
     private RecyclerView rcv;
     private ManageBannersAdapter adapter;
+    private SwipeRefreshLayout swp;
 
     public FragmentManageBanners() {
 
@@ -44,7 +47,6 @@ public class FragmentManageBanners extends Fragment {
         view = inflater.inflate(R.layout.fragment_manage_banners, container, false);
         initViews();
         getBanners();
-        //TODO enable banner
         return view;
     }
 
@@ -57,18 +59,25 @@ public class FragmentManageBanners extends Fragment {
 
     private void initViews() {
         rcv = view.findViewById(R.id.fragment_manage_banners_rcv);
+        swp = view.findViewById(R.id.fragment_manage_banners_swp);
+
         rcv.setLayoutManager(new LinearLayoutManager(getContext()));
 
         adapter = new ManageBannersAdapter();
         adapter.setSearching();
 
         rcv.setAdapter(adapter);
+
+        swp.setColorSchemeResources(R.color.colorPrimary);
+        swp.setOnRefreshListener(this);
     }
 
     private Callback<ResponseJson> callback() {
         return new Callback<ResponseJson>() {
             @Override
             public void onResponse(Call<ResponseJson> call, Response<ResponseJson> response) {
+                swp.setRefreshing(false);
+
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
                         List<Item> items = response.body().getResult().get(0).getItems();
@@ -84,10 +93,15 @@ public class FragmentManageBanners extends Fragment {
             public void onFailure(Call<ResponseJson> call, Throwable t) {
                 Toast.makeText(getContext(), t.toString(), Toast.LENGTH_LONG).show();
                 adapter.setNotFound();
+                swp.setRefreshing(false);
 
             }
         };
     }
 
 
+    @Override
+    public void onRefresh() {
+        getBanners();
+    }
 }

@@ -10,10 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="#7986CB"
+        android:background="@color/purple_50"
         android:padding="@dimen/standard_margin2x"
         android:gravity="center"
-        android:textColor="@color/white"
         tools:text="@string/lorem"
         android:textSize="@dimen/large_3X_sp" />
 

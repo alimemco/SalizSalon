@@ -16,13 +16,12 @@ public class ActivitySplash extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        if (Utils.isConnected(this)) {
+        if (Utils.connected(this)) {
             startActivity(new Intent(this, MainActivity.class));
             finish();
         } else {
             TextView tv = findViewById(R.id.activity_splash_txt);
             tv.setText("internet error");
-
         }
 
 

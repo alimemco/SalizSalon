@@ -4,18 +4,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alirnp.salizsalon.ADMIN.Model.Model;
 import com.alirnp.salizsalon.CustomViews.MyTextView;
+import com.alirnp.salizsalon.Dialog.EditTimeDialog;
 import com.alirnp.salizsalon.Holder.NotFoundHolder;
 import com.alirnp.salizsalon.Holder.SearchingHolder;
 import com.alirnp.salizsalon.R;
@@ -29,6 +30,7 @@ public class ManageTimeAdapter extends
         ListAdapter<Model, RecyclerView.ViewHolder> implements
         KmStickyListener {
 
+
     public static final DiffUtil.ItemCallback<Model> ModelDiffUtilCallback =
             new DiffUtil.ItemCallback<Model>() {
                 @Override
@@ -41,7 +43,9 @@ public class ManageTimeAdapter extends
                     return model.equals(t1);
                 }
             };
+
     private Constants.state state;
+    private EditTimeDialog dialog;
 
     public ManageTimeAdapter() {
         super(ModelDiffUtilCallback);
@@ -75,7 +79,6 @@ public class ManageTimeAdapter extends
 
         View itemView;
 
-        Utils.log(getClass(), "viewType : " + viewType);
 
         if (viewType == Constants.state.HEADER.getStatus()) {
             itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_header, viewGroup, false);
@@ -109,18 +112,12 @@ public class ManageTimeAdapter extends
     public int getItemViewType(int position) {
 
         if (state == Constants.state.SUCCESS) {
-            Utils.log(getClass(), "getItemType: SUCCESS " + getItem(position).getType());
-
-            return getItem(position).getType();
-
+            return getItem(position).getType().getStatus();
 
         } else {
-            Utils.log(getClass(), "getItemType else : " + state.getStatus());
-
             return state.getStatus();
         }
     }
-
 
     @Override
     public Integer getHeaderPositionForItem(Integer itemPosition) {
@@ -179,7 +176,12 @@ public class ManageTimeAdapter extends
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(itemView.getContext(), getItem(getAdapterPosition()).getDay(), Toast.LENGTH_SHORT).show();
+                    FragmentManager manager = ((AppCompatActivity) view.getContext()).getSupportFragmentManager();
+
+                    Model model = getItem(getAdapterPosition());
+                    dialog = EditTimeDialog.newInstance(model.getId(), model.getHour(), model.isReserved());
+
+                    dialog.show(manager, "EditTimeDialog");
                 }
             });
         }
@@ -194,12 +196,18 @@ public class ManageTimeAdapter extends
         private String hourToAmPm(String hour) {
 
             String[] split = hour.split(":");
-            int h = Integer.valueOf(split[0]);
-            if (h <= 12) {
-                return hour + " صبح ";
-            } else {
-                return hour + " عصر ";
+
+            try {
+                int h = Integer.valueOf(split[0]);
+                if (h <= 12) {
+                    return hour + " صبح ";
+                } else {
+                    return hour + " عصر ";
+                }
+            } catch (Exception e) {
+                return "خطا در تجزیه اطلاعات";
             }
+
         }
 
 

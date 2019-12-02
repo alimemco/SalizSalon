@@ -1,5 +1,9 @@
 package com.alirnp.salizsalon.ADMIN.Views.Fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,11 +12,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.alirnp.salizsalon.ADMIN.Model.Model;
 import com.alirnp.salizsalon.ADMIN.Adapter.ManageTimeAdapter;
+import com.alirnp.salizsalon.ADMIN.Model.Model;
 import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.MyUnitTest.Item;
 import com.alirnp.salizsalon.MyUnitTest.ResultAdmin;
@@ -29,7 +35,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class FragmentManageTimes extends Fragment {
+public class FragmentManageTimes extends Fragment implements
+        SwipeRefreshLayout.OnRefreshListener {
 
     private View view;
 
@@ -38,8 +45,17 @@ public class FragmentManageTimes extends Fragment {
     private LinearLayoutManager layoutManager;
     private KmHeaderItemDecoration kmHeaderItemDecoration;
 
+    private SwipeRefreshLayout swp;
+
     public FragmentManageTimes() {
     }
+
+    private BroadcastReceiver receiverEditedUser = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            getTimes();
+        }
+    };
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -48,16 +64,14 @@ public class FragmentManageTimes extends Fragment {
 
         initViews();
         getTimes();
+        registerBroadcast();
         return view;
     }
 
-    private void initViews() {
-        adapter = new ManageTimeAdapter();
-        layoutManager = new LinearLayoutManager(getContext());
-        recyclerView = view.findViewById(R.id.fragment_manager_times);
-        recyclerView.setLayoutManager(layoutManager);
-        kmHeaderItemDecoration = new KmHeaderItemDecoration(adapter);
-        recyclerView.setAdapter(adapter);
+    private void registerBroadcast() {
+        if (getContext() != null)
+            LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiverEditedUser,
+                    new IntentFilter(Constants.EVENT_EDITED_TIME));
     }
 
     private void getTimes() {
@@ -66,10 +80,26 @@ public class FragmentManageTimes extends Fragment {
                 .enqueue(callback());
     }
 
+    private void initViews() {
+        adapter = new ManageTimeAdapter();
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerView = view.findViewById(R.id.fragment_manage_times_rcv);
+
+        recyclerView.setLayoutManager(layoutManager);
+        kmHeaderItemDecoration = new KmHeaderItemDecoration(adapter);
+        recyclerView.setAdapter(adapter);
+
+        swp = view.findViewById(R.id.fragment_manage_times_swp);
+        swp.setColorSchemeResources(R.color.colorPrimary);
+        swp.setOnRefreshListener(this);
+    }
+
     private Callback<ResultAdmin> callback() {
         return new Callback<ResultAdmin>() {
             @Override
             public void onResponse(Call<ResultAdmin> call, Response<ResultAdmin> response) {
+                swp.setRefreshing(false);
+
                 ResultAdmin result = response.body();
                 if (result != null) {
                     if (result.isSuccess()) {
@@ -79,13 +109,13 @@ public class FragmentManageTimes extends Fragment {
 
                         for (int i = 0; i < items.size(); i++) {
                             Item item = items.get(i);
-                            Model headerModel = new Model(item.getDay(), Constants.state.HEADER.getStatus());
+                            Model headerModel = new Model(item.getDay(), Constants.state.HEADER);
                             List<Time> times = item.getTimes();
                             modelList.add(headerModel);
 
                             for (int j = 0; j < times.size(); j++) {
                                 Time time = times.get(j);
-                                Model model = new Model(time.getDay(), time.getHour(), Constants.state.MAIN.getStatus(), time.isReserved());
+                                Model model = new Model(time.getID(), time.getDay(), time.getHour(), Constants.state.MAIN, time.isReserved());
                                 modelList.add(model);
                             }
 
@@ -104,11 +134,15 @@ public class FragmentManageTimes extends Fragment {
             @Override
             public void onFailure(Call<ResultAdmin> call, Throwable t) {
                 Toast.makeText(getContext(), t.toString(), Toast.LENGTH_LONG).show();
-                // adapter.setNotFound();
+                adapter.setNotFound();
+                swp.setRefreshing(false);
 
             }
         };
     }
 
-
+    @Override
+    public void onRefresh() {
+        getTimes();
+    }
 }

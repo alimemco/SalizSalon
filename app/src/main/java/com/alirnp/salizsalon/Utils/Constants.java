@@ -2,7 +2,11 @@ package com.alirnp.salizsalon.Utils;
 
 public class Constants {
 
+    public static final String URL = "www.khodemon.ir";
+    public static final String BASE_URL = "http://khodemon.ir/SalizApp/";
+
     public static final String TOKEN = "AliRnpVAgT8AV195s";
+
     public static final String ID = "ID";
     public static final String STATUS = "STATUS";
     public static final String POSTS = "POSTS";
@@ -12,12 +16,14 @@ public class Constants {
     public static String BANNERS = "GET_BANNERS";
 
     public static String EDIT_ORDERS = "EDIT_ORDER";
+    public static String EDIT_TIME = "EDIT_TIME";
 
     public static String DAY_NAME = "DAY_NAME";
     public static String MONTH_NAME = "MONTH_NAME";
     public static String DAY_OF_MONTH = "DAY_OF_MONTH";
     public static String PRICE = "PRICE";
     public static String RESERVE = "RESERVE";
+    public static String RESERVED = "RESERVED";
     public static String TIME_ID = "TIME_ID";
 
     public static String POSITION = "POSITION";
@@ -43,6 +49,7 @@ public class Constants {
 
     public static String EVENT_LOGIN = "EVENT_LOGIN";
     public static String EVENT_RESERVED = "EVENT_RESERVED";
+    public static String EVENT_EDITED_TIME = "EVENT_EDITED_TIME";
 
     public static String Saturday = "Saturday";
     public static String Sunday = "Sunday";
