@@ -60,6 +60,11 @@ public class Item implements Parcelable {
     @Expose
     private String dayOfMonth;
 
+    @SerializedName("day_of_week")
+    @Expose
+    private int day_of_week;
+
+
 
     @SerializedName("monthName")
     @Expose
@@ -104,6 +109,13 @@ public class Item implements Parcelable {
 
     }
 
+    public int getDay_of_week() {
+        return day_of_week;
+    }
+
+    public void setDay_of_week(int day_of_week) {
+        this.day_of_week = day_of_week;
+    }
 
     public String getTimeID() {
         return timeID;

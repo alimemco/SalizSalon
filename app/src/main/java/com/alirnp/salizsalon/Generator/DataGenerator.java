@@ -4,6 +4,7 @@ import com.alirnp.salizsalon.Model.Day;
 import com.alirnp.salizsalon.Model.Item;
 import com.alirnp.salizsalon.Model.Service;
 import com.alirnp.salizsalon.R;
+import com.alirnp.salizsalon.Utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,6 +86,53 @@ public class DataGenerator {
         }
 
         return list;
+    }
+
+    public static List<Day> getWeekDays() {
+
+        List<Day> items = new ArrayList<>();
+        Day day = new Day();
+
+        for (int i = 1; i <= 7; i++) {
+
+            switch (i) {
+                case 1:
+                    day = new Day(Constants.Saturday, i);
+                    break;
+
+                case 2:
+                    day = new Day(Constants.Sunday, i);
+                    break;
+
+
+                case 3:
+                    day = new Day(Constants.Monday, i);
+                    break;
+
+
+                case 4:
+                    day = new Day(Constants.Tuesday, i);
+                    break;
+
+
+                case 5:
+                    day = new Day(Constants.Wednesday, i);
+                    break;
+
+                case 6:
+                    day = new Day(Constants.Thursday, i);
+                    break;
+
+                case 7:
+                    day = new Day(Constants.Friday, i);
+                    break;
+            }
+
+            items.add(day);
+        }
+
+        return items;
+
     }
 
     public static int randomDigit(int min, int max) {

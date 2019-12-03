@@ -10,9 +10,12 @@ public class Day implements Parcelable {
     private String dayName;
     private String monthName;
     private String dayOfMonth;
+    private int dayOfWeek;
     private boolean isSelected;
     private Date date;
 
+    public Day() {
+    }
 
     public Day(String dayName, String monthName, String dayOfMonth, Date date) {
         this.dayName = dayName;
@@ -20,6 +23,20 @@ public class Day implements Parcelable {
         this.dayOfMonth = dayOfMonth;
         this.date = date;
         this.isSelected = false;
+    }
+
+    public Day(String dayName, int dayOfWeek) {
+        this.dayName = dayName;
+        this.dayOfWeek = dayOfWeek;
+        this.isSelected = false;
+    }
+
+    public int getDayOfWeek() {
+        return dayOfWeek;
+    }
+
+    public void setDayOfWeek(int dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
     }
 
     public Date getDate() {

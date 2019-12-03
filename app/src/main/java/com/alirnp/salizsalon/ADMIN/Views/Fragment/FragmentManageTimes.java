@@ -19,6 +19,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.alirnp.salizsalon.ADMIN.Adapter.ManageTimeAdapter;
 import com.alirnp.salizsalon.ADMIN.Model.Model;
+import com.alirnp.salizsalon.CustomViews.MyButton;
+import com.alirnp.salizsalon.Dialog.AddTimeDialog;
 import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.MyUnitTest.Item;
 import com.alirnp.salizsalon.MyUnitTest.ResultAdmin;
@@ -36,9 +38,11 @@ import retrofit2.Response;
 
 
 public class FragmentManageTimes extends Fragment implements
-        SwipeRefreshLayout.OnRefreshListener {
+        SwipeRefreshLayout.OnRefreshListener,
+        View.OnClickListener {
 
     private View view;
+
 
     private ManageTimeAdapter adapter;
     private RecyclerView recyclerView;
@@ -49,6 +53,7 @@ public class FragmentManageTimes extends Fragment implements
 
     public FragmentManageTimes() {
     }
+
 
     private BroadcastReceiver receiverEditedUser = new BroadcastReceiver() {
         @Override
@@ -84,6 +89,8 @@ public class FragmentManageTimes extends Fragment implements
         adapter = new ManageTimeAdapter();
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView = view.findViewById(R.id.fragment_manage_times_rcv);
+        MyButton addTimeBtn = view.findViewById(R.id.fragment_manage_times_btn_addTime);
+        addTimeBtn.setOnClickListener(this);
 
         recyclerView.setLayoutManager(layoutManager);
         kmHeaderItemDecoration = new KmHeaderItemDecoration(adapter);
@@ -144,5 +151,14 @@ public class FragmentManageTimes extends Fragment implements
     @Override
     public void onRefresh() {
         getTimes();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.fragment_manage_times_btn_addTime) {
+            AddTimeDialog dialog = new AddTimeDialog();
+            if (getFragmentManager() != null)
+                dialog.show(getFragmentManager(), "AddTimeDialog");
+        }
     }
 }

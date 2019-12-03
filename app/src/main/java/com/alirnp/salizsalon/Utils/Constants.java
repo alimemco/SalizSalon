@@ -21,6 +21,7 @@ public class Constants {
     public static String DAY_NAME = "DAY_NAME";
     public static String MONTH_NAME = "MONTH_NAME";
     public static String DAY_OF_MONTH = "DAY_OF_MONTH";
+    public static String DAY_OF_WEEK = "DAY_OF_WEEK";
     public static String PRICE = "PRICE";
     public static String RESERVE = "RESERVE";
     public static String RESERVED = "RESERVED";

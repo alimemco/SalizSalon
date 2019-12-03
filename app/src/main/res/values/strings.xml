@@ -30,4 +30,6 @@
     <string name="address">ماهشهر ، شهرک بعثت (ممکو) ، گلستان  ، آلفا 164</string>
     <string name="change_time">تغییر زمان بندی</string>
     <string name="submit_info">ثبت اطلاعات</string>
+    <string name="add_time">اضافه کردن روز و ساعت</string>
+    <string name="_8_00">8:00</string>
 </resources>

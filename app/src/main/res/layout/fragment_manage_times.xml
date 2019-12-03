@@ -6,10 +6,24 @@
     android:id="@+id/fragment_manage_times_swp"
     tools:context=".ADMIN.Views.Fragment.FragmentManageOrder">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/fragment_manage_times_rcv"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fragment_manage_times_rcv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <com.alirnp.salizsalon.CustomViews.MyButton
+            android:id="@+id/fragment_manage_times_btn_addTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_time" />
+    </LinearLayout>
 
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
