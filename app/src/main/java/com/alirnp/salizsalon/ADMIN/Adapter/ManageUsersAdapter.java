@@ -4,20 +4,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
-
-import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alirnp.salizsalon.CustomViews.MyTextView;
+import com.alirnp.salizsalon.Dialog.BottomSheetChangeUserLevel;
 import com.alirnp.salizsalon.NestedJson.Item;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Utils;
 
+import java.util.List;
 
-public class ManageUsersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+public class ManageUsersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements BottomSheetChangeUserLevel.OnUserLevelChanged {
 
     private List<Item> models;
 
@@ -51,6 +53,12 @@ public class ManageUsersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         return models == null ? 0 : models.size();
     }
 
+    @Override
+    public void OnUserChanged(int position, String userLevel) {
+        models.get(position).setLevel(userLevel);
+        notifyItemChanged(position);
+    }
+
 
     class ManageUsersHolder extends RecyclerView.ViewHolder {
         private View lineView;
@@ -66,7 +74,7 @@ public class ManageUsersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
 
         void bind(final int position) {
-            Item item = models.get(position);
+            final Item item = models.get(position);
             String level = item.getLevel();
             boolean isAdmin = level.equals("ADMIN");
 
@@ -78,10 +86,16 @@ public class ManageUsersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(itemView.getContext(), models.get(getAdapterPosition()).getUsername(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(itemView.getContext(), models.get(getAdapterPosition()).getUsername(), Toast.LENGTH_SHORT).show();
+                    BottomSheetChangeUserLevel dialog = BottomSheetChangeUserLevel.newInstance(Integer.valueOf(item.getID()), position);
+                    dialog.setOnUserLevelChanged(ManageUsersAdapter.this);
+                    FragmentManager manager = ((AppCompatActivity) itemView.getContext()).getSupportFragmentManager();
+                    dialog.show(manager, "BottomSheetChangeUserLevel");
+
                 }
             });
 
         }
+
     }
 }

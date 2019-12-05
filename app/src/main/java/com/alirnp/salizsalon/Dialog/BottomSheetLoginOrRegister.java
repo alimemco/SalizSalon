@@ -15,18 +15,14 @@ import com.alirnp.salizsalon.Views.Activities.ActivityRegister;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 
-public class BottomSheetFragment extends BottomSheetDialogFragment implements View.OnClickListener {
+public class BottomSheetLoginOrRegister extends BottomSheetDialogFragment implements View.OnClickListener {
 
     private View view;
     private MyButton login, register;
 
-    public BottomSheetFragment() {
+    public BottomSheetLoginOrRegister() {
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,

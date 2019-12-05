@@ -39,4 +39,7 @@
 
     <!-- ERRORS -->
     <string name="error_empty_body">خطا در سرور</string>
+
+    <!-- SUCCESS -->
+    <string name="successfully">موفقیت آمیز بود</string>
 </resources>

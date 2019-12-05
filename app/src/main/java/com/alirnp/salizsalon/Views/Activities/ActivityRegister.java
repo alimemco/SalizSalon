@@ -12,8 +12,8 @@ import com.alirnp.salizsalon.CustomViews.MyEditText;
 import com.alirnp.salizsalon.Dialog.LoadingDialog;
 import com.alirnp.salizsalon.Model.User;
 import com.alirnp.salizsalon.MyApplication;
-import com.alirnp.salizsalon.NestedJson.SalizResponse;
 import com.alirnp.salizsalon.NestedJson.Result;
+import com.alirnp.salizsalon.NestedJson.SalizResponse;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
 import com.alirnp.salizsalon.Utils.Utils;
@@ -75,7 +75,7 @@ public class ActivityRegister extends AppCompatActivity implements View.OnClickL
 
     private boolean phoneIsValidate() {
         if (phone != null)
-            return phone.matches("^(?=(?:[8-9]){1})(?=[0-9]{8}).*");
+            return phone.matches("(\\+98|0)?9\\d{9}");
         return false;
     }
 

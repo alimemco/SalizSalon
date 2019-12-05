@@ -9,6 +9,7 @@ public class Constants {
     public static final String TOKEN = "AliRnpVAgT8AV195s";
 
     public static final String ID = "ID";
+    public static final String USER_LEVEL = "level";
     public static final String STATUS = "STATUS";
     public static final String POSTS = "POSTS";
     public static final String CATEGORY = "CATEGORY";
@@ -20,6 +21,7 @@ public class Constants {
 
     public static String EDIT_ORDERS = "EDIT_ORDER";
     public static String EDIT_TIME = "EDIT_TIME";
+    public static String EDIT_USER_LEVEL = "EDIT_USER_LEVEL";
     public static String DELETE_TIME = "DELETE_TIME";
 
     public static String DAY_NAME = "DAY_NAME";

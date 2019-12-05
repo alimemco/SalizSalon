@@ -14,14 +14,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.alirnp.salizsalon.CustomViews.MyButton;
-import com.alirnp.salizsalon.Dialog.BottomSheetFragment;
+import com.alirnp.salizsalon.Dialog.BottomSheetLoginOrRegister;
 import com.alirnp.salizsalon.Interface.OnStepReady;
 import com.alirnp.salizsalon.Model.Day;
 import com.alirnp.salizsalon.Model.Hour;
 import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.NestedJson.Item;
-import com.alirnp.salizsalon.NestedJson.SalizResponse;
 import com.alirnp.salizsalon.NestedJson.Result;
+import com.alirnp.salizsalon.NestedJson.SalizResponse;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
 import com.alirnp.salizsalon.Utils.Utils;
@@ -52,7 +52,7 @@ public class ActivityChooseTime extends AppCompatActivity implements
 
     private boolean active = false;
 
-    private BottomSheetFragment bottomSheetFragment;
+    private BottomSheetLoginOrRegister bottomSheetLoginOrRegister;
 
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private FragmentStepOne fragmentStepOne = new FragmentStepOne(this);
@@ -112,8 +112,8 @@ public class ActivityChooseTime extends AppCompatActivity implements
     }
 
     private void showBottomDialog() {
-        bottomSheetFragment = new BottomSheetFragment();
-        bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
+        bottomSheetLoginOrRegister = new BottomSheetLoginOrRegister();
+        bottomSheetLoginOrRegister.show(getSupportFragmentManager(), bottomSheetLoginOrRegister.getTag());
 
     }
 

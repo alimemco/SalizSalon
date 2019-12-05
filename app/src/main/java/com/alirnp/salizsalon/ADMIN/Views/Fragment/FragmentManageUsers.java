@@ -2,16 +2,16 @@ package com.alirnp.salizsalon.ADMIN.Views.Fragment;
 
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.alirnp.salizsalon.ADMIN.Adapter.ManageUsersAdapter;
 import com.alirnp.salizsalon.MyApplication;
@@ -24,14 +24,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FragmentManageUsers extends Fragment {
+public class FragmentManageUsers extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private View view;
     private ManageUsersAdapter adapter;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private Callback<SalizResponse> callback = new Callback<SalizResponse>() {
         @Override
         public void onResponse(Call<SalizResponse> call, Response<SalizResponse> response) {
-            String error = "{}";
+            String error = "";
+            swipeRefreshLayout.setRefreshing(false);
+
             if (response.isSuccessful()) {
                 if (response.body() != null) {
                     Result result = response.body().getResult().get(0);
@@ -57,6 +60,7 @@ public class FragmentManageUsers extends Fragment {
         @Override
         public void onFailure(Call<SalizResponse> call, Throwable t) {
             Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            swipeRefreshLayout.setRefreshing(false);
         }
     };
 
@@ -79,10 +83,18 @@ public class FragmentManageUsers extends Fragment {
     }
 
     private void initView() {
+        swipeRefreshLayout = view.findViewById(R.id.fragment_manage_users_swp);
         RecyclerView recyclerView = view.findViewById(R.id.fragment_manage_users_recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new ManageUsersAdapter();
         recyclerView.setAdapter(adapter);
+
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        swipeRefreshLayout.setOnRefreshListener(this);
     }
 
+    @Override
+    public void onRefresh() {
+        getUsers();
+    }
 }
