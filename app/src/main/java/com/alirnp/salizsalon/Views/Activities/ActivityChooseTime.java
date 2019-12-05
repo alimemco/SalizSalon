@@ -18,9 +18,10 @@ import com.alirnp.salizsalon.Dialog.BottomSheetFragment;
 import com.alirnp.salizsalon.Interface.OnStepReady;
 import com.alirnp.salizsalon.Model.Day;
 import com.alirnp.salizsalon.Model.Hour;
-import com.alirnp.salizsalon.Model.JSON.Result;
 import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.NestedJson.Item;
+import com.alirnp.salizsalon.NestedJson.SalizResponse;
+import com.alirnp.salizsalon.NestedJson.Result;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
 import com.alirnp.salizsalon.Utils.Utils;
@@ -245,12 +246,12 @@ public class ActivityChooseTime extends AppCompatActivity implements
     }
 
 
-    private Callback<ArrayList<Result>> callback() {
-        return new Callback<ArrayList<Result>>() {
+    private Callback<SalizResponse> callback() {
+        return new Callback<SalizResponse>() {
             @Override
-            public void onResponse(Call<ArrayList<Result>> call, Response<ArrayList<Result>> response) {
+            public void onResponse(Call<SalizResponse> call, Response<SalizResponse> response) {
                 if (response.body() != null) {
-                    Result result = response.body().get(0);
+                    Result result = response.body().getResult().get(0);
                     if (Boolean.valueOf(result.getSuccess())) {
                         Toast.makeText(ActivityChooseTime.this, "با موفقیت ارسال شد ، منتظر تایید باشید", Toast.LENGTH_LONG).show();
                         finish();
@@ -263,7 +264,7 @@ public class ActivityChooseTime extends AppCompatActivity implements
             }
 
             @Override
-            public void onFailure(Call<ArrayList<Result>> call, Throwable t) {
+            public void onFailure(Call<SalizResponse> call, Throwable t) {
                 Toast.makeText(ActivityChooseTime.this, t.toString(), Toast.LENGTH_LONG).show();
 
             }

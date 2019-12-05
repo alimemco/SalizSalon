@@ -13,8 +13,8 @@ import com.alirnp.salizsalon.CustomViews.MyButton;
 import com.alirnp.salizsalon.CustomViews.MyEditText;
 import com.alirnp.salizsalon.Model.User;
 import com.alirnp.salizsalon.MyApplication;
-import com.alirnp.salizsalon.NestedJson.ResponseJson;
-import com.alirnp.salizsalon.NestedJson.ResultItems;
+import com.alirnp.salizsalon.NestedJson.SalizResponse;
+import com.alirnp.salizsalon.NestedJson.Result;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
 import com.alirnp.salizsalon.Utils.Utils;
@@ -136,15 +136,15 @@ public class BottomSheetEditUser extends BottomSheetDialogFragment implements Vi
     }
 
 
-    private Callback<ResponseJson> callback() {
-        return new Callback<ResponseJson>() {
+    private Callback<SalizResponse> callback() {
+        return new Callback<SalizResponse>() {
             @Override
-            public void onResponse(Call<ResponseJson> call, Response<ResponseJson> response) {
+            public void onResponse(Call<SalizResponse> call, Response<SalizResponse> response) {
                 dismissLoading();
 
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
-                        ResultItems result = response.body().getResult().get(0);
+                        Result result = response.body().getResult().get(0);
                         if (Boolean.parseBoolean(result.getSuccess())) {
 
                             editSuccess();
@@ -158,7 +158,7 @@ public class BottomSheetEditUser extends BottomSheetDialogFragment implements Vi
             }
 
             @Override
-            public void onFailure(Call<ResponseJson> call, Throwable t) {
+            public void onFailure(Call<SalizResponse> call, Throwable t) {
                 Toast.makeText(getContext(), t.toString(), Toast.LENGTH_SHORT).show();
                 dismissLoading();
             }

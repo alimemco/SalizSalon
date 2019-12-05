@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alirnp.salizsalon.Adapters.ItemsVerticalAdapter;
 import com.alirnp.salizsalon.MyApplication;
-import com.alirnp.salizsalon.NestedJson.ResponseJson;
-import com.alirnp.salizsalon.NestedJson.ResultItems;
+import com.alirnp.salizsalon.NestedJson.SalizResponse;
+import com.alirnp.salizsalon.NestedJson.Result;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
 import com.alirnp.salizsalon.Utils.Utils;
@@ -24,14 +24,14 @@ import retrofit2.Response;
 public class ActivityShop extends AppCompatActivity {
 
     RecyclerView rcv;
-    private Callback<ResponseJson> callbackPosts = new Callback<ResponseJson>() {
+    private Callback<SalizResponse> callbackPosts = new Callback<SalizResponse>() {
 
         @Override
-        public void onResponse(Call<ResponseJson> call, Response<ResponseJson> response) {
+        public void onResponse(Call<SalizResponse> call, Response<SalizResponse> response) {
 
             if (response.body() != null) {
 
-                List<ResultItems> result = response.body().getResult();
+                List<Result> result = response.body().getResult();
 
                 rcv.setAdapter(new ItemsVerticalAdapter(result));
 
@@ -40,7 +40,7 @@ public class ActivityShop extends AppCompatActivity {
         }
 
         @Override
-        public void onFailure(Call<ResponseJson> call, Throwable t) {
+        public void onFailure(Call<SalizResponse> call, Throwable t) {
             Utils.log(MainActivity.class, t.toString());
         }
     };

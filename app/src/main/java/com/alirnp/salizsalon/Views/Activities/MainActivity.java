@@ -25,7 +25,7 @@ import com.alirnp.salizsalon.Dialog.LoadingDialog;
 import com.alirnp.salizsalon.Interface.OnLogoutUser;
 import com.alirnp.salizsalon.Model.User;
 import com.alirnp.salizsalon.MyApplication;
-import com.alirnp.salizsalon.NestedJson.ResponseJson;
+import com.alirnp.salizsalon.NestedJson.SalizResponse;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
 import com.alirnp.salizsalon.Views.Fragments.FragmentHome;
@@ -268,17 +268,17 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    private Callback<ResponseJson> callback() {
+    private Callback<SalizResponse> callback() {
 
-        return new Callback<ResponseJson>() {
+        return new Callback<SalizResponse>() {
             @Override
-            public void onResponse(Call<ResponseJson> call, Response<ResponseJson> response) {
+            public void onResponse(Call<SalizResponse> call, Response<SalizResponse> response) {
                 startActivity(new Intent(MainActivity.this, ActivityManage.class));
                 dismissLoading();
             }
 
             @Override
-            public void onFailure(Call<ResponseJson> call, Throwable t) {
+            public void onFailure(Call<SalizResponse> call, Throwable t) {
                 Toast.makeText(MainActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
                 dismissLoading();
             }

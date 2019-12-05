@@ -12,6 +12,7 @@ import com.alirnp.salizsalon.ADMIN.Adapter.TabAdapter;
 import com.alirnp.salizsalon.ADMIN.Views.Fragment.FragmentManageBanners;
 import com.alirnp.salizsalon.ADMIN.Views.Fragment.FragmentManageOrder;
 import com.alirnp.salizsalon.ADMIN.Views.Fragment.FragmentManageTimes;
+import com.alirnp.salizsalon.ADMIN.Views.Fragment.FragmentManageUsers;
 import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Utils;
@@ -39,6 +40,7 @@ public class ActivityManage extends AppCompatActivity {
         adapter.addFragment(new FragmentManageOrder(), "سفارشات");
         adapter.addFragment(new FragmentManageTimes(), "زمان بندی");
         adapter.addFragment(new FragmentManageBanners(), "بنر");
+        adapter.addFragment(new FragmentManageUsers(), "کاربران");
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
     }

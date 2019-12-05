@@ -104,9 +104,21 @@ public class Item implements Parcelable {
     @Expose
     private String timeID;
 
+    @SerializedName("USERNAME")
+    @Expose
+    private String username;
+
 
     public Item() {
 
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public int getDay_of_week() {

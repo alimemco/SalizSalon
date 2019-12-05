@@ -16,8 +16,8 @@ import androidx.fragment.app.DialogFragment;
 import com.alirnp.salizsalon.CustomViews.MyButton;
 import com.alirnp.salizsalon.CustomViews.MyEditText;
 import com.alirnp.salizsalon.MyApplication;
-import com.alirnp.salizsalon.NestedJson.ResponseJson;
-import com.alirnp.salizsalon.NestedJson.ResultItems;
+import com.alirnp.salizsalon.NestedJson.SalizResponse;
+import com.alirnp.salizsalon.NestedJson.Result;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
 import com.alirnp.salizsalon.Utils.Utils;
@@ -38,12 +38,12 @@ public class EditTimeDialog extends DialogFragment implements View.OnClickListen
 
     private MyEditText hourEdt;
     private CheckBox reservedChb;
-    private Callback<ResponseJson> callback = new Callback<ResponseJson>() {
+    private Callback<SalizResponse> callbackEditTime = new Callback<SalizResponse>() {
         @Override
-        public void onResponse(Call<ResponseJson> call, Response<ResponseJson> response) {
+        public void onResponse(Call<SalizResponse> call, Response<SalizResponse> response) {
             if (response.isSuccessful())
                 if (response.body() != null) {
-                    ResultItems result = response.body().getResult().get(0);
+                    Result result = response.body().getResult().get(0);
                     boolean success = Boolean.parseBoolean(result.getSuccess());
                     if (success) {
                         Toast.makeText(getContext(), "با موفقیت تغییر کرد", Toast.LENGTH_SHORT).show();
@@ -56,7 +56,35 @@ public class EditTimeDialog extends DialogFragment implements View.OnClickListen
         }
 
         @Override
-        public void onFailure(Call<ResponseJson> call, Throwable t) {
+        public void onFailure(Call<SalizResponse> call, Throwable t) {
+            Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    };
+    private Callback<SalizResponse> callbackDeleteTime = new Callback<SalizResponse>() {
+        @Override
+        public void onResponse(Call<SalizResponse> call, Response<SalizResponse> response) {
+            if (response.isSuccessful()) {
+                if (response.body() != null) {
+                    Result result = response.body().getResult().get(0);
+                    boolean success = Boolean.parseBoolean(result.getSuccess());
+                    if (success) {
+                        Toast.makeText(getContext(), "با موفقیت حذف شد", Toast.LENGTH_SHORT).show();
+                        Utils.sendMessageEditedTime(getContext());
+                        dismiss();
+                    } else {
+                        Toast.makeText(getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getContext(), "خطا در سمت سرور", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
+            }
+
+        }
+
+        @Override
+        public void onFailure(Call<SalizResponse> call, Throwable t) {
             Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
         }
     };
@@ -98,7 +126,8 @@ public class EditTimeDialog extends DialogFragment implements View.OnClickListen
     }
 
     private void initViews() {
-        MyButton submitBtn = view.findViewById(R.id.dialog_manage_edit_time_btn_submit);
+        MyButton submitButton = view.findViewById(R.id.dialog_manage_edit_time_btn_submit);
+        MyButton deleteButton = view.findViewById(R.id.dialog_manage_edit_time_btn_delete);
         hourEdt = view.findViewById(R.id.dialog_manage_edit_time_tv_hour);
         reservedChb = view.findViewById(R.id.dialog_manage_edit_time_chb_reserved);
 
@@ -107,20 +136,36 @@ public class EditTimeDialog extends DialogFragment implements View.OnClickListen
         hourEdt.setText(hour);
         reservedChb.setChecked(reserved);
 
-        submitBtn.setOnClickListener(this);
+        submitButton.setOnClickListener(this);
+        deleteButton.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.dialog_manage_edit_time_btn_submit) {
-            Map<String, String> map = new HashMap<>();
-            if (hourEdt.getText() != null)
-                map.put(Constants.HOUR, hourEdt.getText().toString());
-            map.put(Constants.ID, String.valueOf(id));
-            map.put(Constants.RESERVED, String.valueOf(reservedChb.isChecked()));
-            MyApplication.getApi().manageEdit(Constants.EDIT_TIME, Constants.TOKEN, map).enqueue(callback);
+            editInfo();
+        } else if (v.getId() == R.id.dialog_manage_edit_time_btn_delete) {
+            deleteInfo();
         }
 
+    }
+
+
+    private void editInfo() {
+        Map<String, String> map = new HashMap<>();
+        if (hourEdt.getText() != null)
+            map.put(Constants.HOUR, hourEdt.getText().toString());
+        map.put(Constants.ID, String.valueOf(id));
+        map.put(Constants.RESERVED, String.valueOf(reservedChb.isChecked()));
+
+        MyApplication.getApi().manage(Constants.EDIT_TIME, Constants.TOKEN, map).enqueue(callbackEditTime);
+
+    }
+
+    private void deleteInfo() {
+        Map<String, String> map = new HashMap<>();
+        map.put(Constants.ID, String.valueOf(id));
+        MyApplication.getApi().manage(Constants.DELETE_TIME, Constants.TOKEN, map).enqueue(callbackDeleteTime);
     }
 
 

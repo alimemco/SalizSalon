@@ -17,8 +17,8 @@ import com.alirnp.salizsalon.ADMIN.Adapter.ManageOrderAdapter;
 import com.alirnp.salizsalon.Dialog.LoadingDialog;
 import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.NestedJson.Item;
-import com.alirnp.salizsalon.NestedJson.ResponseJson;
-import com.alirnp.salizsalon.NestedJson.ResultItems;
+import com.alirnp.salizsalon.NestedJson.SalizResponse;
+import com.alirnp.salizsalon.NestedJson.Result;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
 
@@ -70,7 +70,7 @@ public class FragmentManageOrder extends Fragment
         map.put(Constants.TIME_ID, String.valueOf(timeID));
         map.put(Constants.STATUS, status);
         MyApplication.getApi()
-                .manageEdit(Constants.EDIT_ORDERS, Constants.TOKEN, map)
+                .manage(Constants.EDIT_ORDERS, Constants.TOKEN, map)
                 .enqueue(callbackEditOrder());
 
 
@@ -94,10 +94,10 @@ public class FragmentManageOrder extends Fragment
         swp.setOnRefreshListener(this);
     }
 
-    private Callback<ResponseJson> callback() {
-        return new Callback<ResponseJson>() {
+    private Callback<SalizResponse> callback() {
+        return new Callback<SalizResponse>() {
             @Override
-            public void onResponse(Call<ResponseJson> call, Response<ResponseJson> response) {
+            public void onResponse(Call<SalizResponse> call, Response<SalizResponse> response) {
                 swp.setRefreshing(false);
 
                 if (response.isSuccessful()) {
@@ -112,7 +112,7 @@ public class FragmentManageOrder extends Fragment
             }
 
             @Override
-            public void onFailure(Call<ResponseJson> call, Throwable t) {
+            public void onFailure(Call<SalizResponse> call, Throwable t) {
                 Toast.makeText(getContext(), t.toString(), Toast.LENGTH_LONG).show();
                 adapter.setNotFound();
                 swp.setRefreshing(false);
@@ -122,15 +122,15 @@ public class FragmentManageOrder extends Fragment
     }
 
 
-    private Callback<ResponseJson> callbackEditOrder() {
-        return new Callback<ResponseJson>() {
+    private Callback<SalizResponse> callbackEditOrder() {
+        return new Callback<SalizResponse>() {
             @Override
-            public void onResponse(Call<ResponseJson> call, Response<ResponseJson> response) {
+            public void onResponse(Call<SalizResponse> call, Response<SalizResponse> response) {
                 dialog.dismiss();
 
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
-                        ResultItems result = response.body().getResult().get(0);
+                        Result result = response.body().getResult().get(0);
                         boolean success = Boolean.parseBoolean(result.getSuccess());
                         if (success) {
                             adapter.changeOrder(result.getItems(), positionOrder);
@@ -144,7 +144,7 @@ public class FragmentManageOrder extends Fragment
             }
 
             @Override
-            public void onFailure(Call<ResponseJson> call, Throwable t) {
+            public void onFailure(Call<SalizResponse> call, Throwable t) {
                 Toast.makeText(getContext(), t.toString(), Toast.LENGTH_LONG).show();
                 adapter.setNotFound();
 

@@ -16,7 +16,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.alirnp.salizsalon.ADMIN.Adapter.ManageBannersAdapter;
 import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.NestedJson.Item;
-import com.alirnp.salizsalon.NestedJson.ResponseJson;
+import com.alirnp.salizsalon.NestedJson.SalizResponse;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
 
@@ -31,7 +31,6 @@ public class FragmentManageBanners extends Fragment implements
         SwipeRefreshLayout.OnRefreshListener {
 
     private View view;
-    private RecyclerView rcv;
     private ManageBannersAdapter adapter;
     private SwipeRefreshLayout swp;
 
@@ -58,7 +57,7 @@ public class FragmentManageBanners extends Fragment implements
     }
 
     private void initViews() {
-        rcv = view.findViewById(R.id.fragment_manage_banners_rcv);
+        RecyclerView rcv = view.findViewById(R.id.fragment_manage_banners_rcv);
         swp = view.findViewById(R.id.fragment_manage_banners_swp);
 
         rcv.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -72,10 +71,10 @@ public class FragmentManageBanners extends Fragment implements
         swp.setOnRefreshListener(this);
     }
 
-    private Callback<ResponseJson> callback() {
-        return new Callback<ResponseJson>() {
+    private Callback<SalizResponse> callback() {
+        return new Callback<SalizResponse>() {
             @Override
-            public void onResponse(Call<ResponseJson> call, Response<ResponseJson> response) {
+            public void onResponse(Call<SalizResponse> call, Response<SalizResponse> response) {
                 swp.setRefreshing(false);
 
                 if (response.isSuccessful()) {
@@ -90,7 +89,7 @@ public class FragmentManageBanners extends Fragment implements
             }
 
             @Override
-            public void onFailure(Call<ResponseJson> call, Throwable t) {
+            public void onFailure(Call<SalizResponse> call, Throwable t) {
                 Toast.makeText(getContext(), t.toString(), Toast.LENGTH_LONG).show();
                 adapter.setNotFound();
                 swp.setRefreshing(false);

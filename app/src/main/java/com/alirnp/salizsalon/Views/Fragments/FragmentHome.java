@@ -2,6 +2,7 @@ package com.alirnp.salizsalon.Views.Fragments;
 
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,10 +20,12 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import com.alirnp.salizsalon.Adapters.ItemsAdapter;
 import com.alirnp.salizsalon.BannerSlider.MainSliderAdapter;
 import com.alirnp.salizsalon.BannerSlider.PicassoImageLoadingService;
+import com.alirnp.salizsalon.CustomViews.MyButton;
+import com.alirnp.salizsalon.CustomViews.MyTextView;
 import com.alirnp.salizsalon.Generator.DataGenerator;
 import com.alirnp.salizsalon.MyApplication;
-import com.alirnp.salizsalon.NestedJson.ResponseJson;
-import com.alirnp.salizsalon.NestedJson.ResultItems;
+import com.alirnp.salizsalon.NestedJson.SalizResponse;
+import com.alirnp.salizsalon.NestedJson.Result;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
 import com.alirnp.salizsalon.Utils.Utils;
@@ -33,7 +38,8 @@ import ss.com.bannerslider.Slider;
 
 
 public class FragmentHome extends Fragment
-        implements ItemsAdapter.OnItemClick {
+        implements ItemsAdapter.OnItemClick,
+        View.OnClickListener {
 
     private Slider slider;
     private View view;
@@ -78,12 +84,12 @@ public class FragmentHome extends Fragment
     }
 
 
-    private Callback<ResponseJson> callbackBanner = new Callback<ResponseJson>() {
+    private Callback<SalizResponse> callbackBanner = new Callback<SalizResponse>() {
         @Override
-        public void onResponse(Call<ResponseJson> call, Response<ResponseJson> response) {
+        public void onResponse(Call<SalizResponse> call, Response<SalizResponse> response) {
             if (response.isSuccessful())
                 if (response.body() != null) {
-                    ResultItems result = response.body().getResult().get(0);
+                    Result result = response.body().getResult().get(0);
                     boolean success = Boolean.parseBoolean(result.getSuccess());
                     if (success) {
                         slider.setAdapter(new MainSliderAdapter(result.getItems()));
@@ -94,7 +100,7 @@ public class FragmentHome extends Fragment
         }
 
         @Override
-        public void onFailure(Call<ResponseJson> call, Throwable t) {
+        public void onFailure(Call<SalizResponse> call, Throwable t) {
             Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
         }
     };
@@ -111,6 +117,10 @@ public class FragmentHome extends Fragment
         rcvCategory = view.findViewById(R.id.fragment_home_rcv_category);
         rcvItems = view.findViewById(R.id.fragment_home_rcv_items);
 
+        MyTextView addressButton = view.findViewById(R.id.fragment_home_textView_map_direction);
+
+        addressButton.setOnClickListener(this);
+
         rcvCategory.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
 
         if (Utils.connected(getContext())) {
@@ -119,7 +129,6 @@ public class FragmentHome extends Fragment
         } else {
             Toast.makeText(getContext(), "connection error", Toast.LENGTH_SHORT).show();
         }
-
 
 
     }
@@ -149,4 +158,21 @@ public class FragmentHome extends Fragment
 
     }
 
+    private void goToLocation() {
+        String salizLocation = "30.722634,49.180997";
+        String salizLocationName = "(saliz salon)";
+
+        Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + salizLocation + salizLocationName);
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        startActivity(mapIntent);
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        if (view.getId() == R.id.fragment_home_textView_map_direction) {
+            goToLocation();
+        }
+    }
 }

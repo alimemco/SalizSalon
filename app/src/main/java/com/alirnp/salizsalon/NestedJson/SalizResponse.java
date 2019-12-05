@@ -5,17 +5,17 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class ResponseJson {
+public class SalizResponse {
 
     @SerializedName("result")
     @Expose
-    private List<ResultItems> result = null;
+    private List<Result> result = null;
 
-    public List<ResultItems> getResult() {
+    public List<Result> getResult() {
         return result;
     }
 
-    public void setResult(List<ResultItems> result) {
+    public void setResult(List<Result> result) {
         this.result = result;
     }
 

@@ -20,15 +20,14 @@ import com.alirnp.salizsalon.Model.Day;
 import com.alirnp.salizsalon.Model.Hour;
 import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.NestedJson.Item;
-import com.alirnp.salizsalon.NestedJson.ResponseJson;
-import com.alirnp.salizsalon.NestedJson.ResultItems;
+import com.alirnp.salizsalon.NestedJson.SalizResponse;
+import com.alirnp.salizsalon.NestedJson.Result;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
 import com.alirnp.salizsalon.Utils.Utils;
 import com.alirnp.salizsalon.Views.Activities.ActivityChooseTime;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -38,7 +37,7 @@ import retrofit2.Response;
 
 
 public class FragmentStepOne extends Fragment implements
-        Callback<ResponseJson>
+        Callback<SalizResponse>
         , DaysAdapter.OnItemClickListener,
         HoursAdapter.OnItemClickListener {
 
@@ -178,10 +177,10 @@ public class FragmentStepOne extends Fragment implements
 
 
     @Override
-    public void onResponse(Call<ResponseJson> call, Response<ResponseJson> response) {
+    public void onResponse(Call<SalizResponse> call, Response<SalizResponse> response) {
 
         if (response.body() != null) {
-            ResultItems result = response.body().getResult().get(0);
+            Result result = response.body().getResult().get(0);
             if (result != null) {
                 boolean success = Boolean.parseBoolean(result.getSuccess());
 
@@ -205,7 +204,7 @@ public class FragmentStepOne extends Fragment implements
     }
 
     @Override
-    public void onFailure(Call<ResponseJson> call, Throwable t) {
+    public void onFailure(Call<SalizResponse> call, Throwable t) {
         switchState(Constants.state.ITEM_NOT_FOUND);
     }
 

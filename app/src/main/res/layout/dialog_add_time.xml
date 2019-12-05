@@ -2,13 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
+    <com.alirnp.salizsalon.CustomViews.MyTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_50"
+        android:gravity="center"
+        android:padding="@dimen/standard_margin2x"
+        android:text="@string/add_time" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dialog_add_time_rcv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/standard_margin3x"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/rcv_7_day">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -19,4 +32,12 @@
         android:layout_margin="@dimen/standard_margin2x"
         android:gravity="center"
         android:hint="@string/_8_00" />
+
+    <com.alirnp.salizsalon.CustomViews.MyButton
+        android:id="@+id/dialog_add_time_btn_verify"
+        style="@style/buttonGreen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/standard_margin2x"
+        android:text="@string/verify" />
 </LinearLayout>

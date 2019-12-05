@@ -17,7 +17,9 @@ import java.util.List;
 
 
 public class DaysSelectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
     private List<Day> models;
+    private OnDayClick onDayClick;
 
 
     public DaysSelectAdapter(List<Day> models) {
@@ -27,7 +29,6 @@ public class DaysSelectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rcv_7_day, parent, false);
         return new DaysSelectHolder(view);
     }
@@ -60,6 +61,14 @@ public class DaysSelectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     }
 
+    public void setOnDayClick(OnDayClick onDayClick) {
+        this.onDayClick = onDayClick;
+    }
+
+    public interface OnDayClick {
+        void OnDay(Day day);
+    }
+
     public class DaysSelectHolder extends RecyclerView.ViewHolder {
 
         private MyTextView dayTextView;
@@ -68,19 +77,22 @@ public class DaysSelectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             super(itemView);
             dayTextView = itemView.findViewById(R.id.rcv_7_day_dayName);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    changeState(getAdapterPosition());
-                }
-            });
 
         }
 
-        void bind(int position) {
+        void bind(final int position) {
             Day day = models.get(position);
             dayTextView.setText(Utils.convertDayNameToPersian(day.getDayName()));
             itemView.setSelected(day.isSelected());
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    changeState(position);
+                    if (onDayClick != null)
+                        onDayClick.OnDay(models.get(position));
+                }
+            });
         }
 
 

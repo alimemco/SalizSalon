@@ -4,6 +4,7 @@ public class Constants {
 
     public static final String URL = "www.khodemon.ir";
     public static final String BASE_URL = "http://khodemon.ir/SalizApp/";
+    public static final String API_V1 = "api/v1/";
 
     public static final String TOKEN = "AliRnpVAgT8AV195s";
 
@@ -14,9 +15,12 @@ public class Constants {
     public static String TIMES = "GET_TIMES";
     public static String ORDERS = "GET_ORDERS";
     public static String BANNERS = "GET_BANNERS";
+    public static String ADD_TIME = "ADD_TIME";
+    public static String GET_USERS = "GET_USERS";
 
     public static String EDIT_ORDERS = "EDIT_ORDER";
     public static String EDIT_TIME = "EDIT_TIME";
+    public static String DELETE_TIME = "DELETE_TIME";
 
     public static String DAY_NAME = "DAY_NAME";
     public static String MONTH_NAME = "MONTH_NAME";

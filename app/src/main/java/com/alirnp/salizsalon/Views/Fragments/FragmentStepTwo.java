@@ -16,8 +16,8 @@ import com.alirnp.salizsalon.CustomViews.MyTextView;
 import com.alirnp.salizsalon.Interface.OnStepReady;
 import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.NestedJson.Item;
-import com.alirnp.salizsalon.NestedJson.ResponseJson;
-import com.alirnp.salizsalon.NestedJson.ResultItems;
+import com.alirnp.salizsalon.NestedJson.SalizResponse;
+import com.alirnp.salizsalon.NestedJson.Result;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
 import com.alirnp.salizsalon.Utils.Utils;
@@ -44,14 +44,14 @@ public class FragmentStepTwo extends Fragment implements ServicesAdapter.onServi
 
     }
 
-    private Callback<ResponseJson> callback = new Callback<ResponseJson>() {
+    private Callback<SalizResponse> callback = new Callback<SalizResponse>() {
 
         @Override
-        public void onResponse(Call<ResponseJson> call, Response<ResponseJson> response) {
+        public void onResponse(Call<SalizResponse> call, Response<SalizResponse> response) {
 
             if (response.body() != null) {
 
-                ResultItems result = response.body().getResult().get(0);
+                Result result = response.body().getResult().get(0);
                 if (Boolean.parseBoolean(result.getSuccess())) {
 
                     ServicesAdapter adapter = new ServicesAdapter(result.getItems());
@@ -65,7 +65,7 @@ public class FragmentStepTwo extends Fragment implements ServicesAdapter.onServi
         }
 
         @Override
-        public void onFailure(Call<ResponseJson> call, Throwable t) {
+        public void onFailure(Call<SalizResponse> call, Throwable t) {
             Utils.log(MainActivity.class, t.toString());
         }
     };

@@ -39,7 +39,8 @@ import retrofit2.Response;
 
 public class FragmentManageTimes extends Fragment implements
         SwipeRefreshLayout.OnRefreshListener,
-        View.OnClickListener {
+        View.OnClickListener,
+        AddTimeDialog.OnDoneProgress {
 
     private View view;
 
@@ -157,8 +158,14 @@ public class FragmentManageTimes extends Fragment implements
     public void onClick(View v) {
         if (v.getId() == R.id.fragment_manage_times_btn_addTime) {
             AddTimeDialog dialog = new AddTimeDialog();
+            dialog.setOnDoneProgress(this);
             if (getFragmentManager() != null)
                 dialog.show(getFragmentManager(), "AddTimeDialog");
         }
+    }
+
+    @Override
+    public void OnDone() {
+        getTimes();
     }
 }

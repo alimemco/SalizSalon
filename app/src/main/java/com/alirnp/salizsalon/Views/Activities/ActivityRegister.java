@@ -12,8 +12,8 @@ import com.alirnp.salizsalon.CustomViews.MyEditText;
 import com.alirnp.salizsalon.Dialog.LoadingDialog;
 import com.alirnp.salizsalon.Model.User;
 import com.alirnp.salizsalon.MyApplication;
-import com.alirnp.salizsalon.NestedJson.ResponseJson;
-import com.alirnp.salizsalon.NestedJson.ResultItems;
+import com.alirnp.salizsalon.NestedJson.SalizResponse;
+import com.alirnp.salizsalon.NestedJson.Result;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
 import com.alirnp.salizsalon.Utils.Utils;
@@ -61,11 +61,22 @@ public class ActivityRegister extends AppCompatActivity implements View.OnClickL
         if (v.getId() == R.id.activity_register_registerBtn) {
 
             if (validateInfo()) {
-                registerToServer();
+                if (phoneIsValidate()) {
+                    registerToServer();
+                } else {
+                    Toast.makeText(this, "شماره تلفن صحیح نیست", Toast.LENGTH_SHORT).show();
+                }
+
             } else {
                 Toast.makeText(this, "Not Validate", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    private boolean phoneIsValidate() {
+        if (phone != null)
+            return phone.matches("^(?=(?:[8-9]){1})(?=[0-9]{8}).*");
+        return false;
     }
 
     private boolean validateInfo() {
@@ -103,15 +114,15 @@ public class ActivityRegister extends AppCompatActivity implements View.OnClickL
         MyApplication.getApi().userManager(Constants.REGISTER, infoMap).enqueue(callback());
     }
 
-    private Callback<ResponseJson> callback() {
-        return new Callback<ResponseJson>() {
+    private Callback<SalizResponse> callback() {
+        return new Callback<SalizResponse>() {
             @Override
-            public void onResponse(Call<ResponseJson> call, Response<ResponseJson> response) {
+            public void onResponse(Call<SalizResponse> call, Response<SalizResponse> response) {
                 dismissLoading();
 
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
-                        ResultItems result = response.body().getResult().get(0);
+                        Result result = response.body().getResult().get(0);
                         if (Boolean.parseBoolean(result.getSuccess())) {
 
                             registerSuccess();
@@ -127,7 +138,7 @@ public class ActivityRegister extends AppCompatActivity implements View.OnClickL
             }
 
             @Override
-            public void onFailure(Call<ResponseJson> call, Throwable t) {
+            public void onFailure(Call<SalizResponse> call, Throwable t) {
                 Toast.makeText(ActivityRegister.this, t.toString(), Toast.LENGTH_SHORT).show();
                 dismissLoading();
             }

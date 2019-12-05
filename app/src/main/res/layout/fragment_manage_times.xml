@@ -22,7 +22,9 @@
             android:id="@+id/fragment_manage_times_btn_addTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/add_time" />
+            style="@style/buttonGreen"
+            android:text="@string/add_time"
+            android:textSize="@dimen/large_sp" />
     </LinearLayout>
 
 
