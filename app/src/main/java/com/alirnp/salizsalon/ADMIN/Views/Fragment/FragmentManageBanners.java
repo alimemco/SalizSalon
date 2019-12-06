@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -60,7 +60,7 @@ public class FragmentManageBanners extends Fragment implements
         RecyclerView rcv = view.findViewById(R.id.fragment_manage_banners_rcv);
         swp = view.findViewById(R.id.fragment_manage_banners_swp);
 
-        rcv.setLayoutManager(new LinearLayoutManager(getContext()));
+        rcv.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
         adapter = new ManageBannersAdapter();
         adapter.setSearching();

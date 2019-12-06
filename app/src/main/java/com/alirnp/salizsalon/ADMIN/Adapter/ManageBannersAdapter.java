@@ -4,11 +4,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.alirnp.salizsalon.CustomViews.MyTextView;
 import com.alirnp.salizsalon.Holder.NotFoundHolder;
 import com.alirnp.salizsalon.Holder.SearchingHolder;
 import com.alirnp.salizsalon.NestedJson.Item;
@@ -104,23 +104,27 @@ public class ManageBannersAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     public class ManageBannersHolder extends RecyclerView.ViewHolder {
 
-        private MyTextView urlTv;
         private ImageView image;
 
         ManageBannersHolder(View itemView) {
             super(itemView);
 
-            urlTv = itemView.findViewById(R.id.rcv_manage_banners_tv_url);
             image = itemView.findViewById(R.id.rcv_manage_banners_img);
         }
 
-        void bind(int position) {
+        void bind(final int position) {
             Item item = models.get(position);
 
-            urlTv.setText(item.getUrl());
             Picasso.get()
                     .load(item.getUrl())
                     .into(image);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(v.getContext(), "" + position, Toast.LENGTH_SHORT).show();
+                }
+            });
 
         }
 
