@@ -115,9 +115,12 @@ public class ManageBannersAdapter extends RecyclerView.Adapter<RecyclerView.View
         void bind(final int position) {
             Item item = models.get(position);
 
-            Picasso.get()
-                    .load(item.getUrl())
-                    .into(image);
+            if (urlExists(item)) {
+                Picasso.get()
+                        .load(item.getUrl())
+                        .into(image);
+            }
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -126,6 +129,13 @@ public class ManageBannersAdapter extends RecyclerView.Adapter<RecyclerView.View
                 }
             });
 
+        }
+
+        private boolean urlExists(Item item) {
+            String url = item.getUrl();
+            if (url != null)
+                return !url.equals("");
+            return false;
         }
 
 
