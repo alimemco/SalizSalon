@@ -22,6 +22,8 @@
     <color name="purple_300_a">#AA9575CD</color>
     <color name="purple_300">#9575CD</color>
     <color name="purple_400">#7E57C2</color>
+    <color name="bg_item_normal_state">#fff0f0f0</color>
+    <color name="expandable_item_indicator_color">#42000000</color>
 
-    
+
 </resources>

@@ -29,7 +29,15 @@
         <activity android:name=".Views.Activities.ActivityRegister" />
         <activity android:name=".Views.Activities.ActivityLogin" />
         <activity android:name=".Views.Activities.ActivityChooseTime" />
-        <activity android:name=".Views.Activities.MainActivity">
+        <activity android:name=".Views.Activities.MainActivity" />
+
+        <activity android:name=".Test.DraggableExampleActivity">
+
+        </activity>
+
+        <activity android:name=".Test.MinimalDraggableExampleActivity"></activity>
+
+        <activity android:name=".Test.demo_d_grid.DraggableGridExampleActivity">
 
         </activity>
     </application>
