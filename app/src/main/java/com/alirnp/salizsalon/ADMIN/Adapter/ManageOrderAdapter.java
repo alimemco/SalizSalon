@@ -27,6 +27,8 @@ public class ManageOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private List<Item> models;
     private Constants.state state;
     private OnChangeOrderStatus onChangeOrderStatus;
+    private OnAcceptOrder onAcceptOrder;
+
 
 
     public ManageOrderAdapter() {
@@ -118,6 +120,15 @@ public class ManageOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         void onOrderStatusChange(int id, int timeID, int position, Constants.statusReserve status);
     }
 
+    public void setOnAcceptOrder(OnAcceptOrder onAcceptOrder) {
+        this.onAcceptOrder = onAcceptOrder;
+    }
+
+    public interface OnAcceptOrder {
+        void OnAccept(Item item);
+
+    }
+
     public class ManageOrderHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private MyTextView nameTv, priceTv, phoneTv, dateTv, hourTv, servicesTv, statusTv;
@@ -172,7 +183,7 @@ public class ManageOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             Item item = models.get(getAdapterPosition());
             int id = Integer.parseInt(item.getID());
             int timeID = Integer.parseInt(item.getTimeID());
-//TODO Bug Here
+
             switch (v.getId()) {
                 case R.id.rcv_manage_order_constraintHeader:
                     String phone = models.get(getAdapterPosition()).getPhone();
@@ -184,7 +195,8 @@ public class ManageOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
                 case R.id.rcv_manage_order_confirm:
                     onChangeOrderStatus.onOrderStatusChange(id, timeID, getAdapterPosition(), Constants.statusReserve.FINALIZED);
-
+                    if (onAcceptOrder != null)
+                        onAcceptOrder.OnAccept(item);
                     break;
                 case R.id.rcv_manage_order_denied:
                     onChangeOrderStatus.onOrderStatusChange(id, timeID, getAdapterPosition(), Constants.statusReserve.DENIED);

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -30,10 +31,12 @@ import com.alirnp.salizsalon.Views.Fragments.FragmentStepThree;
 import com.alirnp.salizsalon.Views.Fragments.FragmentStepTwo;
 import com.shuhart.stepview.StepView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -53,6 +56,8 @@ public class ActivityChooseTime extends AppCompatActivity implements
     private boolean active = false;
 
     private BottomSheetLoginOrRegister bottomSheetLoginOrRegister;
+
+    private Context context;
 
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private FragmentStepOne fragmentStepOne = new FragmentStepOne(this);
@@ -195,9 +200,14 @@ public class ActivityChooseTime extends AppCompatActivity implements
 
             case 3:
                 submitReserve();
+
+                String message = getResources().getString(R.string.message_admin);
+                String companyName = getResources().getString(R.string.company_name);
+                Utils.sendSmsToAdmin(message + " \n " + companyName);
                 break;
         }
     }
+
 
     private void submitReserve() {
 
@@ -282,4 +292,5 @@ public class ActivityChooseTime extends AppCompatActivity implements
         super.onStop();
         active = false;
     }
+
 }

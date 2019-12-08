@@ -73,12 +73,6 @@ public interface ApiService {
             @QueryMap Map<String, String> map);
 
 
-   /* @Headers("Cache-control: no-cache")
-    @GET(Constants.API_V1+"manager.php")
-    Call<SalizResponse> manageEdit(
-            @Query("request") String request,
-            @Query("TOKEN") String TOKEN,
-            @QueryMap Map<String, String> map);*/
 
 
     @Headers("Cache-control: no-cache")
@@ -88,4 +82,9 @@ public interface ApiService {
             @Query("TOKEN") String TOKEN);
 
 
+    @GET(Constants.API_SMS + "sendSms.php")
+    Call<ResponseBody> sendSms(
+            @Query("TOKEN") String TOKEN,
+            @QueryMap Map<String, String> map
+    );
 }

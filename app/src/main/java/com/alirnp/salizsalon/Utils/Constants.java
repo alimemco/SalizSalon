@@ -3,8 +3,10 @@ package com.alirnp.salizsalon.Utils;
 public class Constants {
 
     public static final String SITE_URL = "www.khodemon.ir";
+    public static final String GOOGLE_URL = "google.com";
     public static final String BASE_URL = "http://khodemon.ir/SalizApp/";
     public static final String API_V1 = "api/v1/";
+    public static final String API_SMS = "api/sms/";
 
     public static final String TOKEN = "AliRnpVAgT8AV195s";
 
@@ -54,6 +56,11 @@ public class Constants {
     public static String NEW_PHONE = "NEW_PHONE";
     public static String PASSWORD = "PASSWORD";
     public static String LEVEL = "LEVEL";
+
+    public static final String MESSAGE_ADMIN = "message_admin";
+    public static final String RECEPTOR_CLIENT = "receptor_client";
+    public static final String MESSAGE_CLIENT = "message_client";
+
 
     public static String SHARED_PREF_NAME = "sharedPrefName";
 

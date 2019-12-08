@@ -6,18 +6,28 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.alirnp.salizsalon.Model.Day;
+import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.NestedJson.Item;
 import com.alirnp.salizsalon.R;
+import com.alirnp.salizsalon.Views.Activities.ActivityChooseTime;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class
 Utils {
@@ -29,20 +39,26 @@ Utils {
         Log.i(TAG, cls.getName() + " | " + txt);
     }
 
-    public static String numberToTextPrice(int price) {
-        NumberFormat format = new DecimalFormat("#,###,###");
-        return format.format(price) + " تومان ";
-    }
-
-    public static String numberToTextPrice(String price) {
-        if (isInteger(price)) {
-            int prc = Integer.valueOf(price);
-            NumberFormat format = new DecimalFormat("#,###,###");
-            return format.format(prc) + " تومان ";
-        } else {
-            return ".";
+    public static Callback<ResponseBody> callback = new Callback<ResponseBody>() {
+        @Override
+        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            try {
+                if (response.body() != null)
+                    Utils.log(getClass(), response.body().string());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
+        @Override
+        public void onFailure(Call<ResponseBody> call, Throwable t) {
+            Utils.log(getClass(), t.getMessage());
+        }
+    };
+
+    public static String numberToTextPrice(int price) {
+        NumberFormat format = new DecimalFormat("#,###,###");
+        return " از " + format.format(price) + " تومان ";
     }
 
     public static String parseUserLevel(String user_level) {
@@ -248,20 +264,45 @@ Utils {
         return false;
     }
 
+    public static String numberToTextPrice(String price) {
+        if (isInteger(price)) {
+            int prc = Integer.valueOf(price);
+            NumberFormat format = new DecimalFormat("#,###,###");
+            return " از " + format.format(prc) + " تومان ";
+        } else {
+            return ".";
+        }
+
+    }
+
     public static boolean connected(Context context) {
         if (context != null) {
 
             if (Utils.isConnected(context)) {
-                Utils.log(context.getClass(), "con 01");
-                return Utils.isConnectedToThisServer(Constants.SITE_URL);
-
-            } else {
-                Utils.log(context.getClass(), "dis 01");
+                return Utils.isConnectedToThisServer(Constants.GOOGLE_URL);
             }
 
         }
         return false;
     }
 
+    public static void sendSmsToAdmin(String messageToAdmin) {
+        Map<String, String> map = new HashMap<>();
+        map.put(Constants.MESSAGE_ADMIN, messageToAdmin);
+
+        MyApplication.getApi().sendSms(Constants.TOKEN, map).enqueue(callback);
+    }
+
+    public static void sendSmsToClient(String messageClient) {
+        Map<String, String> map = new HashMap<>();
+        String receptorClient = MyApplication.getSharedPrefManager().getUser().getPhone();
+
+        if (receptorClient != null) {
+            map.put(Constants.RECEPTOR_CLIENT, receptorClient);
+            map.put(Constants.MESSAGE_CLIENT, messageClient);
+
+            MyApplication.getApi().sendSms(Constants.TOKEN, map).enqueue(callback);
+        }
+    }
 
 }

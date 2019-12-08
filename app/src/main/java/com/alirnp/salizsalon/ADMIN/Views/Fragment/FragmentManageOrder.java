@@ -21,6 +21,7 @@ import com.alirnp.salizsalon.NestedJson.SalizResponse;
 import com.alirnp.salizsalon.NestedJson.Result;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
+import com.alirnp.salizsalon.Utils.Utils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +34,8 @@ import retrofit2.Response;
 
 public class FragmentManageOrder extends Fragment
         implements ManageOrderAdapter.OnChangeOrderStatus,
-        SwipeRefreshLayout.OnRefreshListener {
+        SwipeRefreshLayout.OnRefreshListener,
+        ManageOrderAdapter.OnAcceptOrder {
 
     private View view;
     private RecyclerView rcv;
@@ -84,6 +86,7 @@ public class FragmentManageOrder extends Fragment
 
         adapter = new ManageOrderAdapter();
         adapter.setOnChangeOrderStatus(this);
+        adapter.setOnAcceptOrder(this);
         adapter.setSearching();
 
         rcv.setAdapter(adapter);
@@ -161,11 +164,36 @@ public class FragmentManageOrder extends Fragment
             dialog.show(getFragmentManager(), "dialog");
 
         positionOrder = position;
+
         editOrders(id, timeID, status.getStatus());
+    }
+
+    private void sendSmsToClient(Item item) {
+        StringBuilder message = new StringBuilder();
+        String date = item.getDayName() + " " + item.getDayOfMonth() + " " + item.getMonthName();
+        String companyName = getResources().getString(R.string.company_name);
+        message
+                .append(item.getFirst_name())
+                .append(" عزیز, نوبت شما برای ")
+                .append(date).append(" ")
+                .append(" ساعت ")
+                .append(item.getHour()).append(" ")
+                .append("تایید شد.").append("\n")
+                .append(" قیمت تقریبی :").append(item.getPrice()).append(" تومان ").append("\n")
+                .append(companyName)
+        ;
+
+        Utils.sendSmsToClient(message.toString());
+
     }
 
     @Override
     public void onRefresh() {
         getOrders();
+    }
+
+    @Override
+    public void OnAccept(Item item) {
+        sendSmsToClient(item);
     }
 }

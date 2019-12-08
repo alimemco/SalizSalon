@@ -4,17 +4,28 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.core.view.ViewCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -34,6 +45,7 @@ import com.alirnp.salizsalon.Views.Fragments.FragmentUser;
 import com.alirnp.salizsalon.Views.Fragments.FragmentUserInfo;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.internal.BaselineLayout;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,16 +57,28 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity implements
         BottomNavigationView.OnNavigationItemSelectedListener,
         View.OnClickListener,
-        OnLogoutUser {
+        OnLogoutUser,
+        NavigationView.OnNavigationItemSelectedListener {
 
-    FragmentManager fragmentManager;
+    private FragmentManager fragmentManager;
     boolean doubleBackToExitPressedOnce = false;
-    Constants.fragmentToShow fragmentToShow;
+    private Constants.fragmentToShow fragmentToShow;
     private BottomNavigationView bottomNavigationView;
     private ImageView kingImg, salizIconImageView;
+    private NavigationView navigationView;
+    private DrawerLayout drawerLayout;
+    // private Toolbar toolbar;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
 
     private LoadingDialog dialog;
 
+    private Toolbar toolbar;
+    /*
+
+    private ListView listView;
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mDrawerToggle;
+*/
     private FragmentHome fragmentHome = FragmentHome.newInstance();
     private FragmentOrder fragmentOrder = FragmentOrder.newInstance();
     private FragmentUserInfo fragmentUserInfo = new FragmentUserInfo(this);
@@ -85,6 +109,9 @@ public class MainActivity extends AppCompatActivity implements
 
     private void initViews() {
 
+        toolbar = findViewById(R.id.activity_main_toolbar);
+        // navigationView = findViewById(R.id.activity_main_navigation_view);
+        drawerLayout = findViewById(R.id.activity_main_drawer_layout);
         bottomNavigationView = findViewById(R.id.activity_main_bottomNav);
         kingImg = findViewById(R.id.activity_main_toolbar_king);
         salizIconImageView = findViewById(R.id.activity_main_toolbar_icon);
@@ -98,7 +125,9 @@ public class MainActivity extends AppCompatActivity implements
         fragmentManager = getSupportFragmentManager();
 
 
+
     }
+
 
     @Override
     protected void onStart() {
@@ -129,13 +158,124 @@ public class MainActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_main);
 
         initViews();
-
+        //  setNavigationViewListener();
+        setupNavigationView();
+        setupToolbar();
         setNavigationTypeface();
 
         initBroadcasts();
 
     }
 
+    private void setupToolbar() {
+
+        toolbar = findViewById(R.id.activity_main_toolbar);
+
+        setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
+        DrawerLayout drawerLayout = findViewById(R.id.activity_main_drawer_layout);
+
+        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, 0, 0);
+
+        drawerLayout.addDrawerListener(drawerToggle);
+        drawerToggle.getDrawerArrowDrawable().setColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        drawerToggle.syncState();
+
+
+    }
+
+    private void setupNavigationView() {
+        navigationView = findViewById(R.id.mainActivity_navigation_view);
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId()) {
+
+                    case R.id.action_settings:
+                        Toast.makeText(MainActivity.this, "action_settings", Toast.LENGTH_SHORT).show();
+
+                        break;
+
+
+                }
+
+                return false;
+            }
+        });
+    }
+
+    private void setNavigationViewListener() {
+        setSupportActionBar(toolbar);
+        ViewCompat.setLayoutDirection(toolbar, ViewCompat.LAYOUT_DIRECTION_RTL);
+
+        actionBarDrawerToggle = new ActionBarDrawerToggle(
+                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+
+        }
+
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+                int id = menuItem.getItemId();
+
+                if (id == R.id.nav_camera) {
+                    Toast.makeText(MainActivity.this, "nav_camera", Toast.LENGTH_SHORT).show();
+                } else if (id == R.id.nav_share) {
+                    Toast.makeText(MainActivity.this, "nav_share", Toast.LENGTH_SHORT).show();
+                }
+
+
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            }
+        });
+    }
+
+    /*
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        actionBarDrawerToggle.syncState();
+    }
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        actionBarDrawerToggle.onConfigurationChanged(newConfig);
+    }
+*/
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // it will not work for right to left navigation drawer
+/*        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }*/
+        // so we have to open and close the navigation drawer ourselves
+        if (item.getItemId() == android.R.id.home) {
+            if (drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
+                drawerLayout.closeDrawer(Gravity.RIGHT);
+            } else {
+                drawerLayout.openDrawer(Gravity.RIGHT);
+            }
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     public void setNavigationTypeface() {
         ViewGroup navigationGroup = (ViewGroup) bottomNavigationView.getChildAt(0);
@@ -295,7 +435,7 @@ public class MainActivity extends AppCompatActivity implements
 
     private void dismissLoading() {
         if (dialog !=null)
-        dialog.dismiss();
+            dialog.dismiss();
     }
 
 
