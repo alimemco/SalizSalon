@@ -6,6 +6,7 @@ import com.alirnp.salizsalon.Utils.Constants;
 
 import java.util.Map;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -70,6 +71,7 @@ public interface ApiService {
             @Query("request") String request,
             @Query("TOKEN") String TOKEN,
             @QueryMap Map<String, String> map);
+
 
    /* @Headers("Cache-control: no-cache")
     @GET(Constants.API_V1+"manager.php")

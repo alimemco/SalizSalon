@@ -2,13 +2,14 @@ package com.alirnp.salizsalon.Utils;
 
 public class Constants {
 
-    public static final String URL = "www.khodemon.ir";
+    public static final String SITE_URL = "www.khodemon.ir";
     public static final String BASE_URL = "http://khodemon.ir/SalizApp/";
     public static final String API_V1 = "api/v1/";
 
     public static final String TOKEN = "AliRnpVAgT8AV195s";
 
     public static final String ID = "ID";
+    public static final String URL = "URL";
     public static final String USER_LEVEL = "level";
     public static final String STATUS = "STATUS";
     public static final String POSTS = "POSTS";
@@ -17,12 +18,14 @@ public class Constants {
     public static String ORDERS = "GET_ORDERS";
     public static String BANNERS = "GET_BANNERS";
     public static String ADD_TIME = "ADD_TIME";
+    public static String ADD_BANNER = "ADD_BANNER";
     public static String GET_USERS = "GET_USERS";
 
     public static String EDIT_ORDERS = "EDIT_ORDER";
     public static String EDIT_TIME = "EDIT_TIME";
     public static String EDIT_USER_LEVEL = "EDIT_USER_LEVEL";
     public static String DELETE_TIME = "DELETE_TIME";
+    public static String DELETE_BANNER = "DELETE_BANNER";
 
     public static String DAY_NAME = "DAY_NAME";
     public static String MONTH_NAME = "MONTH_NAME";
@@ -55,8 +58,9 @@ public class Constants {
     public static String SHARED_PREF_NAME = "sharedPrefName";
 
     public static String EVENT_LOGIN = "EVENT_LOGIN";
-    public static String EVENT_RESERVED = "EVENT_RESERVED";
-    public static String EVENT_EDITED_TIME = "EVENT_EDITED_TIME";
+    public static String EVENT_RESERVED = "E_RESERVED";
+    public static String EVENT_EDITED_TIME = "E_EDITED_TIME";
+    public static String EVENT_BANNER_CHANGED = "E_BANNER_CHANGED";
 
     public static String Saturday = "Saturday";
     public static String Sunday = "Sunday";

@@ -27,7 +27,6 @@ import com.alirnp.salizsalon.Model.User;
 import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.NestedJson.SalizResponse;
 import com.alirnp.salizsalon.R;
-import com.alirnp.salizsalon.Test.demo_d_grid.DraggableGridExampleActivity;
 import com.alirnp.salizsalon.Utils.Constants;
 import com.alirnp.salizsalon.Views.Fragments.FragmentHome;
 import com.alirnp.salizsalon.Views.Fragments.FragmentOrder;
@@ -268,8 +267,6 @@ public class MainActivity extends AppCompatActivity implements
             info.put(Constants.PHONE, user.getPhone());
             MyApplication.getApi().userManager(Constants.CHECK_ADMIN, info).enqueue(callback());
             showLoading();
-        } else if (v.getId() == R.id.activity_main_toolbar_icon) {
-            startActivity(new Intent(this, DraggableGridExampleActivity.class));
         }
     }
 

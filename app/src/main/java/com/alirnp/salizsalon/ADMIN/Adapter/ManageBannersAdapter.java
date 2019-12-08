@@ -7,8 +7,11 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alirnp.salizsalon.Dialog.BottomSheetDeleteBanner;
 import com.alirnp.salizsalon.Holder.NotFoundHolder;
 import com.alirnp.salizsalon.Holder.SearchingHolder;
 import com.alirnp.salizsalon.NestedJson.Item;
@@ -105,15 +108,19 @@ public class ManageBannersAdapter extends RecyclerView.Adapter<RecyclerView.View
     public class ManageBannersHolder extends RecyclerView.ViewHolder {
 
         private ImageView image;
+        private BottomSheetDeleteBanner bottomSheetDeleteBanner;
+        private FragmentManager manager;
 
         ManageBannersHolder(View itemView) {
             super(itemView);
 
             image = itemView.findViewById(R.id.rcv_manage_banners_img);
+            bottomSheetDeleteBanner = new BottomSheetDeleteBanner();
+
         }
 
         void bind(final int position) {
-            Item item = models.get(position);
+            final Item item = models.get(position);
 
             if (urlExists(item)) {
                 Picasso.get()
@@ -125,10 +132,17 @@ public class ManageBannersAdapter extends RecyclerView.Adapter<RecyclerView.View
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(v.getContext(), "" + position, Toast.LENGTH_SHORT).show();
+                    showSheetDeleteBanner(Integer.valueOf(item.getID()));
+                    //  Toast.makeText(v.getContext(), item.getID()+"" + position, Toast.LENGTH_SHORT).show();
                 }
             });
 
+        }
+
+        private void showSheetDeleteBanner(int id) {
+            manager = ((AppCompatActivity) itemView.getContext()).getSupportFragmentManager();
+            bottomSheetDeleteBanner.setId(id);
+            bottomSheetDeleteBanner.show(manager, bottomSheetDeleteBanner.getTag());
         }
 
         private boolean urlExists(Item item) {

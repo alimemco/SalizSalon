@@ -1,6 +1,10 @@
 package com.alirnp.salizsalon.ADMIN.Views.Fragment;
 
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,11 +13,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.alirnp.salizsalon.ADMIN.Adapter.ManageBannersAdapter;
+import com.alirnp.salizsalon.CustomViews.MyButton;
+import com.alirnp.salizsalon.Dialog.BottomSheetAddBanner;
 import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.NestedJson.Item;
 import com.alirnp.salizsalon.NestedJson.SalizResponse;
@@ -28,11 +35,23 @@ import retrofit2.Response;
 
 
 public class FragmentManageBanners extends Fragment implements
-        SwipeRefreshLayout.OnRefreshListener {
+        SwipeRefreshLayout.OnRefreshListener,
+        View.OnClickListener {
 
+    private Context context;
     private View view;
+    private MyButton addButton;
     private ManageBannersAdapter adapter;
-    private SwipeRefreshLayout swp;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private RecyclerView recyclerView;
+
+    private BroadcastReceiver bannerChangedReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            getBanners();
+        }
+    };
+
 
     public FragmentManageBanners() {
 
@@ -45,8 +64,29 @@ public class FragmentManageBanners extends Fragment implements
 
         view = inflater.inflate(R.layout.fragment_manage_banners, container, false);
         initViews();
+        initRecyclerView();
+        initSwipeRefreshLayout();
+        initReceiver();
+
         getBanners();
+
         return view;
+    }
+
+    private void initSwipeRefreshLayout() {
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        swipeRefreshLayout.setOnRefreshListener(this);
+    }
+
+    private void initRecyclerView() {
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        adapter = new ManageBannersAdapter();
+        adapter.setSearching();
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void initReceiver() {
+        LocalBroadcastManager.getInstance(context).registerReceiver(bannerChangedReceiver, new IntentFilter(Constants.EVENT_BANNER_CHANGED));
     }
 
     private void getBanners() {
@@ -57,25 +97,18 @@ public class FragmentManageBanners extends Fragment implements
     }
 
     private void initViews() {
-        RecyclerView rcv = view.findViewById(R.id.fragment_manage_banners_rcv);
-        swp = view.findViewById(R.id.fragment_manage_banners_swp);
+        recyclerView = view.findViewById(R.id.fragment_manage_banners_rcv);
+        addButton = view.findViewById(R.id.fragment_manage_banners_button_add);
+        swipeRefreshLayout = view.findViewById(R.id.fragment_manage_banners_swp);
 
-        rcv.setLayoutManager(new GridLayoutManager(getContext(), 2));
-
-        adapter = new ManageBannersAdapter();
-        adapter.setSearching();
-
-        rcv.setAdapter(adapter);
-
-        swp.setColorSchemeResources(R.color.colorPrimary);
-        swp.setOnRefreshListener(this);
+        addButton.setOnClickListener(this);
     }
 
     private Callback<SalizResponse> callback() {
         return new Callback<SalizResponse>() {
             @Override
             public void onResponse(Call<SalizResponse> call, Response<SalizResponse> response) {
-                swp.setRefreshing(false);
+                swipeRefreshLayout.setRefreshing(false);
 
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
@@ -92,7 +125,7 @@ public class FragmentManageBanners extends Fragment implements
             public void onFailure(Call<SalizResponse> call, Throwable t) {
                 Toast.makeText(getContext(), t.toString(), Toast.LENGTH_LONG).show();
                 adapter.setNotFound();
-                swp.setRefreshing(false);
+                swipeRefreshLayout.setRefreshing(false);
 
             }
         };
@@ -100,7 +133,22 @@ public class FragmentManageBanners extends Fragment implements
 
 
     @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
+
+    @Override
     public void onRefresh() {
         getBanners();
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.fragment_manage_banners_button_add) {
+            BottomSheetAddBanner bottomSheetAddBanner = new BottomSheetAddBanner();
+            if (getFragmentManager() != null)
+                bottomSheetAddBanner.show(getFragmentManager(), bottomSheetAddBanner.getTag());
+        }
     }
 }

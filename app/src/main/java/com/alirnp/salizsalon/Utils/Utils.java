@@ -91,6 +91,11 @@ Utils {
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
 
+    public static void sendMessageBannerChanged(Context context) {
+        Intent intent = new Intent(Constants.EVENT_BANNER_CHANGED);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+    }
+
 
     public static boolean isInteger(String number) {
         try {
@@ -248,7 +253,7 @@ Utils {
 
             if (Utils.isConnected(context)) {
                 Utils.log(context.getClass(), "con 01");
-                return Utils.isConnectedToThisServer(Constants.URL);
+                return Utils.isConnectedToThisServer(Constants.SITE_URL);
 
             } else {
                 Utils.log(context.getClass(), "dis 01");

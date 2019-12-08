@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.alirnp.salizsalon.CustomViews.MyTextView
+        android:id="@+id/fragment_bottom_sheet_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="@dimen/standard_margin2x"
+        android:padding="@dimen/large_2X_sp"
+        android:text="@string/delete_banner"
+        android:textSize="@dimen/large_3X_sp"
+        app:drawableRightCompat="@drawable/ic_denied" />
+
+</FrameLayout>

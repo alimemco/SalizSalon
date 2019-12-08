@@ -42,4 +42,5 @@
 
     <!-- SUCCESS -->
     <string name="successfully">موفقیت آمیز بود</string>
+    <string name="delete_banner">حذف بنر</string>
 </resources>
