@@ -173,7 +173,7 @@ public class ManageOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             servicesTv.setText(Utils.splitServices(item.getServices()));
             statusTv.setText(Utils.getStatus(itemView.getContext(), item));
             statusTv.setTextColor(Utils.getStatusColor(itemView.getContext(), item));
-            priceTv.setText(Utils.numberToTextPrice(item.getPrice()));
+            priceTv.setText(Utils.numberToTextPrice(item.getPrice(), true));
 
             statusView.setBackground(Utils.getDrawableFromStatus(itemView.getContext(), item));
         }

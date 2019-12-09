@@ -83,6 +83,10 @@ public class Item implements Parcelable {
     @Expose
     private String period;
 
+    @SerializedName("range_price")
+    @Expose
+    private String range_price;
+
     @SerializedName("first_name")
     @Expose
     private String first_name;
@@ -111,6 +115,14 @@ public class Item implements Parcelable {
 
     public Item() {
 
+    }
+
+    public String getRange_price() {
+        return range_price;
+    }
+
+    public void setRange_price(String range_price) {
+        this.range_price = range_price;
     }
 
     public String getUsername() {

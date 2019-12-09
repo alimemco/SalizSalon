@@ -121,7 +121,7 @@ public class UserReserveAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         void bind(Item item) {
 
             statusTv.setText(Utils.getStatus(itemView.getContext(), item));
-            priceTv.setText(Utils.numberToTextPrice(item.getPrice()));
+            priceTv.setText(Utils.numberToTextPrice(item.getPrice(), true));
             hourTv.setText(item.getHour());
 
             String date = item.getDayName() + " " + item.getDayOfMonth() + " " + item.getMonthName();

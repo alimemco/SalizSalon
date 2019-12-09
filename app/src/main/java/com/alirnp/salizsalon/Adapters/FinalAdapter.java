@@ -108,7 +108,7 @@ public class FinalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             Item item = models.get(position);
 
             title.setText(item.getName());
-            price.setText(Utils.numberToTextPrice(item.getPrice()));
+            price.setText(Utils.numberToTextPrice(item.getPrice(), true));
 
         }
     }

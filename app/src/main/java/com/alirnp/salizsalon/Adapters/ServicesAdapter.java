@@ -98,9 +98,9 @@ public class ServicesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         void bind(final int position) {
 
             final Item item = models.get(position);
-
+            boolean isStatic = item.getRange_price().equals("static");
             title.setText(item.getName());
-            price.setText(Utils.numberToTextPrice(item.getPrice()));
+            price.setText(Utils.numberToTextPrice(item.getPrice(), isStatic));
             period.setText(Approximate(item.getPeriod()));
 
             if (!booleanArray.get(position, false)) {

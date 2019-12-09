@@ -103,7 +103,7 @@
         android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_gravity="right"
-        app:headerLayout="@layout/navigation_header_main"
+        app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/main_menu" />
 
 

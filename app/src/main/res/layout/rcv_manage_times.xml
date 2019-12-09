@@ -22,7 +22,6 @@
             tools:text="16:00" />
 
         <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/rcv_manage_times_canReserve"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

@@ -6,7 +6,6 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -15,7 +14,6 @@ import com.alirnp.salizsalon.Model.Day;
 import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.NestedJson.Item;
 import com.alirnp.salizsalon.R;
-import com.alirnp.salizsalon.Views.Activities.ActivityChooseTime;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -131,7 +129,7 @@ Utils {
     }
 
     public static float dpToPxFloat(float dp) {
-        return (float) (dp * Resources.getSystem().getDisplayMetrics().density);
+        return dp * Resources.getSystem().getDisplayMetrics().density;
     }
 
     public static String splitServices(String services) {
@@ -256,19 +254,21 @@ Utils {
             Process ipProcess = runtime.exec("/system/bin/ping -c 1 " + host);
             int exitValue = ipProcess.waitFor();
             return (exitValue == 0);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
         return false;
     }
 
-    public static String numberToTextPrice(String price) {
+    public static String numberToTextPrice(String price, boolean isStatic) {
         if (isInteger(price)) {
             int prc = Integer.valueOf(price);
             NumberFormat format = new DecimalFormat("#,###,###");
-            return " از " + format.format(prc) + " تومان ";
+
+            if (isStatic)
+                return format.format(prc) + " تومان ";
+            else
+                return "شروع از " + format.format(prc) + " تومان ";
         } else {
             return ".";
         }

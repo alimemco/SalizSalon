@@ -4,8 +4,6 @@
     <color name="colorPrimaryDark">#512DA8</color>
     <color name="colorAccent">#7E57C2</color>
     <color name="blue_gray_200">#B0BEC5</color>
-    <color name="mdtp_accent_color">#1976D2</color>
-    <color name="mdtp_accent_color_dark">#7B1FA2</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
     <color name="green_300">#81C784</color>
@@ -19,11 +17,6 @@
     <color name="red_500">#f44336</color>
     <color name="purple_50">#EDE7F6</color>
     <color name="purple_100">#D1C4E9</color>
-    <color name="purple_300_a">#AA9575CD</color>
-    <color name="purple_300">#9575CD</color>
-    <color name="purple_400">#7E57C2</color>
-    <color name="bg_item_normal_state">#fff0f0f0</color>
-    <color name="expandable_item_indicator_color">#42000000</color>
 
 
 </resources>

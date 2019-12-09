@@ -17,8 +17,6 @@ import retrofit2.http.QueryMap;
 
 public interface ApiService {
 
-//TODO Edit paramets berfore send to bazzar app
-
     @GET(Constants.API_V1 + "get.php")
     Call<SalizResponse> get(@Query("request") String request);
 

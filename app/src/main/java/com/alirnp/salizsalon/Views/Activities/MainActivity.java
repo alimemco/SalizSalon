@@ -180,14 +180,8 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 drawerLayout.closeDrawers();
-                switch (item.getItemId()) {
-
-                    case R.id.main_menu_aboutUS:
-                        Toast.makeText(MainActivity.this, "action_settings", Toast.LENGTH_SHORT).show();
-
-                        break;
-
-
+                if (item.getItemId() == R.id.main_menu_aboutUS) {
+                    startActivity(new Intent(MainActivity.this, AboutActivity.class));
                 }
 
                 return false;
