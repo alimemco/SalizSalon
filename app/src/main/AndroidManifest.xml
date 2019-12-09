@@ -17,6 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".Views.Activities.AboutActivity"></activity>
         <activity android:name=".Views.Activities.ActivitySplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,7 +31,6 @@
         <activity android:name=".Views.Activities.ActivityLogin" />
         <activity android:name=".Views.Activities.ActivityChooseTime" />
         <activity android:name=".Views.Activities.MainActivity" />
-
     </application>
 
 </manifest>

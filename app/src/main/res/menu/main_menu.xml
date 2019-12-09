@@ -4,9 +4,9 @@
     android:id="@+id/main_menu">
 
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/main_menu_aboutUS"
         android:icon="@drawable/ic_king"
-        android:title="menu_icon"
+        android:title="درباره ما"
         app:showAsAction="always" />
 
 </menu>
