@@ -15,10 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alirnp.salizsalon.Adapters.UserReserveAdapter;
 import com.alirnp.salizsalon.Model.User;
 import com.alirnp.salizsalon.MyApplication;
-import com.alirnp.salizsalon.NestedJson.SalizResponse;
 import com.alirnp.salizsalon.NestedJson.Result;
+import com.alirnp.salizsalon.NestedJson.SalizResponse;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
+import com.alirnp.salizsalon.Utils.Utils;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,6 +50,27 @@ public class FragmentOrder extends Fragment {
         return view;
     }
 
+    private Callback<SalizResponse> callback = new Callback<SalizResponse>() {
+        @Override
+        public void onResponse(Call<SalizResponse> call, Response<SalizResponse> response) {
+
+            if (Utils.validateCallbackSalizResponse(getContext(), response)) {
+                assert response.body() != null;
+                Result result = response.body().getResult().get(0);
+                adapter.setData(result.getItems());
+            } else {
+                adapter.setNotFound();
+            }
+
+        }
+
+        @Override
+        public void onFailure(Call<SalizResponse> call, Throwable t) {
+            Toast.makeText(getContext(), t.toString(), Toast.LENGTH_SHORT).show();
+            adapter.setNotFound();
+        }
+    };
+
     private void initViews() {
         RecyclerView rcv = view.findViewById(R.id.fragment_order_rcv);
         rcv.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -57,40 +79,16 @@ public class FragmentOrder extends Fragment {
         User user = MyApplication.getSharedPrefManager().getUser();
 
         String phone = user.getPhone();
-            if (phone != null) {
-                MyApplication.getApi().getUserReserveList(Constants.USER_RESERVE_LIST, phone).enqueue(callback());
+        if (phone != null) {
+            if (Utils.connected(getContext())) {
+                MyApplication.getApi().getUserReserveList(Constants.USER_RESERVE_LIST, phone).enqueue(callback);
+            } else {
+                adapter.setNotFound();
             }
+        } else {
+            adapter.setNotFound();
+        }
 
     }
-
-
-    private Callback<SalizResponse> callback() {
-        return new Callback<SalizResponse>() {
-            @Override
-            public void onResponse(Call<SalizResponse> call, Response<SalizResponse> response) {
-                if (response.isSuccessful())
-                    if (response.body() != null) {
-                        Result result = response.body().getResult().get(0);
-                        boolean success = Boolean.parseBoolean(result.getSuccess());
-                        if (success) {
-
-                            adapter.setData(result.getItems());
-
-                        } else {
-                            String msg = result.getMessage();
-                            Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-            }
-
-            @Override
-            public void onFailure(Call<SalizResponse> call, Throwable t) {
-                Toast.makeText(getContext(), t.toString(), Toast.LENGTH_SHORT).show();
-            }
-        };
-    }
-
-
-
 
 }

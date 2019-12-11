@@ -10,22 +10,18 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.alirnp.salizsalon.Adapters.ItemsAdapter;
 import com.alirnp.salizsalon.BannerSlider.MainSliderAdapter;
 import com.alirnp.salizsalon.BannerSlider.PicassoImageLoadingService;
-import com.alirnp.salizsalon.CustomViews.MyButton;
 import com.alirnp.salizsalon.CustomViews.MyTextView;
 import com.alirnp.salizsalon.Generator.DataGenerator;
 import com.alirnp.salizsalon.MyApplication;
-import com.alirnp.salizsalon.NestedJson.SalizResponse;
 import com.alirnp.salizsalon.NestedJson.Result;
+import com.alirnp.salizsalon.NestedJson.SalizResponse;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
 import com.alirnp.salizsalon.Utils.Utils;
@@ -44,7 +40,6 @@ public class FragmentHome extends Fragment
     private Slider slider;
     private View view;
 
-    private RecyclerView rcvCategory;
     private RecyclerView rcvItems;
 
 
@@ -73,30 +68,40 @@ public class FragmentHome extends Fragment
         return view;
     }
 
-    private void initItemsRecyclerView() {
-
-        rcvItems.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-
-        ItemsAdapter itemsAdapter = new ItemsAdapter(DataGenerator.getHomeItems());
-        itemsAdapter.setOnItemClick(this);
-        rcvItems.setAdapter(itemsAdapter);
-
-    }
-
-
     private Callback<SalizResponse> callbackBanner = new Callback<SalizResponse>() {
         @Override
         public void onResponse(Call<SalizResponse> call, Response<SalizResponse> response) {
-            if (response.isSuccessful())
+            String error;
+
+            if (response.isSuccessful()) {
                 if (response.body() != null) {
-                    Result result = response.body().getResult().get(0);
-                    boolean success = Boolean.parseBoolean(result.getSuccess());
-                    if (success) {
-                        slider.setAdapter(new MainSliderAdapter(result.getItems()));
+                    if (response.code() == 200) {
+                        Result result = response.body().getResult().get(0);
+                        boolean success = Boolean.parseBoolean(result.getSuccess());
+                        if (success) {
+                            if (result.getItems() != null) {
+                                initSlider();
+                                slider.setAdapter(new MainSliderAdapter(result.getItems()));
+                                return;
+                            } else {
+                                error = getString(R.string.error_emptyItems);
+                            }
+
+                        } else {
+                            error = result.getMessage();
+                        }
                     } else {
-                        Toast.makeText(getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
+                        error = getString(R.string.error_emptyHttpOK);
                     }
+
+                } else {
+                    error = getString(R.string.error_unSuccess);
                 }
+            } else {
+                error = getString(R.string.error_empty_body);
+            }
+            Toast.makeText(getContext(), error, Toast.LENGTH_LONG).show();
+
         }
 
         @Override
@@ -104,6 +109,16 @@ public class FragmentHome extends Fragment
             Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
         }
     };
+
+    private void initItemsRecyclerView() {
+        rcvItems.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+
+
+        ItemsAdapter itemsAdapter = new ItemsAdapter(DataGenerator.getHomeItems());
+        itemsAdapter.setOnItemClick(this);
+        rcvItems.setAdapter(itemsAdapter);
+
+    }
 
     @Override
     public void onStart() {
@@ -114,17 +129,15 @@ public class FragmentHome extends Fragment
 
     private void initView() {
 
-        rcvCategory = view.findViewById(R.id.fragment_home_rcv_category);
+
         rcvItems = view.findViewById(R.id.fragment_home_rcv_items);
 
         MyTextView addressButton = view.findViewById(R.id.fragment_home_textView_map_direction);
 
         addressButton.setOnClickListener(this);
 
-        rcvCategory.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-
         if (Utils.connected(getContext())) {
-            initSlider();
+
             initApiServices();
         } else {
             Toast.makeText(getContext(), "connection error", Toast.LENGTH_SHORT).show();
@@ -140,6 +153,7 @@ public class FragmentHome extends Fragment
 
     private void initSlider() {
         slider = view.findViewById(R.id.fragment_home_banner);
+        slider.setInterval(3000);
         Slider.init(new PicassoImageLoadingService(getContext()));
     }
 

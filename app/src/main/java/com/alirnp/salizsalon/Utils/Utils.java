@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -13,6 +14,8 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.alirnp.salizsalon.Model.Day;
 import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.NestedJson.Item;
+import com.alirnp.salizsalon.NestedJson.Result;
+import com.alirnp.salizsalon.NestedJson.SalizResponse;
 import com.alirnp.salizsalon.R;
 
 import java.io.IOException;
@@ -54,10 +57,6 @@ Utils {
         }
     };
 
-    public static String numberToTextPrice(int price) {
-        NumberFormat format = new DecimalFormat("#,###,###");
-        return " از " + format.format(price) + " تومان ";
-    }
 
     public static String parseUserLevel(String user_level) {
 
@@ -260,6 +259,11 @@ Utils {
         return false;
     }
 
+    public static String numberToTextPrice(int price) {
+        NumberFormat format = new DecimalFormat("#,###,###");
+        return format.format(price) + " تومان ";
+    }
+
     public static String numberToTextPrice(String price, boolean isStatic) {
         if (isInteger(price)) {
             int prc = Integer.valueOf(price);
@@ -279,12 +283,13 @@ Utils {
         if (context != null) {
 
             if (Utils.isConnected(context)) {
-                return Utils.isConnectedToThisServer(Constants.GOOGLE_URL);
+                return Utils.isConnectedToThisServer(Constants.SITE_URL);
             }
 
         }
         return false;
     }
+
 
     public static void sendSmsToAdmin(String messageToAdmin) {
         Map<String, String> map = new HashMap<>();
@@ -303,6 +308,38 @@ Utils {
 
             MyApplication.getApi().sendSms(Constants.TOKEN, map).enqueue(callback);
         }
+    }
+
+    public static boolean validateCallbackSalizResponse(Context context, Response<SalizResponse> response) {
+        String error;
+
+        if (response.isSuccessful()) {
+            if (response.body() != null) {
+                if (response.code() == 200) {
+                    Result result = response.body().getResult().get(0);
+                    boolean success = Boolean.parseBoolean(result.getSuccess());
+                    if (success) {
+                        if (result.getItems() != null) {
+                            return true;
+                        } else {
+                            error = context.getString(R.string.error_emptyItems);
+                        }
+
+                    } else {
+                        error = result.getMessage();
+                    }
+                } else {
+                    error = context.getString(R.string.error_emptyHttpOK);
+                }
+
+            } else {
+                error = context.getString(R.string.error_unSuccess);
+            }
+        } else {
+            error = context.getString(R.string.error_empty_body);
+        }
+        Toast.makeText(context, error, Toast.LENGTH_LONG).show();
+        return false;
     }
 
 }

@@ -38,6 +38,9 @@
 
     <!-- ERRORS -->
     <string name="error_empty_body">خطا در سرور</string>
+    <string name="error_unSuccess">خطا در دریافت اطلاعات</string>
+    <string name="error_emptyHttpOK">عدم دریافت پاسخ از سرور</string>
+    <string name="error_emptyItems">عدم دریافت آیتم ها</string>
 
     <!-- SUCCESS -->
     <string name="successfully">موفقیت آمیز بود</string>

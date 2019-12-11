@@ -41,8 +41,6 @@ public class UserReserveAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 return Constants.state.SUCCESS.getStatus();
             case ITEM_NOT_FOUND:
                 return Constants.state.ITEM_NOT_FOUND.getStatus();
-            case SEARCHING:
-                return Constants.state.SEARCHING.getStatus();
 
             default:
                 return Constants.state.SEARCHING.getStatus();
@@ -97,7 +95,10 @@ public class UserReserveAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public int getItemCount() {
-        return models == null ? 1 : models.size();
+        if (state == Constants.state.SUCCESS)
+            return models == null ? 1 : models.size();
+        else
+            return 1;
     }
 
     public class UserReserveHolder extends RecyclerView.ViewHolder {

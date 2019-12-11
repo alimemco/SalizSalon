@@ -17,7 +17,8 @@ public class PicassoImageLoadingService implements ImageLoadingService {
 
     @Override
     public void loadImage(String url, ImageView imageView) {
-        Picasso.get().load(url).into(imageView);
+        if (!url.equals(""))
+            Picasso.get().load(url).into(imageView);
     }
 
     @Override
@@ -27,6 +28,7 @@ public class PicassoImageLoadingService implements ImageLoadingService {
 
     @Override
     public void loadImage(String url, int placeHolder, int errorDrawable, ImageView imageView) {
-        Picasso.get().load(url).placeholder(R.color.gray_100).error(errorDrawable).into(imageView);
+        if (!url.equals(""))
+            Picasso.get().load(url).placeholder(R.color.gray_100).error(R.color.gray_blue_200).into(imageView);
     }
 }

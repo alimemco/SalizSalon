@@ -56,7 +56,6 @@
             android:gravity="center"
             android:hint="پسورد"
             android:inputType="textPassword"
-            android:maxLength="11"
             android:maxLines="1"
             android:textSize="@dimen/large_2X_sp"
             app:drawableRightCompat="@drawable/ic_key"

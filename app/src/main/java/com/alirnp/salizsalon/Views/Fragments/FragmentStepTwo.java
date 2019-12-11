@@ -16,8 +16,8 @@ import com.alirnp.salizsalon.CustomViews.MyTextView;
 import com.alirnp.salizsalon.Interface.OnStepReady;
 import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.NestedJson.Item;
-import com.alirnp.salizsalon.NestedJson.SalizResponse;
 import com.alirnp.salizsalon.NestedJson.Result;
+import com.alirnp.salizsalon.NestedJson.SalizResponse;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
 import com.alirnp.salizsalon.Utils.Utils;
@@ -80,7 +80,7 @@ public class FragmentStepTwo extends Fragment implements ServicesAdapter.onServi
     }
 
     private void showPrice(int price) {
-        String prc = " مجموع :  " + Utils.numberToTextPrice(price);
+        String prc = " مجموع : ~ " + Utils.numberToTextPrice(price);
         finalPriceTv.setText(prc);
     }
 
