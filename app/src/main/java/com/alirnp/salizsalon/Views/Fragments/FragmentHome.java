@@ -129,25 +129,23 @@ public class FragmentHome extends Fragment
 
     private void initView() {
 
-
         rcvItems = view.findViewById(R.id.fragment_home_rcv_items);
 
         MyTextView addressButton = view.findViewById(R.id.fragment_home_textView_map_direction);
 
         addressButton.setOnClickListener(this);
 
-        if (Utils.connected(getContext())) {
-
-            initApiServices();
+        if (getContext() != null)
+            if (Utils.isConnected(getContext())) {
+                getBanners();
         } else {
-            Toast.makeText(getContext(), "connection error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "خطا در برقراری ارتباط", Toast.LENGTH_SHORT).show();
         }
-
 
     }
 
 
-    private void initApiServices() {
+    private void getBanners() {
         MyApplication.getApi().get(Constants.BANNERS).enqueue(callbackBanner);
     }
 

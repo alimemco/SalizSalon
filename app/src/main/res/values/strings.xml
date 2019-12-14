@@ -37,6 +37,7 @@
     <string name="message_admin">سفارش جدید دارید</string>
 
     <!-- ERRORS -->
+    <string name="error_connection">خطا در ارتباط با اینترنت</string>
     <string name="error_empty_body">خطا در سرور</string>
     <string name="error_unSuccess">خطا در دریافت اطلاعات</string>
     <string name="error_emptyHttpOK">عدم دریافت پاسخ از سرور</string>
@@ -48,4 +49,5 @@
     <string name="delete_banner">حذف بنر</string>
     <string name="email">alimoghadam75@gmail.com</string>
     <string name="developer">علی مقدم</string>
+    <string name="try_again">تلاش مجدد</string>
 </resources>

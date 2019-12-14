@@ -17,8 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Views.Activities.AboutActivity"></activity>
-        <activity android:name=".Views.Activities.ActivitySplash">
+        <activity android:name=".Views.Activities.ErrorConnectionActivity"></activity>
+        <activity android:name=".Views.Activities.AboutActivity" />
+        <activity
+            android:name=".Views.Activities.ActivitySplash"
+            android:theme="@style/SplashTheme">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

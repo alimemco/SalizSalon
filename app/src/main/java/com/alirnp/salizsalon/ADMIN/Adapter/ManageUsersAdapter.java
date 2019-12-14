@@ -62,12 +62,13 @@ public class ManageUsersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     class ManageUsersHolder extends RecyclerView.ViewHolder {
         private View lineView;
-        private MyTextView usernameTextView, userLevelTextView;
+        private MyTextView nameTextView, usernameTextView, userLevelTextView;
         private ImageView kingImageView;
 
         private ManageUsersHolder(View itemView) {
             super(itemView);
             lineView = itemView.findViewById(R.id.rcv_manage_users_line);
+            nameTextView = itemView.findViewById(R.id.rcv_manage_users_name);
             usernameTextView = itemView.findViewById(R.id.rcv_manage_users_username);
             userLevelTextView = itemView.findViewById(R.id.rcv_manage_users_userLevel);
             kingImageView = itemView.findViewById(R.id.rcv_manage_users_king);
@@ -75,23 +76,24 @@ public class ManageUsersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         void bind(final int position) {
             final Item item = models.get(position);
-            String level = item.getLevel();
-            boolean isAdmin = level.equals("ADMIN");
+            boolean isAdmin = item.getLevel().equals("ADMIN");
+            String name = item.getFirst_name() + " " + item.getLast_name();
 
             lineView.setVisibility(position == 0 ? View.INVISIBLE : View.VISIBLE);
             kingImageView.setVisibility(isAdmin ? View.VISIBLE : View.INVISIBLE);
 
+            nameTextView.setText(name);
             usernameTextView.setText(item.getUsername());
-            userLevelTextView.setText(Utils.parseUserLevel(level));
+            userLevelTextView.setText(Utils.parseUserLevel(item.getLevel()));
+
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //Toast.makeText(itemView.getContext(), models.get(getAdapterPosition()).getUsername(), Toast.LENGTH_SHORT).show();
                     BottomSheetChangeUserLevel dialog = BottomSheetChangeUserLevel.newInstance(Integer.valueOf(item.getID()), position);
                     dialog.setOnUserLevelChanged(ManageUsersAdapter.this);
                     FragmentManager manager = ((AppCompatActivity) itemView.getContext()).getSupportFragmentManager();
                     dialog.show(manager, "BottomSheetChangeUserLevel");
-
                 }
             });
 
