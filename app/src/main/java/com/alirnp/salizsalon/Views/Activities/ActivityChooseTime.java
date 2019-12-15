@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -19,6 +18,7 @@ import com.alirnp.salizsalon.Dialog.BottomSheetLoginOrRegister;
 import com.alirnp.salizsalon.Interface.OnStepReady;
 import com.alirnp.salizsalon.Model.Day;
 import com.alirnp.salizsalon.Model.Hour;
+import com.alirnp.salizsalon.Model.User;
 import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.NestedJson.Item;
 import com.alirnp.salizsalon.NestedJson.Result;
@@ -31,12 +31,10 @@ import com.alirnp.salizsalon.Views.Fragments.FragmentStepThree;
 import com.alirnp.salizsalon.Views.Fragments.FragmentStepTwo;
 import com.shuhart.stepview.StepView;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -57,7 +55,6 @@ public class ActivityChooseTime extends AppCompatActivity implements
 
     private BottomSheetLoginOrRegister bottomSheetLoginOrRegister;
 
-    private Context context;
 
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private FragmentStepOne fragmentStepOne = new FragmentStepOne(this);
@@ -200,39 +197,60 @@ public class ActivityChooseTime extends AppCompatActivity implements
 
             case 3:
                 submitReserve();
+                break;
+        }
+    }
+
+    private void sendSms(User user) {
+        String info;
+        if (user != null) {
+            String phone = user.getPhone();
+            String firstName = user.getFirstName();
+            String lastName = user.getLastName();
+
+            if (phone != null && firstName != null && lastName != null) {
+                info = firstName + " " + lastName + " " + phone;
 
                 String message = getResources().getString(R.string.message_admin);
                 String companyName = getResources().getString(R.string.company_name);
-                Utils.sendSmsToAdmin(message + " \n " + companyName);
-                break;
+                Utils.sendSmsToAdmin(message + " \n " + info + " \n " + companyName);
+            }
         }
+
+
     }
 
 
     private void submitReserve() {
 
-        String phone = MyApplication.getSharedPrefManager().getUser().getPhone();
-        if (phone == null) {
-            showBottomDialog();
+        User user = MyApplication.getSharedPrefManager().getUser();
+        String phone = user.getPhone();
+        if (phone != null) {
+            submit(user);
+            sendSms(user);
         } else {
-            Map<String, String> info = new HashMap<>();
-
-            info.put(Constants.TIME_ID, String.valueOf(hour.getTimeID()));
-            info.put(Constants.PHONE, phone);
-            info.put(Constants.DAY_NAME, day.getDayName());
-            info.put(Constants.MONTH_NAME, day.getMonthName());
-            info.put(Constants.DAY_OF_MONTH, day.getDayOfMonth());
-            info.put(Constants.HOUR, hour.getTime());
-            info.put(Constants.PRICE, String.valueOf(calculatorPrice()));
-            info.put(Constants.SERVICES, explodeServices());
-
-            MyApplication.getApi().reserve(
-                    Constants.RESERVE,
-                    info
-            ).enqueue(callback());
+            showBottomDialog();
         }
 
         nextStepBtn.setEnabled(true);
+    }
+
+    private void submit(User user) {
+        Map<String, String> info = new HashMap<>();
+
+        info.put(Constants.TIME_ID, String.valueOf(hour.getTimeID()));
+        info.put(Constants.PHONE, user.getPhone());
+        info.put(Constants.DAY_NAME, day.getDayName());
+        info.put(Constants.MONTH_NAME, day.getMonthName());
+        info.put(Constants.DAY_OF_MONTH, day.getDayOfMonth());
+        info.put(Constants.HOUR, hour.getTime());
+        info.put(Constants.PRICE, String.valueOf(calculatorPrice()));
+        info.put(Constants.SERVICES, explodeServices());
+
+        MyApplication.getApi().reserve(
+                Constants.RESERVE,
+                info
+        ).enqueue(callback());
     }
 
     private int calculatorPrice() {

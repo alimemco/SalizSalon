@@ -24,11 +24,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="30dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="@dimen/standard_margin2x"
         android:text="@string/saliz_beautiful_salon"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/large_3X_sp"
+        app:layout_constraintBottom_toTopOf="@id/fragment_user_btn_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appCompatImageView3" />
@@ -39,12 +40,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/standard_margin2x"
-        android:layout_marginTop="70dp"
         android:layout_marginEnd="@dimen/standard_margin2x"
         android:text="ورود"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="@dimen/standard_margin2x"
+        app:layout_constraintBottom_toTopOf="@id/fragment_user_btn_register"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/myTextView2" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
     <com.alirnp.salizsalon.CustomViews.MyButton
@@ -56,9 +57,10 @@
         android:layout_marginTop="28dp"
         android:layout_marginEnd="@dimen/standard_margin2x"
         android:text="ثبت نام"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_user_btn_login" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

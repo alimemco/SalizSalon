@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="@dimen/standard_margin2x"
-    android:paddingTop="@dimen/standard_margin2x"
-    android:paddingRight="@dimen/standard_margin2x"
-    android:paddingBottom="@dimen/standard_margin2x">
+    android:layout_height="match_parent">
 
     <item android:drawable="@color/white" />
 
 
-    <item android:gravity="center">
+    <item
+        android:gravity="center"
+        android:paddingLeft="120dp"
+        android:paddingTop="120dp"
+        android:paddingRight="120dp"
+        android:paddingBottom="120dp">
         <bitmap
             android:gravity="center"
             android:src="@drawable/woman_hair_128" />

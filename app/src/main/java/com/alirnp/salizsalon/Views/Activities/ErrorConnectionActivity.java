@@ -22,6 +22,7 @@ public class ErrorConnectionActivity extends AppCompatActivity implements View.O
 
         initView();
         setListener();
+
     }
 
     private void setListener() {
@@ -37,21 +38,11 @@ public class ErrorConnectionActivity extends AppCompatActivity implements View.O
         if (view.getId() == R.id.activity_error_connection_button) {
             if (Utils.isConnected(ErrorConnectionActivity.this)) {
                 startActivity(new Intent(ErrorConnectionActivity.this, MainActivity.class));
+                finish();
             } else {
                 Toast.makeText(this, R.string.error_connection, Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-/*
-    private void showDialog(){
-        dialog = new LoadingDialog();
-        dialog.show(getSupportFragmentManager(),dialog.getTag());
-    }
-
-    private void dismissDialog(){
-        if (dialog != null)
-            dialog.dismiss();
-
-    }*/
 }
