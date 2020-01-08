@@ -14,11 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.alirnp.salizsalon.ADMIN.Adapter.ManageUsersAdapter;
-import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.NestedJson.Result;
 import com.alirnp.salizsalon.NestedJson.SalizResponse;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
+import com.alirnp.salizsalon.Utils.MyApplication;
 
 import retrofit2.Call;
 import retrofit2.Callback;

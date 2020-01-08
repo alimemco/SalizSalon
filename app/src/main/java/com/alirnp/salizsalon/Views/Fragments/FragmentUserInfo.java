@@ -15,8 +15,8 @@ import com.alirnp.salizsalon.CustomViews.MyTextView;
 import com.alirnp.salizsalon.Dialog.BottomSheetEditUser;
 import com.alirnp.salizsalon.Interface.OnLogoutUser;
 import com.alirnp.salizsalon.Model.User;
-import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.R;
+import com.alirnp.salizsalon.Utils.MyApplication;
 import com.alirnp.salizsalon.Utils.Utils;
 
 

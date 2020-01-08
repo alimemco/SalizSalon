@@ -6,8 +6,8 @@ import android.util.AttributeSet;
 
 import androidx.appcompat.widget.AppCompatTextView;
 
-import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.R;
+import com.alirnp.salizsalon.Utils.MyApplication;
 
 public class MyTextView extends AppCompatTextView {
 

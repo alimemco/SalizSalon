@@ -19,13 +19,18 @@ import com.alirnp.salizsalon.BannerSlider.MainSliderAdapter;
 import com.alirnp.salizsalon.BannerSlider.PicassoImageLoadingService;
 import com.alirnp.salizsalon.CustomViews.MyTextView;
 import com.alirnp.salizsalon.Generator.DataGenerator;
-import com.alirnp.salizsalon.MyApplication;
+import com.alirnp.salizsalon.Model.User;
+import com.alirnp.salizsalon.NestedJson.Item;
 import com.alirnp.salizsalon.NestedJson.Result;
 import com.alirnp.salizsalon.NestedJson.SalizResponse;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
+import com.alirnp.salizsalon.Utils.MyApplication;
 import com.alirnp.salizsalon.Utils.Utils;
 import com.alirnp.salizsalon.Views.Activities.ActivityChooseTime;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -110,6 +115,60 @@ public class FragmentHome extends Fragment
         }
     };
 
+
+    private Callback<SalizResponse> callbackUserLevel = new Callback<SalizResponse>() {
+        @Override
+        public void onResponse(Call<SalizResponse> call, Response<SalizResponse> response) {
+            String error;
+
+            if (response.isSuccessful()) {
+                if (response.body() != null) {
+                    if (response.code() == 200) {
+                        Result result = response.body().getResult().get(0);
+                        boolean success = Boolean.parseBoolean(result.getSuccess());
+                        if (success) {
+                            if (result.getItems() != null) {
+                                Item item = result.getItems().get(0);
+                                if (item != null) {
+
+                                    String level = item.getLevel();
+                                    User user = MyApplication.getSharedPrefManager().getUser();
+                                    if (user != null) {
+                                        user.setLevel(level);
+
+                                        Utils.sendMessageAdminLevel(getContext());
+                                    }
+
+                                }
+
+                                return;
+                            } else {
+                                error = getString(R.string.error_emptyItems);
+                            }
+
+                        } else {
+                            error = result.getMessage();
+                        }
+                    } else {
+                        error = getString(R.string.error_emptyHttpOK);
+                    }
+
+                } else {
+                    error = getString(R.string.error_unSuccess);
+                }
+            } else {
+                error = getString(R.string.error_empty_body);
+            }
+            Toast.makeText(getContext(), error, Toast.LENGTH_LONG).show();
+
+        }
+
+        @Override
+        public void onFailure(Call<SalizResponse> call, Throwable t) {
+            Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    };
+
     private void initItemsRecyclerView() {
         rcvItems.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
 
@@ -138,15 +197,30 @@ public class FragmentHome extends Fragment
         if (getContext() != null)
             if (Utils.isConnected(getContext())) {
                 getBanners();
-        } else {
+                checkUserLevel();
+            } else {
                 Toast.makeText(getContext(), "خطا در برقراری ارتباط", Toast.LENGTH_SHORT).show();
-        }
+            }
 
     }
 
 
     private void getBanners() {
         MyApplication.getApi().get(Constants.BANNERS).enqueue(callbackBanner);
+    }
+
+    private void checkUserLevel() {
+        String phone = null;
+        User user = MyApplication.getSharedPrefManager().getUser();
+        if (user != null)
+            phone = user.getPhone();
+        if (phone != null) {
+            Map<String, String> map = new HashMap<>();
+            map.put(Constants.PHONE, phone);
+            MyApplication.getApi().get(Constants.GET_USER_LEVEL, map).enqueue(callbackUserLevel);
+        }
+
+
     }
 
     private void initSlider() {

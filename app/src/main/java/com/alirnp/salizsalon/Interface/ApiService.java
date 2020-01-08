@@ -1,8 +1,8 @@
 package com.alirnp.salizsalon.Interface;
 
+import com.alirnp.salizsalon.Config;
 import com.alirnp.salizsalon.MyUnitTest.ResultAdmin;
 import com.alirnp.salizsalon.NestedJson.SalizResponse;
-import com.alirnp.salizsalon.Utils.Constants;
 
 import java.util.Map;
 
@@ -17,11 +17,17 @@ import retrofit2.http.QueryMap;
 
 public interface ApiService {
 
-    @GET(Constants.API_V1 + "get.php")
+    @GET(Config.API_V1 + "get.php")
     Call<SalizResponse> get(@Query("request") String request);
 
+
+    @GET(Config.API_V1 + "get.php")
+    Call<SalizResponse> get(
+            @Query("request") String request,
+            @QueryMap Map<String, String> map);
+
     @Headers("Cache-control: no-cache")
-    @GET(Constants.API_V1 + "get.php")
+    @GET(Config.API_V1 + "get.php")
     Call<SalizResponse> getTimes(
             @Query("request") String request,
             @Query("DAY") String day);
@@ -31,7 +37,7 @@ public interface ApiService {
      * @param info    {DAY_NAME, MONTH_NAME, DAY_OF_MONTH, HOUR, PRICE, PRICE, SERVICES}
      */
     @Headers("Cache-control: no-cache")
-    @PUT(Constants.API_V1 + "service.php")
+    @PUT(Config.API_V1 + "service.php")
     Call<SalizResponse> reserve(
             @Query("request") String request,
             @QueryMap Map<String, String> info
@@ -42,45 +48,42 @@ public interface ApiService {
      * @param request {REGISTER , LOGIN , EDIT}
      * @param info    { first_name , last_name , phone , password }
      */
-    @POST(Constants.API_V1 + "users.php")
+    @POST(Config.API_V1 + "users.php")
     Call<SalizResponse> userManager(
             @Query("request") String request,
             @QueryMap Map<String, String> info);
 
 
     @Headers("Cache-control: no-cache")
-    @GET(Constants.API_V1 + "get.php")
+    @GET(Config.API_V1 + "get.php")
     Call<SalizResponse> getUserReserveList(
             @Query("request") String request,
             @Query("PHONE") String phone);
 
 
-
     @Headers("Cache-control: no-cache")
-    @GET(Constants.API_V1 + "manager.php")
+    @GET(Config.API_V1 + "manager.php")
     Call<SalizResponse> manage(
             @Query("request") String request,
             @Query("TOKEN") String TOKEN);
 
 
     @Headers("Cache-control: no-cache")
-    @GET(Constants.API_V1 + "manager.php")
+    @GET(Config.API_V1 + "manager.php")
     Call<SalizResponse> manage(
             @Query("request") String request,
             @Query("TOKEN") String TOKEN,
             @QueryMap Map<String, String> map);
 
 
-
-
     @Headers("Cache-control: no-cache")
-    @GET(Constants.API_V1 + "manager.php")
+    @GET(Config.API_V1 + "manager.php")
     Call<ResultAdmin> manageTime(
             @Query("request") String request,
             @Query("TOKEN") String TOKEN);
 
 
-    @GET(Constants.API_SMS + "sendSms.php")
+    @GET(Config.API_SMS + "sendSms.php")
     Call<ResponseBody> sendSms(
             @Query("TOKEN") String TOKEN,
             @QueryMap Map<String, String> map

@@ -2,12 +2,6 @@ package com.alirnp.salizsalon.Utils;
 
 public class Constants {
 
-    public static final String SITE_URL = "www.khodemon.ir";
-    public static final String GOOGLE_URL = "google.com";
-    public static final String BASE_URL = "http://khodemon.ir/SalizApp/";
-    public static final String API_V1 = "api/v1/";
-    public static final String API_SMS = "api/sms/";
-
     public static final String TOKEN = "AliRnpVAgT8AV195s";
 
     public static final String ID = "ID";
@@ -15,7 +9,7 @@ public class Constants {
     public static final String USER_LEVEL = "level";
     public static final String STATUS = "STATUS";
     public static final String POSTS = "POSTS";
-    public static final String CATEGORY = "CATEGORY";
+    public static final String GET_USER_LEVEL = "GET_USER_LEVEL";
     public static String TIMES = "GET_TIMES";
     public static String ORDERS = "GET_ORDERS";
     public static String BANNERS = "GET_BANNERS";
@@ -66,6 +60,7 @@ public class Constants {
 
     public static String EVENT_LOGIN = "EVENT_LOGIN";
     public static String EVENT_RESERVED = "E_RESERVED";
+    public static String EVENT_ADMIN = "E_ADMIN";
     public static String EVENT_EDITED_TIME = "E_EDITED_TIME";
     public static String EVENT_BANNER_CHANGED = "E_BANNER_CHANGED";
 
@@ -128,8 +123,7 @@ public class Constants {
         ITEM_NOT_FOUND(2),
         SEARCHING(3),
         HEADER(4),
-        MAIN(5),
-        FOOTER(6);
+        MAIN(5);
 
         private int status;
 

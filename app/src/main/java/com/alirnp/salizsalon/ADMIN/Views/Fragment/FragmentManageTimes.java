@@ -21,12 +21,12 @@ import com.alirnp.salizsalon.ADMIN.Adapter.ManageTimeAdapter;
 import com.alirnp.salizsalon.ADMIN.Model.Model;
 import com.alirnp.salizsalon.CustomViews.MyButton;
 import com.alirnp.salizsalon.Dialog.AddTimeDialog;
-import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.MyUnitTest.Item;
 import com.alirnp.salizsalon.MyUnitTest.ResultAdmin;
 import com.alirnp.salizsalon.MyUnitTest.Time;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
+import com.alirnp.salizsalon.Utils.MyApplication;
 import com.kodmap.library.kmrecyclerviewstickyheader.KmHeaderItemDecoration;
 
 import java.util.ArrayList;

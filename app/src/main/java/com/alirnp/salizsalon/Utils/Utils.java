@@ -11,8 +11,8 @@ import android.widget.Toast;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.alirnp.salizsalon.Config;
 import com.alirnp.salizsalon.Model.Day;
-import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.NestedJson.Item;
 import com.alirnp.salizsalon.NestedJson.Result;
 import com.alirnp.salizsalon.NestedJson.SalizResponse;
@@ -101,6 +101,11 @@ Utils {
 
     public static void sendMessageReserved(Context context) {
         Intent intent = new Intent(Constants.EVENT_RESERVED);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+    }
+
+    public static void sendMessageAdminLevel(Context context) {
+        Intent intent = new Intent(Constants.EVENT_ADMIN);
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
 
@@ -283,7 +288,7 @@ Utils {
         if (context != null) {
 
             if (Utils.isConnected(context)) {
-                return Utils.isConnectedToThisServer(Constants.SITE_URL);
+                return Utils.isConnectedToThisServer(Config.BASE_URL);
             }
 
         }

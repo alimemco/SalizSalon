@@ -2,7 +2,6 @@ package com.alirnp.salizsalon.BannerSlider;
 
 import com.alirnp.salizsalon.NestedJson.Item;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ss.com.bannerslider.adapters.SliderAdapter;

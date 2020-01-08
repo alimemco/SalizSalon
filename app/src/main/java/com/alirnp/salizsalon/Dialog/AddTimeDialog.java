@@ -18,11 +18,11 @@ import com.alirnp.salizsalon.CustomViews.MyButton;
 import com.alirnp.salizsalon.CustomViews.MyEditText;
 import com.alirnp.salizsalon.Generator.DataGenerator;
 import com.alirnp.salizsalon.Model.Day;
-import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.NestedJson.Result;
 import com.alirnp.salizsalon.NestedJson.SalizResponse;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
+import com.alirnp.salizsalon.Utils.MyApplication;
 
 import java.util.HashMap;
 import java.util.Map;

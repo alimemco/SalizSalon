@@ -6,8 +6,8 @@ import android.util.AttributeSet;
 
 import androidx.appcompat.widget.AppCompatButton;
 
-import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.R;
+import com.alirnp.salizsalon.Utils.MyApplication;
 
 public class MyButton extends AppCompatButton {
 

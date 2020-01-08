@@ -13,8 +13,8 @@ import com.alirnp.salizsalon.ADMIN.Views.Fragment.FragmentManageBanners;
 import com.alirnp.salizsalon.ADMIN.Views.Fragment.FragmentManageOrder;
 import com.alirnp.salizsalon.ADMIN.Views.Fragment.FragmentManageTimes;
 import com.alirnp.salizsalon.ADMIN.Views.Fragment.FragmentManageUsers;
-import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.R;
+import com.alirnp.salizsalon.Utils.MyApplication;
 import com.alirnp.salizsalon.Utils.Utils;
 import com.google.android.material.tabs.TabLayout;
 

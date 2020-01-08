@@ -29,10 +29,10 @@ import com.alirnp.salizsalon.ADMIN.Views.Activity.ActivityManage;
 import com.alirnp.salizsalon.Dialog.LoadingDialog;
 import com.alirnp.salizsalon.Interface.OnLogoutUser;
 import com.alirnp.salizsalon.Model.User;
-import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.NestedJson.SalizResponse;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
+import com.alirnp.salizsalon.Utils.MyApplication;
 import com.alirnp.salizsalon.Views.Fragments.FragmentHome;
 import com.alirnp.salizsalon.Views.Fragments.FragmentOrder;
 import com.alirnp.salizsalon.Views.Fragments.FragmentUser;
@@ -75,6 +75,14 @@ public class MainActivity extends AppCompatActivity implements
         public void onReceive(Context context, Intent intent) {
 
             fragmentToShow = Constants.fragmentToShow.HOME;
+
+            showAdminManager();
+        }
+    };
+
+    private BroadcastReceiver mAdminReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
 
             showAdminManager();
         }
@@ -190,25 +198,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
-    /*
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            // it will not work for right to left navigation drawer
-    /*        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
-                return true;
-            }
-            // so we have to open and close the navigation drawer ourselves
-            if (item.getItemId() == android.R.id.home) {
-                if (drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
-                    drawerLayout.closeDrawer(Gravity.RIGHT);
-                } else {
-                    drawerLayout.openDrawer(Gravity.RIGHT);
-                }
-                return true;
-            }
-            return super.onOptionsItemSelected(item);
-        }
-    */
+
     public void setNavigationTypeface() {
         ViewGroup navigationGroup = (ViewGroup) bottomNavigationView.getChildAt(0);
         for (int i = 0; i < navigationGroup.getChildCount(); i++) {
@@ -283,6 +273,9 @@ public class MainActivity extends AppCompatActivity implements
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mBroadcastReserved,
                 new IntentFilter(Constants.EVENT_RESERVED));
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mAdminReceiver,
+                new IntentFilter(Constants.EVENT_ADMIN));
     }
 
     @Override

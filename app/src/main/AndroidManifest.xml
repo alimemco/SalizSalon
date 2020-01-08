@@ -9,7 +9,7 @@
     <dist:module dist:instant="true" />
 
     <application
-        android:name=".MyApplication"
+        android:name="com.alirnp.salizsalon.Utils.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_female"
         android:label="@string/app_name"
@@ -17,10 +17,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Views.Activities.ErrorConnectionActivity"></activity>
-        <activity android:name=".Views.Activities.AboutActivity" />
+        <activity android:name="com.alirnp.salizsalon.Views.Activities.ErrorConnectionActivity"></activity>
+        <activity android:name="com.alirnp.salizsalon.Views.Activities.AboutActivity" />
         <activity
-            android:name=".Views.Activities.ActivitySplash"
+            android:name="com.alirnp.salizsalon.Views.Activities.ActivitySplash"
             android:theme="@style/SplashTheme">
 
             <intent-filter>
@@ -29,12 +29,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ADMIN.Views.Activity.ActivityManage" />
-        <activity android:name=".HolderForTestApp.ActivityShop" />
-        <activity android:name=".Views.Activities.ActivityRegister" />
-        <activity android:name=".Views.Activities.ActivityLogin" />
-        <activity android:name=".Views.Activities.ActivityChooseTime" />
-        <activity android:name=".Views.Activities.MainActivity" />
+        <activity android:name="com.alirnp.salizsalon.ADMIN.Views.Activity.ActivityManage" />
+        <activity android:name="com.alirnp.salizsalon.HolderForTestApp.ActivityShop" />
+        <activity android:name="com.alirnp.salizsalon.Views.Activities.ActivityRegister" />
+        <activity android:name="com.alirnp.salizsalon.Views.Activities.ActivityLogin" />
+        <activity android:name="com.alirnp.salizsalon.Views.Activities.ActivityChooseTime" />
+        <activity android:name="com.alirnp.salizsalon.Views.Activities.MainActivity" />
     </application>
 
 </manifest>

@@ -2,9 +2,9 @@ package com.alirnp.salizsalon;
 
 import com.alirnp.salizsalon.Utils.Constants;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Example local unit test, which will execute on the development machine (host).

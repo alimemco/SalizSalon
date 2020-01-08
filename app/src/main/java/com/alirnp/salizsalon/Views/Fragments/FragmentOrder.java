@@ -14,11 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alirnp.salizsalon.Adapters.UserReserveAdapter;
 import com.alirnp.salizsalon.Model.User;
-import com.alirnp.salizsalon.MyApplication;
 import com.alirnp.salizsalon.NestedJson.Result;
 import com.alirnp.salizsalon.NestedJson.SalizResponse;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
+import com.alirnp.salizsalon.Utils.MyApplication;
 import com.alirnp.salizsalon.Utils.Utils;
 
 import retrofit2.Call;

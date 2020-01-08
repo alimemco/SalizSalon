@@ -2,9 +2,9 @@
     <string name="app_name">saliz | سالیز</string>
     <string name="saliz">سالیز</string>
     <string name="company_name">سالن زیبایی سالیز</string>
+
     <string name="account">حساب کاربری</string>
     <string name="orders">سفارشات</string>
-
     <string name="gift">تخفیف ویژه برای روز های تعطیل</string>
     <string name="lorem">متن ساده برای نمایش آزمایشی</string>
     <string name="choose_dayHour">تایید روز و ساعت</string>
