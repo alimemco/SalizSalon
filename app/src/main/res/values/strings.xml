@@ -1,7 +1,14 @@
 <resources>
+
     <string name="app_name">saliz | سالیز</string>
     <string name="saliz">سالیز</string>
     <string name="company_name">سالن زیبایی سالیز</string>
+    <string name="address">ماهشهر ، شهرک بعثت (ممکو) ، گلستان 5 ، آلفا 164</string>
+
+    <string name="support_phone">09169501905</string>
+    <string name="support_email">alimoghadam75@gmail.com</string>
+    <string name="email">alimoghadam75@gmail.com</string>
+    <string name="developer">علی مقدم</string>
 
     <string name="account">حساب کاربری</string>
     <string name="orders">سفارشات</string>
@@ -25,7 +32,6 @@
     <string name="register">ثبت نام</string>
     <string name="user_normal">کاربر عادی</string>
     <string name="can_reserve">قابل رزرو</string>
-    <string name="address">ماهشهر ، شهرک بعثت (ممکو) ، گلستان 5 ، آلفا 164</string>
     <string name="change_time">تغییر زمان بندی</string>
     <string name="add_time">اضافه کردن روز و ساعت</string>
     <string name="_8_00">8:00</string>
@@ -47,7 +53,14 @@
     <string name="successfully">موفقیت آمیز بود</string>
 
     <string name="delete_banner">حذف بنر</string>
-    <string name="email">alimoghadam75@gmail.com</string>
-    <string name="developer">علی مقدم</string>
+
     <string name="try_again">تلاش مجدد</string>
+
+    <string name="rules">قوانین و مقررات</string>
+    <string name="sale">روش پرداخت</string>
+    <string name="support">پشتیبانی ، ثبت شکایت ، انتقاد</string>
+
+    <string name="rule1">* حضور مشتری سر ساعت و روز مشخص شده الزامی است</string>
+    <string name="rule2">* حداقل 15 دقیقه قبل از نوبت در سالن حصور داشته باشید</string>
+    <string name="sale1">پرداخت در محل انجام می شود</string>
 </resources>

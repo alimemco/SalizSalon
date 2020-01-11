@@ -8,4 +8,17 @@
         android:title="درباره ما"
         app:showAsAction="always" />
 
+
+    <item
+        android:id="@+id/main_menu_rules"
+        android:icon="@drawable/ic_rules"
+        android:title="@string/rules"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/main_menu_support"
+        android:icon="@drawable/ic_rules"
+        android:title="@string/support"
+        app:showAsAction="always" />
+
 </menu>

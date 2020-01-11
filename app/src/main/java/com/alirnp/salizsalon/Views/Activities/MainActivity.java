@@ -26,9 +26,11 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.alirnp.salizsalon.ADMIN.Views.Activity.ActivityManage;
+import com.alirnp.salizsalon.Config;
 import com.alirnp.salizsalon.Dialog.LoadingDialog;
 import com.alirnp.salizsalon.Interface.OnLogoutUser;
 import com.alirnp.salizsalon.Model.User;
+import com.alirnp.salizsalon.NestedJson.Result;
 import com.alirnp.salizsalon.NestedJson.SalizResponse;
 import com.alirnp.salizsalon.R;
 import com.alirnp.salizsalon.Utils.Constants;
@@ -54,8 +56,8 @@ public class MainActivity extends AppCompatActivity implements
         OnLogoutUser,
         NavigationView.OnNavigationItemSelectedListener {
 
-    private FragmentManager fragmentManager;
     boolean doubleBackToExitPressedOnce = false;
+    private FragmentManager fragmentManager;
     private Constants.fragmentToShow fragmentToShow;
     private BottomNavigationView bottomNavigationView;
     private ImageView kingImg, salizIconImageView;
@@ -87,20 +89,23 @@ public class MainActivity extends AppCompatActivity implements
             showAdminManager();
         }
     };
-
-    private void showAdminManager() {
-        boolean visible;
-        String userLevel = MyApplication.getSharedPrefManager().getUser().getLevel();
-        visible = userLevel.equals(Constants.user_level.ADMIN.getLevel());
-        kingImg.setVisibility(visible ? View.VISIBLE : View.GONE);
-    }
-
     private BroadcastReceiver mBroadcastReserved = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             fragmentToShow = Constants.fragmentToShow.ORDER;
         }
     };
+
+    private void showAdminManager() {
+        boolean visible;
+        String userLevel = MyApplication.getSharedPrefManager().getUser().getLevel();
+        visible = userLevel.equals(Constants.user_level.ADMIN.getLevel());
+        kingImg.setVisibility(visible ? View.VISIBLE : View.GONE);
+
+
+        if (Config.isDemo)
+            kingImg.setVisibility(View.VISIBLE);
+    }
 
     private void initViews() {
 
@@ -184,19 +189,23 @@ public class MainActivity extends AppCompatActivity implements
     private void setupNavigationView() {
         navigationView = findViewById(R.id.mainActivity_navigation_view);
 
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                drawerLayout.closeDrawers();
-                if (item.getItemId() == R.id.main_menu_aboutUS) {
-                    startActivity(new Intent(MainActivity.this, AboutActivity.class));
-                }
+        navigationView.setNavigationItemSelectedListener(item -> {
+            drawerLayout.closeDrawers();
 
-                return false;
+            switch (item.getItemId()) {
+                case R.id.main_menu_aboutUS:
+                    startActivity(new Intent(MainActivity.this, AboutActivity.class));
+                    break;
+
+                case R.id.main_menu_rules:
+                case R.id.main_menu_support:
+                    startActivity(new Intent(MainActivity.this, ActivityRules.class));
+                    break;
             }
+
+            return false;
         });
     }
-
 
 
     public void setNavigationTypeface() {
@@ -239,12 +248,7 @@ public class MainActivity extends AppCompatActivity implements
         this.doubleBackToExitPressedOnce = true;
 
         Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                doubleBackToExitPressedOnce = false;
-            }
-        }, 2000);
+        handler.postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
     }
 
     private void DetectFragment() {
@@ -254,11 +258,6 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    private void clearFragmentBackStack() {
-        for (int i = 0; i < fragmentManager.getBackStackEntryCount(); i++) {
-            fragmentManager.popBackStack();
-        }
-    }
 
     @Override
     public void onLogout() {
@@ -327,11 +326,16 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.activity_main_toolbar_king) {
-            User user = MyApplication.getSharedPrefManager().getUser();
-            Map<String, String> info = new HashMap<>();
-            info.put(Constants.PHONE, user.getPhone());
-            MyApplication.getApi().userManager(Constants.CHECK_ADMIN, info).enqueue(callback());
-            showLoading();
+
+            if (!Config.isDemo) {
+                User user = MyApplication.getSharedPrefManager().getUser();
+                Map<String, String> info = new HashMap<>();
+                info.put(Constants.PHONE, user.getPhone());
+                MyApplication.getApi().userManager(Constants.CHECK_ADMIN, info).enqueue(callback());
+                showLoading();
+            } else {
+                startActivity(new Intent(MainActivity.this, ActivityManage.class));
+            }
         }
     }
 
@@ -340,14 +344,32 @@ public class MainActivity extends AppCompatActivity implements
         return new Callback<SalizResponse>() {
             @Override
             public void onResponse(Call<SalizResponse> call, Response<SalizResponse> response) {
-                startActivity(new Intent(MainActivity.this, ActivityManage.class));
                 dismissLoading();
+                if (response.body() != null) {
+                    Result result = response.body().getResult().get(0);
+                    if (result != null) {
+                        boolean success = Boolean.parseBoolean(result.getSuccess());
+                        if (success) {
+                            startActivity(new Intent(MainActivity.this, ActivityManage.class));
+                        } else {
+                            Toast.makeText(MainActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
+
+                        }
+                    } else {
+                        Toast.makeText(MainActivity.this, R.string.error_emptyItems, Toast.LENGTH_SHORT).show();
+
+                    }
+                } else {
+                    Toast.makeText(MainActivity.this, R.string.error_empty_body, Toast.LENGTH_SHORT).show();
+                }
+
+
             }
 
             @Override
             public void onFailure(Call<SalizResponse> call, Throwable t) {
-                Toast.makeText(MainActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
                 dismissLoading();
+                Toast.makeText(MainActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
             }
         };
     }
@@ -359,7 +381,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void dismissLoading() {
-        if (dialog !=null)
+        if (dialog != null)
             dialog.dismiss();
     }
 

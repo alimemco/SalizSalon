@@ -18,7 +18,8 @@ public class DataGenerator {
     public static List<Item> getHomeItems() {
 
         List<Item> itemList = new ArrayList<>();
-
+        itemList.add(new Item(0, "گرفتن نوبت", R.drawable.ic_clock));
+/*
         for (int i = 0; i < 2; i++) {
             switch (i) {
 
@@ -33,7 +34,7 @@ public class DataGenerator {
 
 
             }
-        }
+        }*/
 
         return itemList;
     }

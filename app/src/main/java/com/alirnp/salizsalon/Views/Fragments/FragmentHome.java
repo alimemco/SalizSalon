@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import com.alirnp.salizsalon.Adapters.ItemsAdapter;
 import com.alirnp.salizsalon.BannerSlider.MainSliderAdapter;
 import com.alirnp.salizsalon.BannerSlider.PicassoImageLoadingService;
+import com.alirnp.salizsalon.Config;
 import com.alirnp.salizsalon.CustomViews.MyTextView;
 import com.alirnp.salizsalon.Generator.DataGenerator;
 import com.alirnp.salizsalon.Model.User;
@@ -170,9 +171,7 @@ public class FragmentHome extends Fragment
     };
 
     private void initItemsRecyclerView() {
-        rcvItems.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-
-
+        rcvItems.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
         ItemsAdapter itemsAdapter = new ItemsAdapter(DataGenerator.getHomeItems());
         itemsAdapter.setOnItemClick(this);
         rcvItems.setAdapter(itemsAdapter);
@@ -232,6 +231,8 @@ public class FragmentHome extends Fragment
     @Override
     public void OnClick(int ID) {
 
+        startActivity(new Intent(getContext(), ActivityChooseTime.class));
+        /*
         switch (ID) {
             case 0:
                 startActivity(new Intent(getContext(), ActivityChooseTime.class));
@@ -240,15 +241,15 @@ public class FragmentHome extends Fragment
             case 1:
                 Toast.makeText(getContext(), "به زودی", Toast.LENGTH_SHORT).show();
                 break;
-        }
+        }*/
 
     }
 
     private void goToLocation() {
-        String salizLocation = "30.722634,49.180997";
-        String salizLocationName = "(saliz salon)";
+        String location = Config.LOCATION;
+        String locationName = Config.LOCATION_NAME;
 
-        Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + salizLocation + salizLocationName);
+        Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + location + locationName);
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
         mapIntent.setPackage("com.google.android.apps.maps");
         startActivity(mapIntent);

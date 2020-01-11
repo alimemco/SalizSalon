@@ -43,39 +43,10 @@ public class ItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         ItemsHolder mHolder = (ItemsHolder) holder;
 
-        //bind(mHolder,models.get(position));
         mHolder.bind(models.get(position), onItemClick);
 
     }
 
-    private void bind(ItemsHolder itemsHolder, final Item item) {
-
-        itemsHolder.txt.setText(item.getTitle());
-
-        itemsHolder.imageView.setImageResource(item.getImage());
-
-      /*  itemsHolder.imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utils.log(ItemsAdapter.class,"man");
-            }
-        });
-
-        itemsHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utils.log(ItemsAdapter.class,"click");
-                if (onItemClick != null){
-                    onItemClick.OnClick(item.getID());
-                    Utils.log(ItemsAdapter.class,"click ok");
-                }else {
-                    Utils.log(ItemsAdapter.class,"click null");
-                }
-            }
-        });*/
-
-
-    }
 
 
     @Override
@@ -107,12 +78,9 @@ public class ItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
             imageView.setImageResource(item.getImage());
 
-            rootLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (onItemClick != null) {
-                        onItemClick.OnClick(item.getID());
-                    }
+            rootLayout.setOnClickListener(v -> {
+                if (onItemClick != null) {
+                    onItemClick.OnClick(item.getID());
                 }
             });
 
