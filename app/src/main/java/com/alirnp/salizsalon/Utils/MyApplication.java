@@ -75,6 +75,7 @@ public class MyApplication extends Application {
 
     }
 
+
     public static void saveUserInSharePreference(Context context, User user) {
         SharedPrefManager sharedPrefManager = new SharedPrefManager(context);
         sharedPrefManager.saveUser(user);

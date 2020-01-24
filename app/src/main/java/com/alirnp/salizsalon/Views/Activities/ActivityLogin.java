@@ -100,7 +100,9 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
 
             @Override
             public void onFailure(Call<SalizResponse> call, Throwable t) {
-                Toast.makeText(ActivityLogin.this, t.toString(), Toast.LENGTH_SHORT).show();
+
+                Utils.log(ActivityLogin.class, t.getMessage());
+                Toast.makeText(ActivityLogin.this, R.string.error_fail, Toast.LENGTH_LONG).show();
                 dismissLoading();
             }
         };
@@ -121,6 +123,8 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
     }
 
     private boolean validatedInfo() {
+
+        //TODO fix#1 if edit text is empty return false
 
         if (phoneEdt.getText() != null && passwordEdt.getText() != null) {
             phone = phoneEdt.getText().toString();

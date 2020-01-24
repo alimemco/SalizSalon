@@ -112,7 +112,10 @@ public class FragmentHome extends Fragment
 
         @Override
         public void onFailure(Call<SalizResponse> call, Throwable t) {
-            Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            if (getContext() != null) {
+                Utils.log(getContext().getClass(), t.getMessage());
+                Toast.makeText(getContext(), R.string.error_fail, Toast.LENGTH_LONG).show();
+            }
         }
     };
 

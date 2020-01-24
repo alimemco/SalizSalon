@@ -139,7 +139,8 @@ public class ActivityRegister extends AppCompatActivity implements View.OnClickL
 
             @Override
             public void onFailure(Call<SalizResponse> call, Throwable t) {
-                Toast.makeText(ActivityRegister.this, t.toString(), Toast.LENGTH_SHORT).show();
+                Utils.log(ActivityLogin.class, t.getMessage());
+                Toast.makeText(ActivityRegister.this, R.string.error_fail, Toast.LENGTH_LONG).show();
                 dismissLoading();
             }
         };
